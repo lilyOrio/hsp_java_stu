@@ -4,11 +4,23 @@
     <meta charset="UTF-8">
     <title>乌龟游戏</title>
     <script type="text/javascript">
-//  如何让乌龟动起来 :
-//        思路 ： 改变乌龟的坐标 （改变top和left的属性值）
-//        1.得到乌龟dom对象
-//        2.获取 wugui.style.left 和 wugui.style.top 属性对象
-//        3.改变上面的属性值，乌龟就可以动起来了
+        //  如何让乌龟动起来 :
+        //     一、 思路 ： 改变乌龟的坐标 （改变top和left的属性值）
+        //        1.得到乌龟dom对象
+        //        2.获取 wugui.style.left 和 wugui.style.top 属性对象
+        //        3.改变上面的属性值，乌龟就可以动起来了
+
+        // 用一个函数解决 上下左右移动 行为
+
+        function move(obj) {
+            // alert(obj.value);
+            var wugui = document.getElementById("wugui");
+            var wugui_left = wugui.style.left;//得到的是
+            var wugui_top = wugui.style.top;
+            // 字符串 转成=》number
+            wugui_left = parseInt(wugui_left.substring(0, wugui_left.indexOf("p")));
+            wugui_top = parseInt(wugui_top.substring(0, wugui_top.indexOf("p")));
+        }
 
     </script>
 </head>
@@ -16,6 +28,7 @@
 <table border="1">
     <tr>
         <td></td>
+        <!--  this 表示的就是这个input dom对象   -->
         <td><input type="button" value="向上走" onclick="move(this)"/></td>
         <td></td>
     </tr>
