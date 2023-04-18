@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>createElement</title>
+    <script type="text/javascript">
+        function addImg() {
+            //创建一只小猫图片
+            var element = document.createElement("img");
+            element.src = "./img/1.png";
+            element.height = '100';
+            //展示小猫图片 将创建好的dom对象挂载到
+            //添加到body 标签
+            document.body.appendChild(element);
+        }
+
+        function removeImg() {
+        }
+    </script>
+</head>
+<body>
+<input type="button" onclick="addImg()"
+       value="点击创建一只小猫~"/>
+<input type="button" onclick="removeImg()"
+       value="点击移除一只小猫~"/>
+</body>
+</html>

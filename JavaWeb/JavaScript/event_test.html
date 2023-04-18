@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单提交事件练习</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var form2 = document.getElementById("form2");
+
+            form2.onsubmit = function () {
+                //过关斩将
+                if (form2.username.value.length < 4
+                    || form2.username.value.length > 6) {
+                    alert("用户名长度不对！");
+                    return false;
+                }
+
+                if (form2.pwd.value.length != 6) {
+                    alert("密码长度应为6！");
+                    return false;
+                }
+
+                if (form2.pwd2.value.length != 6
+                    || form2.pwd2.value != form2.pwd.value) {
+                    alert("密码不一致！");
+                    return false;
+                }
+
+                //电邮确认
+                var emailPatt = /^[\w-]+@([a-zA-Z]+\.)+[a-zA-z]+$/;
+                if (!emailPatt.test(form2.email.value)){
+                    alert("电子邮件格式不正确~")
+                    return false;
+                }
+                return true;
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>注册用户</h1> <!-- 动态注册表单提交事件-->
+<form action="ok.html" id="form2">
+    用户名: <input type="text" name="username"/>长度(4-6)<br/>
+    密码: <input type="password" name="pwd"/>长度(6)<br/>
+    确认: <input type="password" name="pwd2">长度(6)<br/>
+    电邮: <input type="text" name="email">满足基本格式<br/>
+    <input type="submit" value="注册用户"/></form>
+</body>
+</html>

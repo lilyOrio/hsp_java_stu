@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getElementsByTagName</title>
+    <script type="text/javascript">
+        function getElements() {
+            var input = document.getElementById("context");
+            var imgs = document.getElementsByTagName("img");//获取所有img
+            if (input.value === "查看多少小猫,并切换成小狗"){
+                //imgs 是一个集合==>HTMLCollection
+                // alert(imgs);
+                alert("猫猫的数量是：" + imgs.length);
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].src = "img/" + (i + 4) + ".png"
+                }
+                input.value = "查看多少小狗,并切换成小猫";
+            }else {
+                alert("狗狗的数量是：" + imgs.length);
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].src = "img/" + (i + 1) + ".png"
+                }
+                input.value = "查看多少小猫,并切换成小狗";
+            }
+        }
+    </script>
+</head>
+<body>
+<img src="img/1.png" height="100">
+<img src="img/2.png" height="100">
+<img src="img/3.png" height="100">
+<br/>
+<input id="context" type="button" onclick="getElements()" value="查看多少小猫,并切换成小狗"/>
+</body>
+</html>

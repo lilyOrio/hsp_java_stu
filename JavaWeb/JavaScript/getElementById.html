@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getElementById 的使用</title>
+    <script type="text/javascript">
+        window.onload = function () {//被下面的函数定义覆盖了
+            var element = document.getElementById("myHeader");//得到h1 dom对象，后面对该对象进行操作
+            alert(element);
+        }
+        // function getValue() {
+        //     var element = document.getElementById("myHeader");//得到h1 dom对象，后面对该对象进行操作
+        //     alert(element.innerText);//获取element中包含的文本 " lily \n 韩顺平教育 "
+        //     alert(element.innerHTML);//获取element中包含的HTML "<div>lily</div>韩顺平教育"
+        // }
+        window.onload = function () {//覆盖掉了上面的定义
+            var element = document.getElementById("myHeader");
+            element.onclick = function () {
+                alert(element.innerText);//获取element中包含的文本 " lily \n 韩顺平教育 "
+                alert(element.innerHTML);//获取element中包含的HTML "<div>lily</div>韩顺平教育"
+            }
+        }
+    </script>
+</head>
+<body>
+<h1 id="myHeader" onclick="getValue()">
+    <div>lily</div>
+    韩顺平教育
+</h1>
+<p>Click on the header to alert its value</p>
+</body>
+</html>

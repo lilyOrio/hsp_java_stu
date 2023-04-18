@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js弱类型</title>
+    <!--案例演示-->
+    <!--
+    老师解释
+    1. js 代码可以写在script 标签中
+    2. type="text/javascript" 表示这个脚本(script)类型是javascript
+    3. type="text/javascript" 可以不写，但是建议写上
+    4. js 语句可以不写; 建议写上
+    5. var 后面接变量（var也可以不加）
+    -->
+    <script type="text/javascript">
+        // //弱类型
+        // var name = "lily stu"
+        // //输出alert() 使用弹框方式
+        // //输出console.log() 在调试输出
+        // alert("name=" + name);
+        // //输出变量类型
+        // alert(typeof name);
+        // name = 100;
+        // alert(typeof name);
+
+        var age = 10;//数值
+        console.log("age=" + age)
+        console.log(typeof age);
+        age = "北京";
+        console.log("age=" + age)
+        console.log(typeof age);
+
+        //老师那如果输出字符串+数字的话会把数字转成string 吗
+        var n = 123 + "abc";
+        console.log(n);
+        console.log(typeof n);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
