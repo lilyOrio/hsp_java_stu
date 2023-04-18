@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义对象方式2</title>
+</head>
+<body>
+<script type="text/javascript">
+    var person = {
+        name : "lily",
+        age : 23,
+        hi : function () {
+            console.log("person信息="+this.name+" "+this.age )
+        }
+    }
+
+    //使用
+    console.log("外部访问 name= " + person.name + " " + person.age);
+    person.hi();
+</script>
+</body>
+</html>

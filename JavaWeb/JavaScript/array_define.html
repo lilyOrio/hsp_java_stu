@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组定义</title>
+</head>
+<body>
+<script type="text/javascript">
+    //方式1
+    var cars1 = ["Audi", "BMW", "Volvo"];
+    console.log("cars1=" + cars1);
+    console.log(cars1[1]);
+
+    //方式2
+    var cars2 = [];
+    //添加元素
+    cars2[0] = "奥迪";
+    cars2[1] = "宝马";
+    cars2[2] = "奔驰";
+    console.log("cars2=" + cars2);
+    console.log("cars2[2]=" + cars2[2]);//奔驰
+    console.log("cars2[10]=" + cars2[10]);// 如 果 该 元 素 不 存 在 ， 返 回 的 就 是undefined
+
+    //数组定义方式 3
+    var cars3 = new Array("Audi", "BMW", "Volvo");
+    console.log("cars3=" + cars3);
+    console.log("cars3[0]=" + cars3[0]);//Audi
+    //数组定义方式 4
+    var cars4 = new Array();//空数组
+    console.log(typeof cars4);
+    cars4[0] = "法拉利";
+    cars4[1] = "保时捷";
+    cars4[2] = "yy";//相当于是给数组扩容
+    cars4[0] = "zz";//替换
+
+    cars4[8] = "红旗";//扩容, 如果是跳过了下标给赋值，那么中间没有赋值的元素为 undefined
+    console.log("cars4[3]=" + cars4[3]);//undefined
+    console.log("cars4= " + cars4)
+</script>
+</body>
+</html>

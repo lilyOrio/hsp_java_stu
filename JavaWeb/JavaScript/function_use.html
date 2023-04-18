@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用函数1</title>
+</head>
+<body>
+<script type="text/javascript">
+    //没有返回值的函数
+    function f1() {
+        alert("f1()被调用");
+    }
+
+    f1();
+
+    //有形参的函数
+    function f2(name) {
+        alert("hi " + name);
+    }
+
+    f2("lily");
+
+    //有形参和返回值的函数=》返回类型由返回数据决定
+    function f3(n1, n2) {
+        return (n1 + n2);
+    }
+    alert("f3(\"abc\",\"hi\")=" + f3("abc","hi"));
+</script>
+</body>
+</html>

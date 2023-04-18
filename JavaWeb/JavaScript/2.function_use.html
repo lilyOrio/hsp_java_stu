@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数的使用方式2</title>
+</head>
+<body>
+<script type="text/javascript">
+    var f1 = function (){
+        alert("hi lily");
+    }
+    console.log(typeof f1);
+    f1();
+
+    var f3 = f1;
+    f3();
+
+    var f2 = function (name){
+        alert("f2 hi" + name);
+    }
+    f2("lily");
+
+    var f4 = function (n1, n2) {
+        return n1 + n2;
+    }
+    alert("res= " + f4(10, 50));
+</script>
+</body>
+</html>
