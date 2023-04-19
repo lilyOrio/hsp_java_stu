@@ -13,13 +13,84 @@
         // 用一个函数解决 上下左右移动 行为
 
         function move(obj) {
+
+            //定义公鸡的坐标
+            var cock_top = 200;
+            var cock_left = 200;
+            //定义乌龟的高度和宽度
+            var wugui_height = 67;
+            var wugui_width = 94;
+            //定义公鸡的高度和宽度
+            var cock_height = 73;
+            var cock_width = 76;
+
             // alert(obj.value);
             var wugui = document.getElementById("wugui");
-            var wugui_left = wugui.style.left;//得到的是
+            var wugui_left = wugui.style.left;//得到的是String类型
             var wugui_top = wugui.style.top;
             // 字符串 转成=》number
-            wugui_left = parseInt(wugui_left.substring(0, wugui_left.indexOf("p")));
+            wugui_left = parseInt(wugui_left.substring(0, wugui_left.indexOf("p")));//类型转换需要使用底层api
             wugui_top = parseInt(wugui_top.substring(0, wugui_top.indexOf("p")));
+
+            if (obj.value === "向上走") {
+                wugui_top -= 10;
+            } else if (obj.value === "向右走") {
+                wugui_left += 10;
+            } else if (obj.value === "向下走") {
+                wugui_top += 10;
+            } else {
+                wugui_left -= 10;
+            }
+
+            wugui.style.top = wugui_top + "px";
+            wugui.style.left = wugui_left + "px";
+
+            // 4. 分析如何判断乌龟和公鸡碰撞
+            // 4.1 得到乌龟和公鸡左上角的距离, 纵向距离y
+            // (1) 如果乌龟在上面， 当y < 乌龟图片的高度时，说明他们可能在纵向发生重叠， 使用yy 记录
+            // (2) 如果乌龟在下面， 当y < 公鸡图片的高度时，说明他们可能在纵向发生重叠， 使用yy 记录
+            //
+            // 4.2 得到乌龟和公鸡左上角的距离, 横向距离x
+            // (1) 如果乌龟在左面， 当x < 乌龟图片的宽度时，说明他们可能在横向发生重叠， 使用xx 记录
+            // (2) 如果乌龟在右面， 当x < 公鸡图片的宽度时，说明他们可能在横向发生重叠， 使用xx 记录
+            //
+            // 4.3 如果xx 和yy 同时为true, 说明一定发生碰撞
+
+            //得到乌龟和公鸡左上角的距离, 纵向距离y
+            var y = Math.abs(wugui_top - cock_top);
+            // 得到乌龟和公鸡左上角的距离, 横向距离x
+            var x = Math.abs(wugui_left - cock_left);
+
+            var yy = 0;//默认纵向没有重叠
+            var xx = 0;//默认横向没有重叠
+
+            if (wugui_top < cock_top) {//乌龟在上
+                if (y < wugui_height) {
+                    yy = 1;
+                }
+            } else {//乌龟在上下
+                if (y < cock_height) {
+                    yy = 1
+                }
+            }
+
+            if (wugui_left<cock_left){
+                if (x<wugui_width){
+                    xx=1;
+                }
+            }else {
+                if (x<cock_width){
+                    xx=1;
+                }
+            }
+
+            if (xx&&yy){
+                alert("乌龟很厉害!");
+                //乌龟放到原来的位置
+                wugui.style.left = "100px";
+                wugui.style.top = "120px";
+            }
+
         }
 
     </script>
