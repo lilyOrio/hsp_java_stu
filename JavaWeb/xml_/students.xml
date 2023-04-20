@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<?xml version="1.0" encoding="UTF-8"?> ==》必须放在第一行
+1.version="1.0"版本
+2.encoding="UTF-8" 文件编码
+3.下面用xml来存储多个学生信息
+4.程序员可以决定储存哪些信息 id是属性；name、gender、age则是student的子元素
+5.xml结构也可以映射成一个”dom“树
+-->
+<students>
+    <student id="01">
+        <name>Tom</name>
+        <gender>男</gender>
+        <age>18</age>
+    </student>
+    <student id="02">
+        <name>Marry</name>
+        <gender>女</gender>
+        <age>17</age>
+    </student>
+</students>
+<!--
+XML语法
+1.文档声明
+2、标签
+3、属性
+4、注释
+5、CDATA区、特殊字符，后续说明
+-->

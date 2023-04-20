@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+老韩解读
+对于一些单个字符，若想显示其原始样式，也可以使用转义的形式予以处理
+比如> < & ' ""
+-->
+<students>
+    <stduent id="01">
+        <name>tom</name>
+        <gender>男</gender>
+        <age>18</age>
+        <!--
+        使用转义字符表示一些特殊字符
+        <resume>年龄<100 &版权</resume>
+        -->
+        <resume>年龄&lt;10 &gt; &amp;</resume>
+    </stduent>
+    <stduent id="02">
+        <name>scott</name>
+        <gender>女</gender>
+        <age>17</age>
+    </stduent>
+</students>
+<!--
+6.7 格式正规的XML 文档-小结
+遵循如下规则的XML 文档称为格式正规的XML 文档：
+1、XML 声明语句<?xml version="1.0" encoding="utf-8"?>
+2、必须有且仅有一个根元素
+3、标记大小,区分大小写的.
+4、属性值用引号
+5、标记成对
+6、空标记关闭
+7、元素正确嵌套
+-->
