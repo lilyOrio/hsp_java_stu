@@ -8,16 +8,57 @@
 1. servlet-name: 给Servlet取名(程序员决定), 该名字唯一
 2. servlet-class: Servlet的类的全路径: Tomcat在反射生成该Servlet需要使用
 3. url-pattern: 这个就是该servlet访问的url的配置(路径)
-4. 这时我们应该这样访问servlet http://localhost:9999/servlet/helloServlet
+4. 这时我们应该这样访问servlet http://localhost:9999/servlet/HelloServlet
 5. url-pattern 取名是程序员决定的
 6. load-on-startup 表示在tomcat 启动时，会自动的加载servlet实例
 -->
     <servlet>
         <servlet-name>HelloServlet</servlet-name>
         <servlet-class>com.lilystu.servlet.HelloServlet</servlet-class>
+        <!--表示tomcat在启动时会自动加载这个Servlet-->
+        <!--<load-on-startup>1</load-on-startup>-->
     </servlet>
     <servlet-mapping>
         <servlet-name>HelloServlet</servlet-name>
         <url-pattern>/HelloServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HiServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.HiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HiServlet</servlet-name>
+        <url-pattern>/hiServlet</url-pattern>
+    </servlet-mapping>
+
+<!--  IDEA自动配置  -->
+    <servlet>
+        <servlet-name>OkServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.OkServlet</servlet-class>
+    </servlet>
+    <!--  手动配置  -->
+    <servlet-mapping>
+        <servlet-name>OkServlet</servlet-name>
+        <url-pattern>/okServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CatServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.CatServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CatServlet</servlet-name>
+        <url-pattern>/cat</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DogServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.DogServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DogServlet</servlet-name>
+        <url-pattern>/dog</url-pattern>
+    </servlet-mapping>
+
 </web-app>

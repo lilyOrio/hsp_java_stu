@@ -1,6 +1,8 @@
 package com.lilystu.servlet;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -13,6 +15,8 @@ import java.io.IOException;
  * 2. 实现Servlet接口的方法5个
  */
 public class HelloServlet implements Servlet {
+
+    private int count = 0;
 
     /**
      * 1.初始化 servlet
@@ -53,8 +57,32 @@ public class HelloServlet implements Servlet {
     public void service(ServletRequest servletRequest,
                         ServletResponse servletResponse) throws
             ServletException, IOException {
-        System.out.println("hi servlet~~~");
+//        如果count一直累计加一，说明HelloServlet是单例的，不同浏览器访问也是会累计加1的
+        System.out.println("hi servlet~~~ " + count++);
+//        浏览器每次请求都会开一个新的线程（tomcat每处理一次http请求都会为其新建一个请求）
+        System.out.println("线程id："+Thread.currentThread().getName());
 
+        HttpServletRequest servletRequest1 = (HttpServletRequest) servletRequest;
+        String method = servletRequest1.getMethod();
+        if (method.equals("GET")){
+            doGet();
+        }else if (method.equals("POST")){
+            doPost();
+        }
+    }
+
+    /**
+     * 响应get请求
+     */
+    public void doGet(){
+        System.out.println("doGet被调用~");
+    }
+
+    /**
+     * 响应post请求
+     */
+    public void doPost(){
+        System.out.println("doPost被调用~");
     }
 
     /**
@@ -73,6 +101,6 @@ public class HelloServlet implements Servlet {
      */
     @Override
     public void destroy() {
-
+        System.out.println("destroy~~");
     }
 }

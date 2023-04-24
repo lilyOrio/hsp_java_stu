@@ -1,0 +1,33 @@
+1.tomcat 发现请求的是静态资源，会直接返回，并不会去调用Servlet（这里由默认的DefaultServlet处理）
+2.浏览器请求a.html文件===》tomcat 匹配servlet，都匹配不到，则DefaultServlet就会去读取a.html文件然后返回
+3.当Servlet 配置了"/", 会覆盖tomcat 的DefaultServlet（这个默认的servlet 是处理静态资源的，一旦拦截，静态资源不能处理）, 
+  当其他的utl-pattern 都匹配不上时，都会走这个Servlet, 这样可以拦截到其它静态资源
+ （比如，浏览器再次请求a.xml文件时，会调用配置了“/”的Servlet，而无法返回浏览器请求的静态资源文件）
+4.优先级：精准匹配"/ok">目录匹配"/ok/">扩展名匹配"*.action"> /* > /
+
+
+HTTP协议介绍：
+超文本传输协议(HTTP，HyperText Transfer Protocol)是互联网上应用广泛的一种网络协议。
+是工作在tcp/ip 协议基础上的,所有的WWW 文件都遵守这个标准。
+请求头解析：
+url:http://localhost:9999/servlet/ok1 
+uri:servlet/ok1
+Host 指定请求的服务器的域名和端口号
+Host: www.zcmhi.com：8080 主机=域名(www.zcmhi.com)+端口号(:8080)
+User-Agent 的内容包含发出请求的用户信息
+User-Agent: Mozilla/5.0 (Linux; X11)  Mozilla(浏览器的意思)
+Accept 指定客户端能够接收的内容类型
+Accept: text/plain, text/html
+
+响应（响应头+响应体）解析：
+Accept-Ranges 表明服务器是否支持指定范围请求及哪种类型的分段请求
+Accept-Ranges: bytes
+响应头里面含有==》响应体类型的标识。
+类型：text/html ==》html文件.css文件等等
+
+下面是常见的HTTP状态码：
+200 - 请求成功
+301 - 资源（网页等）被永久转移到其它URL
+404 - 请求的资源（网页等）不存在
+500 - 内部服务器错误
+
