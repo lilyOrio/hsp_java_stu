@@ -1,0 +1,46 @@
+HTTP协议介绍：
+超文本传输协议(HTTP，HyperText Transfer Protocol)是互联网上应用广泛的一种网络协议。
+是工作在tcp/ip 协议基础上的,所有的WWW 文件都遵守这个标准。
+请求头解析：
+url:http://localhost:9999/servlet/ok1 
+uri:servlet/ok1
+Host 指定请求的服务器的域名和端口号
+Host: www.zcmhi.com：8080 主机=域名(www.zcmhi.com)+端口号(:8080)
+User-Agent 的内容包含发出请求的用户信息
+User-Agent: Mozilla/5.0 (Linux; X11)  Mozilla(浏览器的意思)
+Accept 指定客户端能够接收的内容类型
+Accept: text/plain, text/html
+
+响应（响应头+响应体）解析：
+Accept-Ranges 表明服务器是否支持指定范围请求及哪种类型的分段请求
+Accept-Ranges: bytes
+响应头里面含有==》响应体类型的标识。
+类型：text/html ==》html文件.css文件等等
+
+下面是常见的HTTP状态码：
+200 - 请求成功
+301 - 资源（网页等）被永久转移到其它URL
+404 - 请求的资源（网页等）不存在
+500 - 内部服务器错误
+
+
+GET /http/login?username=uidq5850&pwd=111 HTTP/1.1
+(GET 请求方式；/http/login URI资源；username=uidq5850&pwd=111表单数据；HTTP/1.1 表示协议和版本)
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+(表示浏览器可以接收什么格式[类型]的数据)
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Connection: keep-alive
+Cookie: JSESSIONID=656F9218878C33D5AFA24204645E2282; Idea-63f4d6eb=4f99a4ca-13e9-440c-8ae7-43ff62edf063
+Host: localhost:8080(主机=域名[ip]+端口)
+Referer: http://localhost:8080/http/login.html
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: same-origin
+Sec-Fetch-User: ?1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.48
+(浏览器/客户端信息)
+sec-ch-ua: "Chromium";v="112", "Microsoft Edge";v="112", "Not:A-Brand";v="99"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-platform: "Windows"

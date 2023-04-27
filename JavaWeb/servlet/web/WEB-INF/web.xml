@@ -4,14 +4,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-<!--
-1. servlet-name: 给Servlet取名(程序员决定), 该名字唯一
-2. servlet-class: Servlet的类的全路径: Tomcat在反射生成该Servlet需要使用
-3. url-pattern: 这个就是该servlet访问的url的配置(路径)
-4. 这时我们应该这样访问servlet http://localhost:9999/servlet/HelloServlet
-5. url-pattern 取名是程序员决定的
-6. load-on-startup 表示在tomcat 启动时，会自动的加载servlet实例
--->
+    <!--
+    1. servlet-name: 给Servlet取名(程序员决定), 该名字唯一
+    2. servlet-class: Servlet的类的全路径: Tomcat在反射生成该Servlet需要使用
+    3. url-pattern: 这个就是该servlet访问的url的配置(路径)
+    4. 这时我们应该这样访问servlet http://localhost:9999/servlet/HelloServlet
+    5. url-pattern 取名是程序员决定的
+    6. load-on-startup 表示在tomcat 启动时，会自动的加载servlet实例
+    -->
     <servlet>
         <servlet-name>HelloServlet</servlet-name>
         <servlet-class>com.lilystu.servlet.HelloServlet</servlet-class>
@@ -32,7 +32,7 @@
         <url-pattern>/hiServlet</url-pattern>
     </servlet-mapping>
 
-<!--  IDEA自动配置  -->
+    <!--  IDEA自动配置  -->
     <servlet>
         <servlet-name>OkServlet</servlet-name>
         <servlet-class>com.lilystu.servlet.OkServlet</servlet-class>
@@ -61,4 +61,66 @@
         <url-pattern>/dog</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>DBServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.DBServlet</servlet-class>
+        <init-param>
+            <param-name>username</param-name>
+            <param-value>lily</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pwd</param-name>
+            <param-value>123456</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DBServlet</servlet-name>
+        <url-pattern>/db</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletContext</servlet-name>
+        <servlet-class>com.lilystu.servlet.servlet_context.ServletContext_</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletContext</servlet-name>
+        <url-pattern>/context</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PayServlet</servlet-name>
+        <servlet-class>com.lilystu.servlet.PayServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PayServlet</servlet-name>
+        <url-pattern>/pay</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HttpServletRequestMethods</servlet-name>
+        <servlet-class>com.lilystu.servlet.HttpServletRequestMethods</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HttpServletRequestMethods</servlet-name>
+        <url-pattern>/requestMethods</url-pattern>
+    </servlet-mapping>
+
+<!--  配置整个网站的信息  -->
+    <context-param>
+        <param-name>website</param-name>
+        <param-value>http://www.lilystu.net</param-value>
+    </context-param>
+    <context-param>
+        <param-name>company</param-name>
+        <param-value>lilystu</param-value>
+    </context-param>
 </web-app>

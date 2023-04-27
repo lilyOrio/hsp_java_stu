@@ -5,29 +5,31 @@
  （比如，浏览器再次请求a.xml文件时，会调用配置了“/”的Servlet，而无法返回浏览器请求的静态资源文件）
 4.优先级：精准匹配"/ok">目录匹配"/ok/">扩展名匹配"*.action"> /* > /
 
+ServletConfig 类能干什么
+1. 获取Servlet 程序的servlet-name 的值
+2. 获取初始化参数init-param
+3. 获取ServletContext 对象
 
-HTTP协议介绍：
-超文本传输协议(HTTP，HyperText Transfer Protocol)是互联网上应用广泛的一种网络协议。
-是工作在tcp/ip 协议基础上的,所有的WWW 文件都遵守这个标准。
-请求头解析：
-url:http://localhost:9999/servlet/ok1 
-uri:servlet/ok1
-Host 指定请求的服务器的域名和端口号
-Host: www.zcmhi.com：8080 主机=域名(www.zcmhi.com)+端口号(:8080)
-User-Agent 的内容包含发出请求的用户信息
-User-Agent: Mozilla/5.0 (Linux; X11)  Mozilla(浏览器的意思)
-Accept 指定客户端能够接收的内容类型
-Accept: text/plain, text/html
+8.9.3 ServletConfig 应用实例
 
-响应（响应头+响应体）解析：
-Accept-Ranges 表明服务器是否支持指定范围请求及哪种类型的分段请求
-Accept-Ranges: bytes
-响应头里面含有==》响应体类型的标识。
-类型：text/html ==》html文件.css文件等等
+transient关键字，不会被序列化，串行化后不会写到文件里，信息敏感
 
-下面是常见的HTTP状态码：
-200 - 请求成功
-301 - 资源（网页等）被永久转移到其它URL
-404 - 请求的资源（网页等）不存在
-500 - 内部服务器错误
+servletconfig对象创建流程：
+1.当Servlet对象时，tomcat会同时创建一个ServeletConfig对象
+2.如果Servlet的init方法调用super.init()
+   public void init(ServletConfig config) throws ServletException {
+        this.config = config;
+        this.init();
+        }
+	把tomcat创建的ServeletConfig对象赋给GenericServlet的属性（private transient ServletConfig config;）
+	这样的话getServletConfig()就可以获取到该ServeletConfig对象
+	
+8.10.1 为什么需要ServletContext
+1. 先看一个需求：如果我们希望统计某个web 应用的所有Servlet 被访问的次数，怎么办?
+方案一：多个Servlet操作数据表
+方案二：多个Servlet共享ServletContext(接口)
+ServletContext：可以被多个Servlet共享；数据存储形式{k-v},类似map；可以实现多个Servlet的通信；注意数据内存
 
+
+	
+	
