@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class HttpServletRequestMethods extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,15 +31,24 @@ public class HttpServletRequestMethods extends HttpServlet {
         System.out.println("浏览器= " + s[s.length - 1].split("\\/")[0]);
         // 主要是Get / Post
         System.out.println("http 请求方式~= " + request.getMethod());
+//        System.out.println(request.getRequestedSessionId());
         /***********************************
          * 获取和请求参数相关(表格数据)信息, 注意要求在返回数据前，获取参数
          ***********************************/
         //1. 获取表单的数据[单个数据]
         //username=tom&pwd=&hobby=hsp&hobby=spls
+        request.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
         String pwd = request.getParameter("pwd");
         System.out.println("username= " + username);
         System.out.println("pwd= " + pwd);
+        response.setContentType("text/html;charset=utf-8");
+//        response.setContentType("application/x-tar;charset=utf-8");//文件下载
+        PrintWriter writer = response.getWriter();
+        writer.println("username= " + username);
+        writer.println("pwd= " + pwd);
+        writer.flush();
+        writer.close();
 
         //2. 获取表单一组数据
         String[] hobbies = request.getParameterValues("hobby");
