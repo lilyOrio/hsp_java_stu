@@ -22,6 +22,8 @@ public class RegisterServlet extends HttpServlet {
             hobby = sport + " ";
         }
 //        性别
+//        单选
+//        String gender = request.getParameter("gender");
         String[] genders = request.getParameterValues("gender");
         System.out.println(genders[0]);
 //        喜欢的城市

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付页面</title>
+</head>
+<body>
+<h1>支付页面</h1>
+<!--action的第一个"/"会被解析成浏览器地址栏的主机-->
+<form action="/servlet/myPayServlet">
+    用户编号：<input type="text" name="user"><br/>
+    用户编号：<input type="text" name="money"><br/>
+    <input type="submit" value="点击支付">
+</form>
+</body>
+</html>
