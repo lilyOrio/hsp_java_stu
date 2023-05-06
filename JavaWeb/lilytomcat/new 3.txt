@@ -1,0 +1,5 @@
+思路：反射+xml
+浏览器==请求==》
+LilyTomcat(维护一个文件web.xml用来配置Servlet，同时拥有两个容器用来映射
+Servlet[servlet-name,servlet对应的实例(反射)]和servlet-mapping[uri,servlet-name])
+==调用==>目标Servlet

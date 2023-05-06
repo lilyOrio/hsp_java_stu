@@ -4,4 +4,13 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <servlet-name>calServlet</servlet-name>
+<!--  自己设计的Servlet Tomcat不识别所以会报红  -->
+    <servlet-class>com.lilystu.tomcat.servlet.LilyCalServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>calServlet</servlet-name>
+    <url-pattern>/cal</url-pattern>
+  </servlet-mapping>
 </web-app>
