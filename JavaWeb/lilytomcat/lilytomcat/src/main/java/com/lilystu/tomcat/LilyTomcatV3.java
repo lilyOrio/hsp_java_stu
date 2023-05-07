@@ -41,10 +41,10 @@ public class LilyTomcatV3 {
         run();
     }
 
-    //启动容器
+    //启动Tomcat容器
     public static void run() throws IOException {
         ServerSocket serverSocket = new ServerSocket(9999);
-        System.out.println("============V2服务器在9999端口监听=================");
+        System.out.println("============V3服务器在9999端口监听=================");
         while (!serverSocket.isClosed()){
             Socket socket = serverSocket.accept();
             new Thread(new LilyRequestHandler(socket)).start();

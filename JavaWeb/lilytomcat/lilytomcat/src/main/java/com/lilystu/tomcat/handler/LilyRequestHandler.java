@@ -60,9 +60,30 @@ public class LilyRequestHandler extends Thread {
 //            LilyCalServlet servlet = new LilyCalServlet();
 //            servlet.service(request,response);
             String uri = request.getUri();
+//            判断是否为静态资源
+            if (WebUtil.isHtml(uri)) {
+                String resp = LilyResponse.respHeader + WebUtil.readHtml(uri);
+                OutputStream outputStream = response.getOutputStream();
+                outputStream.write(resp.getBytes());
+                outputStream.flush();
+                outputStream.close();
+                socket.close();
+                return;
+            }
             String servletName = LilyTomcatV3.servletUrlMapping.get(uri);
+            if (servletName == null) {
+                servletName = "";
+            }
             LilyHttpServlet servlet = LilyTomcatV3.servletMapping.get(servletName);
-            servlet.service(request,response);
+            if (servlet != null) {
+                servlet.service(request, response);
+            } else {
+                String resp = LilyResponse.respHeader + "<h1>404 not find</h1>";
+                OutputStream outputStream = response.getOutputStream();
+                outputStream.write(resp.getBytes());
+                outputStream.flush();
+                outputStream.close();
+            }
             socket.close();
         } catch (Exception e) {
             e.printStackTrace();
