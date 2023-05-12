@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>b.html</title>
+    <!--
+    老韩解读
+    1. 如果没有<base href="http://localhost:10000/hspedu_servlet/">
+    2. 当点击返回a.html 超链接，将会以当前浏览器的地址为路径来确定路径
+    3. 如果增加了<base href="http://localhost:10000/hspedu_servlet/">
+    4. 将以base 指定的href 的地址为路径，来确定超链接的路径
+    -->
+<!--    <base href="http://localhost:9999/webpath/">-->
+    <!--简写形式-->
+<!--  base标签是由浏览器解析的，浏览器会将第一个“/”时，会解析成 http://localhost:9999/ -->
+    <base href="/webpath/">
+</head>
+<body>
+<h1>这是/d1/d2/b.html</h1>
+<!--会使文件相互调用变得复杂，解决方法：引入base标签-->
+<a href="../../a.html">(1)返回a.html~</a><br/>
+<!--这里的a.html前面不能带‘/’，如果带了会被解析成http://localhost:9999/a.html-->
+<a href="a.html">(2)返回a.html~</a>
+</body>
+</html>

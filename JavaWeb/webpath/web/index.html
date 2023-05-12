@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>base标签</title>
+</head>
+<body>
+<h1>注册用户~</h1>
+<!--
+访问一个web资源的路径比较麻烦==》http://localhost:9999/webpath/ok
+*使用相对路径来解决，一个非常重要的规则：页面所有的相对路径，在默认情
+况下，都会参考当前浏览器地址栏的路径http://ip:port/工程名/ + 资源来进行跳转
+相对路径的弊端：示意图==希望==》http://ip:port/工程名/ + 资源来进行跳转
+==》如果需要指定页面相对路径参考的的路径，可以使用base 标签来指定
+base标签：base 标签是HTML 语言中的基准网址标记，它是一个单标签，位于网页头部文件的head标签内
+        一个页面最多只能使用一个base 元素，用来提供一个指定的默认目标，是一种表达路径和连接网址的标记。
+        常见的url 路径形式分别有相对路径与绝对路径，如果base 标签指定了目标，浏览器将通过这个目标来解析当前文档中的所有相对路径，包括的标签有（a、img、link、form
+-->
+<form action="http://localhost:9999/webpath/ok"
+      method="post">
+    u: <input type="text" name="username"/><br><br>
+    <input type="submit" value="注册用户"/>
+</form>
+<h1>讨论区</h1>
+<form action="ok"
+      method="post">
+    讨论内容: <textarea cols="50" rows="5"></textarea><br><br>
+    <input type="submit" value="发布讨论"/>
+</form>
+<h1>回复区</h1>
+<form action="ok"
+      method="post">
+    回复内容: <textarea cols="50" rows="5"></textarea><br><br>
+    <input type="submit" value="回复"/>
+</form>
+</body>
+</html>

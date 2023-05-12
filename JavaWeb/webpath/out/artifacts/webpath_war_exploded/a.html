@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>a.html</title>
+</head>
+<body>
+<h1>这是a.html</h1>
+<!--等价于：http://localhost:9999/webpath/d1/d2/b.html-->
+<a href="d1/d2/b.html">跳转到/d1/d2/b.html</a>
+<br/><br/>
+<!--不能在最前面加“/”加上了该“/”会被解析成http://ip:port/-->
+<!--不带“/”则默认解析为http://ip:port/工程名/（或者是base标签定义的路径）-->
+<!--前面不带“/”则以浏览器当前的地址栏去掉资源部分，作为一个相对路径+资源-->
+<a href="servlet03">转发到/d1/d2/b.html</a>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<h1>登录界面</h1>
+<form action="http://localhost:9999/webpath/views/user/user.html"
+      method="post">
+    u: <input type="text" name="username"/><br><br>
+    <input type="submit" value="登录"/>
+</form>
+<form action="views/user/user.html"
+      method="post">
+    u: <input type="text" name="username"/><br><br>
+    <input type="submit" value="登录2"/>
+</form>
+<form action="/webpath/views/user/user.html"
+      method="post">
+    u: <input type="text" name="username"/><br><br>
+    <input type="submit" value="登录3"/>
+</form>
+<form action="servlet05"
+      method="post">
+    u: <input type="text" name="username"/><br><br>
+    <input type="submit" value="登录4"/>
+</form>
+</body>
+</html>

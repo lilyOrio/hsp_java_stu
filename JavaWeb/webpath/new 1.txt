@@ -1,0 +1,23 @@
+结构化思维：
+应该了解哪些内容
+清楚自己的薄弱点
+
+Web工程路径专题
+
+1.实际开发中使用的都是绝对路径
+2.在web 中/ 斜杠如果被浏览器解析，得到的地址是：http://ip[域名]:port/比如: <a href="/">斜杠</a>
+3.在web 中/ 斜杠如果被服务器解析，得到的地址是：http://ip[域名]:port/工程路径/，你也可以理解成/工程路径/
+4.String realPath = getServletContext().getRealPath("/");==》项目的真正的工作路径
+String contextPath = getServletContext().getContextPath();==》Tomcat配置的Application context（将来可以在服务器渲染技术上使用 动态获取工程路径）
+realPath =D:\uidq5850\repo_code\JavaWeb\webpath\out\artifacts\webpath_war_exploded\
+contextPath =/webpath
+5.在javaWeb 中路径最后带/ 和不带/ 含义不同,
+比如<a href="/a/servlet03">网址</a> : servlet03 表示资源
+<a href="/a/servlet03/">网址</a> : servlet03 表示路径
+6. 特别说明：重定向response.sendRediect("/"); 这条语句虽然是在服务器执行的，但是,服务器是把斜杠/ 发送给浏览器解析。因此得到地址http://ip[域名]:port/
+
+老韩小结： 在编写资源路径时: , 考虑这么几点
+(1) 这个路径前面有没有/
+(2) 这个路径在哪里被解析[服务器还是浏览器] , 如果前面有/ , 并且是在浏览器被解析的被解析成http://ip:port/ , 如果在服务器端被解析, 被解析成/工程路径/
+(3)** 如果这个路径，前面没有/ , 并且在浏览器被解析，则以浏览器当前的地址栏去掉资源部分，作为一个相对路径.
+(4) 这个路径，最后有没有/ , 如果最后有/ 表示路径， 如果没有/ 表示资源
