@@ -18,7 +18,7 @@
         <th>名字</th>
         <th>技能</th>
     </tr>
-    <c:forEach items="${requestScope.monsters}" var="monster">
+    <c:forEach items="${monsters}" var="monster">
         <c:if test="${monster.id > 100}">
             <tr>
                 <td>${monster.id}</td>
