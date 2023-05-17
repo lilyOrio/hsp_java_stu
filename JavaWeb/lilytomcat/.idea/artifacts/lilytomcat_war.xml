@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="lilytomcat:war">
+    <output-path>$PROJECT_DIR$/lilytomcat/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>lilytomcat</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="lilytomcat.war">
+      <element id="artifact" artifact-name="lilytomcat:war exploded" />
+    </root>
+  </artifact>
+</component>

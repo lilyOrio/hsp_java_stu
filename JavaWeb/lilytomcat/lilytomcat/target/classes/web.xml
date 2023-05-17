@@ -13,14 +13,4 @@
     <servlet-name>calServlet</servlet-name>
     <url-pattern>/cal</url-pattern>
   </servlet-mapping>
-
-  <servlet>
-    <servlet-name>cal2Servlet</servlet-name>
-    <!--  自己设计的Servlet Tomcat不识别所以会报红  -->
-    <servlet-class>com.lilystu.tomcat.servlet.LilyCal2Servlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>cal2Servlet</servlet-name>
-    <url-pattern>/cal2</url-pattern>
-  </servlet-mapping>
 </web-app>
