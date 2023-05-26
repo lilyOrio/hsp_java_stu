@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON 对象和字符串对象转换</title>
+    <script type="text/javascript">
+        var jsonPerson = {
+            "name": "lucy",
+            "age": 12
+        }
+        var strPerson = JSON.stringify(jsonPerson);
+        console.log("strPerson = " + strPerson)
+        console.log("strPerson 类型" + typeof strPerson)
+
+        var strDog = "{\"name\":\"小白\",\"age\":2}"
+        var jsonDog = JSON.parse(strDog);
+        console.log("jsonDog = " , jsonDog)
+        console.log("jsonDog 类型" + typeof jsonDog)
+    </script>
+</head>
+<body>
+<h1>JSON 对象和字符串对象转换</h1>
+</body>
+</html>

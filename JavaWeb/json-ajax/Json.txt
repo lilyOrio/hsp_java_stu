@@ -1,0 +1,20 @@
+JSON（本质上是js对象）
+1.js的对象表示法（JavaScript Object Notation）
+2.json是轻量级的文本数据交换格式
+3.json独立于语言（除了Java，某些其它语言也可以使用）
+4.JSON 具有自我描述性，更易理解,一句话，非常的好用..
+
+JSON 对象和字符串对象转换
+注意事项和细节
+1、JSON.springify(json 对象) 会返回对应string, 并不会影响原来json 对象
+2、JSON.parse(string) 函数会返回对应的json 对象, 并不会影响原来string
+
+JSON 在java 中使用
+1. java 中使用json，需要引入到第3 方的包gson.jar
+2. Gson 是Google 提供的用来在Java 对象和JSON 数据之间进行映射的Java 类库。
+3. 可以对JSON 字符串和Java 对象相互转换
+
+*匿名内部类的基本语法：
+new 类/接口 (参数列表){//参数列表指定使用哪个构造器
+	类体
+}

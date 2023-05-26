@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>json 快速入门案例</title>
+    <script type="text/javascript">
+        var myJson = {
+            "key1": "韩顺平教育", // 字符串
+            "key2": 123, // Number
+            "key3": [1, "hello", 2.3], // 数组
+            "key4": {"age": 12, "name": "jack"}, //json 对象
+            "key5": [ //json 数组
+                {"k1": 10, "k2": "milan"},
+                {"k3": 30, "k4": "smith"}
+            ]
+        };
+        //访问json 的属性
+        console.log("key1= " + myJson.key1);
+        // 访问json 的数组属性
+        console.log("key3[1]= " + myJson.key3[1]); // hello
+        //遍历
+        for (var i = 0; i < myJson.key3.length; i++) {
+            console.log("第%i个元素 " + myJson.key3[i], i);
+        }
+        // 访问key4 的name 属性
+        console.log("name= " , myJson.key4);
+        console.log("name= " , myJson.key4.name); // jack
+        // 访问key5 json 数组的第一个元素
+        console.log("myJson.key5[0]= " + myJson.key5[0]); //[object, object]
+        console.log("myJson.key5[0].k2= " + myJson.key5[0].k2)// milan
+    </script>
+</head>
+<body>
+<h1>json 快速入门案例</h1>
+</body>
+</html>
