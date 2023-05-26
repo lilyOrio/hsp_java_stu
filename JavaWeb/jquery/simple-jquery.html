@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery快速入门</title>
+    <!--引入jquery库-->
+    <script type="text/javascript" src="script/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript">
+
+        // 使用dom完成
+        window.onload = function () {
+            //得到btn01
+            var btn01 = document.getElementById("btn01");
+            //绑定事件
+            btn01.onclick = function () {
+                alert("hello , js")
+            }
+        }
+
+        <!--使用jquery完成-->
+        // $(function () {})等价于
+        /*
+        window.onload = function () {}
+         */
+        // var btn01 = $("#btn01")等价于...
+        //必须在ID前带#，一般对象名前面也加$(约定)
+        $(function () {
+            var $btn01 = $("#btn01")
+            $btn01.click(function (){
+                alert("hello , jquery")
+            })
+        })
+    /*
+    jQuery对象就是对DOM对象进行包装后的产生的对象
+    ：$("#id").html()
+     */
+    </script>
+</head>
+<body>
+<button id="btn01"> 按钮1</button>
+</body>
+</html>

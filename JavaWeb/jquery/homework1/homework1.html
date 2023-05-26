@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../script/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            //遍历绑定
+            $("p").each(function (){
+                    $(this).click(function (){
+                        alert($(this).text())
+                    })
+            })
+            //统一绑定
+            $("p").click(function (){
+                // alert(this.innerText)
+                alert($(this).text())
+            })
+        })
+    </script>
+</head>
+<body>
+<h1>网页中所有的 &lt;p&gt; 元素添加 onclick 事件</h1>
+<p>段落 1</p>
+<p>段落 2</p>
+<p>段落 3</p>
+</body>
+</html>
