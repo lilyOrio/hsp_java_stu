@@ -14,6 +14,21 @@
                 //2.准备发送指定数据
                 //请求方式GET;url;true表示异步发送
                 xhr.open("GET","/ajax/checkUserServlet?username="+uname,true);
+                //在send前，需要给xhr绑定一个事件onredaystate
+                //该事件表示，当数据变化时触发
+                xhr.onreadystatechange = function(){
+                    if (xhr.readyState == 4 && xhr.status == 200){
+                        var responseText = xhr.responseText;
+                        // console.log("responseText = ",responseText)
+                       if(responseText.trim() != ""){
+                           document.getElementById("myres").value = "用户名不可用！"
+                           document.getElementById("div1").innerText = responseText
+                       } else {
+                           document.getElementById("myres").value = "用户名可用~"
+                       }
+                    }
+
+                }
                 //3.发送ajax请求（也是一个http请求）
                 xhr.send();//如果是POST请求，就需要在send方法中填入需要发送的数据
             }
