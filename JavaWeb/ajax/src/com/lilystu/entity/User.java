@@ -6,7 +6,11 @@ public class User {
     private String email;
     private String pwd;
 
-    public User(Integer id, String userName, String email, String pwd) {
+    public User(){//反射必须提供无参构造器
+
+    }
+
+    public User(Integer id, String userName, String pwd, String email) {
         this.id = id;
         this.userName = userName;
         this.email = email;
