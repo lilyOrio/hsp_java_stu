@@ -19,28 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="893195cf-223a-4069-9b69-c892e373c40b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../json-ajax/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/Json.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/json-ajax.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/json_quick_start.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../json-ajax/json_str.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_2_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Json.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json_quick_start.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/json_str.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/gson-2.2.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lily-json-ajax.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/lilystu/json/Book.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/lilystu/json/JavaJson.java" afterDir="false" />
-    </list>
+    <list default="true" id="893195cf-223a-4069-9b69-c892e373c40b" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +47,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -107,6 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685019031860</updated>
       <workItem from="1685019036466" duration="6731000" />
+      <workItem from="1685326380945" duration="12000" />
     </task>
     <servers />
   </component>
@@ -123,6 +103,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="446" y="49" key="#com.intellij.ide.util.MemberChooser" timestamp="1685019755299">

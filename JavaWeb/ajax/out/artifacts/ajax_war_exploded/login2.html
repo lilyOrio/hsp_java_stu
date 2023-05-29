@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <script type="text/javascript" src="./script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#checkButton").click(function () {
+                //发出ajax请求
+                //在{}中给参数；需要指定 参数名 ：参数值
+                // $.ajax({
+                //     url: "/ajax/checkUserServlet2",
+                //     type: "POST",
+                //     data: {//传送json数据
+                //         username: $("#uname").val(),
+                //         date: new Date()//防止浏览器缓存，因为date是会变的
+                //     },
+                //     error: function () {
+                //         console.log("失败了。。。")
+                //     },
+                //     success: function (data, status, xhr) {
+                //         console.log("成功！")
+                //         console.log(data)
+                //         console.log(status)
+                //         console.log(xhr)
+                //         if ("" != data.userName) {
+                //             $("#myres").val("用户名不可用！")
+                //             $("#div1").html(JSON.stringify(data))
+                //         } else {
+                //             $("#myres").val("用户名可用~")
+                //         }
+                //     },
+                //     dataType: "json"//要求接受的数据格式是json，否则解析出错
+                // })
+
+                //发送GET请求 不需要指定参数名，但是参数顺序要保持一致
+                //发送POST请求，只需要将GET改为POST就行，就可以按照post方式发送ajax请求
+                // $.get(
+                //     "/ajax/checkUserServlet2",
+                //     {//传送json数据
+                //         username: $("#uname").val(),
+                //         date: new Date()//防止浏览器缓存，因为date是会变的
+                //     },
+                //     function (data, status, xhr) {
+                //         console.log("成功！")
+                //         console.log(data)
+                //         console.log(status)
+                //         console.log(xhr)
+                //         if ("" != data.userName) {
+                //             $("#myres").val("用户名不可用！")
+                //             $("#div1").html(JSON.stringify(data))
+                //         } else {
+                //             $("#myres").val("用户名可用~")
+                //         }
+                //     },
+                //     "json"
+                // )
+
+                //如果通过jQuery发出的ajax请求是GET请求，且返回的数据格式是json，可以直接使用getJSON方法，比较简洁
+                $.getJSON(
+                    "/ajax/checkUserServlet2",
+                    {//传送json数据
+                        username: $("#uname").val(),
+                        date: new Date()//防止浏览器缓存，因为date是会变的
+                    },
+                    function (data, status, xhr) {
+                        console.log("成功！")
+                        console.log(data)
+                        console.log(status)
+                        console.log(xhr)
+                        if ("" != data.userName) {
+                            $("#myres").val("用户名不可用！")
+                            $("#div1").html(JSON.stringify(data))
+                        } else {
+                            $("#myres").val("用户名可用~")
+                        }
+                    }
+                )
+            })
+        });
+    </script>
+</head>
+<body>
+<h1>用户注册</h1>
+<form action="/ajax/checkUserServlet2" method="post">
+    用户名字:<input type="text" name="username" id="uname">
+    <input type="button" id="checkButton" value="验证用户名">
+    <input style="border-width: 0;color: red" type="text" id="myres"><br/><br/>
+    用户密码:<input type="password" name="password"><br/><br/>
+    电子邮件:<input type="text" name="email"><br/><br/>
+    <input type="submit" value="用户注册">
+</form>
+<h1>返回的json 数据</h1>
+<div id="div1"></div>
+</body>
+</html>
