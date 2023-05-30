@@ -1,0 +1,11 @@
+线程数据共享和安全-ThreadLocal
+什么是ThreadLocal
+1.作用：可以实现在同一个线程数据共享, 从而解决多线程数据安全问题
+2.threadlocalA.set(dog):
+	获取当前线程t==》根据当前线程获取threadlocalMap对象（map），如果map不为空==》map.set(threadlocalA,dog)
+															      如果map为空==》createMap(t, dog);
+3.threadLocalA.get() get函数没有参数，表明一个threadloacl对象对应一个value：
+     先得到当前的线程对象t==>通过线程获取到对应的ThrealLocalMap(map)
+	 ==>如果map不为空,根据当前的 threadlocal对象，得到对应的Entry  ThreadLocalMap.Entry e = map.getEntry(this);
+	 ==>如果e 不为null 则T result = (T)e.value;（result表示之前存的dog）
+						 return result;

@@ -2,7 +2,9 @@ package com.lilystu.threadlocal;
 
 public class T1 {
     //创建ThreadLocal对象
+    //所以ThreadLocal对象都被当前线程的threadlocals维护 return t.threadLocals==>threadLocalMap
     public static ThreadLocal<Object> threadLocal1 = new ThreadLocal<>();
+    public static ThreadLocal<Object> threadLocal2 = new ThreadLocal<>();
     public static void main(String[] args) {
 //在一个线程中共享数据，并且这个数据是线程安全的
         /*1.在T1中起一个线程t0
@@ -21,7 +23,8 @@ public class T1 {
             Dog dog = new Dog();
             Pig pig = new Pig();
 //            给threadLocal中放入对象
-            threadLocal1.set(dog);
+            threadLocal1.set(pig);
+            threadLocal2.set(dog);
             /*
             set方法中经历了什么呢？
             public void set(T value) {
@@ -34,7 +37,7 @@ public class T1 {
                                          //总结：一个threadLocal对象只可以存放一个数据
                 else
                     createMap(t, value);//没有map就创建一个，和当前线程t关联
-    }
+            }
              */
             System.out.println("Task 在run 方法中 线程=" + Thread.currentThread().getName() +
                     ", dog = " + dog);
