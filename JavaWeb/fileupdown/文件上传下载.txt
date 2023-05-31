@@ -1,0 +1,63 @@
+web 应用常用功能-文件上传下载
+基本介绍：
+	3.如果是传输大文件，一般用专门工具或者插件
+	4.文件上传下载需要使用到两个包, 需要导入
+文件上传：
+	基本原理：
+		一图胜千言。。。
+		1.还是使用表单提交，method 指定post
+		2.enctype ：encodetype 编码类型 默认是 application/x-www-urlencoded；这种编码方式不适合提交二进制文件，一般适用于文本数据
+		5.二进制文件提交entype指定 multipart/form-data 表示表单提交的数据是有多个部分组成，也就是可以提交二进制数据和文本数据
+	服务端：
+		1.判断是不是一个文件表单
+		2.判断表单提交的各个表单项是是什么类型 type = “text”/“file”/。。。
+		3.type = “text”按文本方式处理
+		4.type = “file”使用io技术处理
+		5.把表单提交的文件数据，保存到你指定的服务端的某个目录
+		
+文件上传应用实例：
+1.ServletFileUpload.isMultipartContent(request)//判断是否未文件表单提交
+2.DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();//创建DiskFileItemFactory对象，用于构建解析上传数据的工具的对象
+3.ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);//构建解析上传数据的工具
+3-2. servletFileUpload.setHeaderEncoding("utf-8");//解决接收到的文件名乱码问题
+4.List<FileItem> list = servletFileUpload.parseRequest(request);//servletFileUpload对象可以把表单提交的数据（text/文件），
+	解析并将其封装到FileItem文件项中；后续可以遍历这个fileItem
+5.fileItem.isFormField()) //true==>文本  false==>文件
+
+            
+
+文件上传注意事项和细节:
+分目录存放：
+ LocalDateTime ldt = LocalDateTime.now();
+        int year = ldt.getYear();
+        int monthValue = ldt.getMonthValue();
+        int dayOfMonth = ldt.getDayOfMonth();
+        String yearMonthDay = year + "/" + monthValue + "/" + dayOfMonth + "/";
+		
+//写一个工具类，返回这样一个目录：2024/11/11 字符串
+	File fileReadDir = new File(fileReadPath + WebUtils.getYearMonthDay());//获取文件
+	if (!fileReadDir.exists()){//文件夹不存在。。。
+		fileReadDir.mkdirs();//创建文件夹
+	}
+	
+一个完美的文件上传，要考虑的因素很多，比如断点续传、控制图片大小，尺寸，分片
+上传，防止恶意上传等（上传同名文件替换系统原来保存的文件），在项目中，可以考虑使用WebUploader 组件(百度开发)
+http://fex.baidu.com/webuploader/doc/index.html
+
+文件上传，创建web/upload 的文件夹，在tomcat 启动时，没有在out 目录下创建对
+应的upload 文件夹, 原因是tomcat 对应空目录是不会在out 下创建相应目录的，所以，只
+需在upload 目录下，放一个文件即可, 这个是Idea + Tomcat 的问题, 实际开发不会存
+在.[
+
+文件下载
+响应头：1.content-Disposition：表示下载的数据的展示方式，或下载方式
+		2.content-type：指定返回数据的类型MIME
+响应体：在网络传输时是图片的原生数据
+		可以看到图片是因为浏览器解析并显示了图片
+文件下载案例
+服务器准备要下载资源：在web下建立download目录，另外还需保证tomcat启动后文件已同步到工作目录
+设置下载响应头：
+细节：
+	1.文件下载，比较麻烦的就是文件名中文处理
+	2.对于网站的文件，很多文件使用另存为即可下载，对于大文件(文档，视频)，会使用专业的下载工具(迅雷、百度，腾讯，华为网盘等)
+	

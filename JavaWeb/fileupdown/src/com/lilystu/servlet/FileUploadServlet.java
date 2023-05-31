@@ -1,5 +1,6 @@
 package com.lilystu.servlet;
 
+import com.lilystu.utils.WebUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @WebServlet(urlPatterns = "/fileUploadServlet")
 public class FileUploadServlet extends HttpServlet {
@@ -46,24 +48,12 @@ public class FileUploadServlet extends HttpServlet {
                         String string = fileItem.getString("utf-8");
                         System.out.println(string + "...");
                     } else {//文件
-//                        获取文件名
-                        String name = fileItem.getName();
-                        System.out.println("图片名称:" + name);
-//                      保存文件  把暂存文件保存到指定位置
+//                     保存文件  把暂存文件保存到指定位置
 //                        1.指定一个目录 就是我们网站的工作目录下
                         String filePath = "/upload/";//==>保存到指定目录
 //                        2.获取完整路径 ==》指定目录存在的完整路径
                         String fileReadPath = request.getServletContext().getRealPath(filePath);
-
-                        //为了防止保存文件失败（出现FileNotFoundException文件拒绝访问异常），要先创建好文件夹
-                        File fileReadDir = new File(fileReadPath);//获取文件
-                        if (!fileReadDir.exists()){//文件夹不存在。。。
-                            fileReadDir.mkdirs();//创建文件夹
-                        }
-
-                        String fileFullPath = fileReadPath + name;//文件的全路径（加了文件名）
-                        fileItem.write(new File(fileFullPath));//将文件保存到创建好的文件中
-
+                        WebUtils.SaveFile(fileItem,fileReadPath);
                         response.setContentType("text/html;charset=utf-8");
                         response.getWriter().write("上传成功~~");
                     }
