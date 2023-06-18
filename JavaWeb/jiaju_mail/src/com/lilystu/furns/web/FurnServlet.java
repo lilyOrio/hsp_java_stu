@@ -25,7 +25,7 @@ public class FurnServlet extends BasicServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void List(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("FurnServlet==List==");
         List<Furn> furnList = furnsService.queryFurns();
         for (Furn f : furnList) {

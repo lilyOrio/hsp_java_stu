@@ -9,8 +9,7 @@ import java.util.List;
 public class FurnDAOImpl extends BasicDAO implements FurnDAO {
     @Override
     public List<Furn> queryFurns() {
-        String sql = "SELECT `id`,`name`,`price`,sales`,`stock`,`img_path`" +
-                "FROM furn";
+        String sql = "SELECT `id`, `NAME` , `maker`, `price`, `sales`, `stock`, `img_path` imgPath FROM furn";
         return queryMulti(sql,Furn.class);
     }
 }
