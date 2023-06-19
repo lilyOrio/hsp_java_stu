@@ -14,7 +14,7 @@ public class MemberDAOimpl extends BasicDAO<Member> implements MemberDAO {
     public Member queryMemberByUsername(String userName) {
         //sql 语句建议现在sqlyog测试
         String sql = "SELECT `id`,`username`,`password`,`email` FROM `member`" +
-                "WHERE `username` = ?";
+                "WHERE `username`=?";
         return querySingle(sql,Member.class,userName);
     }
 
@@ -38,8 +38,8 @@ public class MemberDAOimpl extends BasicDAO<Member> implements MemberDAO {
      */
     @Override
     public Member queryMemberByUsernameAndPassword(String userName, String password) {
-        String sql = "SELECT `id`,`username`,`password`,`email` FROM `member`" +
-                "WHERE `username` = ? AND `password` = MD5(?)" ;
+        String sql = "SELECT `id`,`username`,`password`,`email` FROM `member` " +
+                " WHERE `username`=? and `password`=md5(?)"; ;
         return querySingle(sql,Member.class,userName,password);
     }
 }
