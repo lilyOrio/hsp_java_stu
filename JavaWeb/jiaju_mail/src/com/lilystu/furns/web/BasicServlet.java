@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 public abstract class BasicServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("utf-8");
         System.out.println("BasicServlet...");
         String action = req.getParameter("action");
 
