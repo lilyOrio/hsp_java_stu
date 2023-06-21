@@ -7,4 +7,5 @@ import java.util.List;
 public interface FurnsService {
     List<Furn> queryFurns();
     int addFurn(Furn furn);
+    int deleteFurnById(int id);
 }

@@ -17,4 +17,11 @@ public interface FurnDAO {
      * @return
      */
     int addFurn(Furn furn);
+
+    /**
+     * 根据id删除家具
+     * @param id
+     * @return
+     */
+    int deleteFurnById(int id);
 }

@@ -26,4 +26,9 @@ public class FurnsServiceTest {
                 "assets/images/product-image/16.jpg");
         System.out.println("添加家具：" + furnsService.addFurn(furn));
     }
+
+    @Test
+    public void deleteFurnById(){
+        System.out.println("输出家具：" + furnsService.deleteFurnById(5));
+    }
 }

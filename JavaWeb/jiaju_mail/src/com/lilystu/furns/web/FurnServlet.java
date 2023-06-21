@@ -64,4 +64,11 @@ public class FurnServlet extends BasicServlet {
         response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
     }
 
+    protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("FurnServlet==delete==");
+        int id = DataUtils.parseInt(request.getParameter("id"),0);
+        furnsService.deleteFurnById(id);
+        response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
+    }
+
 }

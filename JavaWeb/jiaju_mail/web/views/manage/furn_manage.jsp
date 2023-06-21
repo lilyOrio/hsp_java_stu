@@ -12,6 +12,17 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {//页面加载完毕
+            $("a.deleteCss").click(function () {
+                var furnName = $(this).parent().parent().find("td:eq(1)").text();
+                //弹出确认弹框
+                //确定返回true 取消返回 false
+                return confirm("确认删除【"+furnName+"】？")
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -114,7 +125,7 @@
                                 </td>
                                 <td class="product-remove">
                                     <a href="#"><i class="icon-pencil"></i></a>
-                                    <a href="#"><i class="icon-close"></i></a>
+                                    <a href="/manage/furnServlet?action=delete&id=${furn.id}" class="deleteCss"><i class="icon-close"></i></a>
                                 </td>
                             </tr>
                             </c:forEach>
