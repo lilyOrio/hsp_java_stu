@@ -32,5 +32,24 @@ public interface FurnDAO {
      */
     Furn queryFurnById(int id);
 
+    /**
+     * 更新家具信息
+     * @param furn
+     * @return
+     */
     int updateFurn(Furn furn);
+
+    /**
+     * 获取家具数量
+     * @return
+     */
+    int getTotalRow();
+
+    /**
+     * 获取当前页显示数据
+     * @param pageBegin 从第几条数据开始显示 0开始计算
+     * @param pageSize 取出多少条记录
+     * @return
+     */
+    List<Furn> getPageItem(int pageBegin,int pageSize);
 }

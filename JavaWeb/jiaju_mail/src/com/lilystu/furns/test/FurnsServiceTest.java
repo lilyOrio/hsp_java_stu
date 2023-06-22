@@ -1,6 +1,7 @@
 package com.lilystu.furns.test;
 
 import com.lilystu.furns.entity.Furn;
+import com.lilystu.furns.entity.Page;
 import com.lilystu.furns.service.FurnsService;
 import com.lilystu.furns.service.impl.FurnsServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -43,5 +44,11 @@ public class FurnsServiceTest {
                 new BigDecimal(999.99), 100, 10,
                 "assets/images/product-image/16.jpg");
         System.out.println("更新家具信息：" + furnsService.updateFurn(furn));
+    }
+
+    @Test
+    public void page(){
+        Page page = furnsService.page(2, 3);
+        System.out.println("分页信息：" +page);
     }
 }
