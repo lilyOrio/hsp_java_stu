@@ -8,4 +8,6 @@ public interface FurnsService {
     List<Furn> queryFurns();
     int addFurn(Furn furn);
     int deleteFurnById(int id);
+    Furn queryFurnById(int id);
+    int updateFurn(Furn furn);
 }

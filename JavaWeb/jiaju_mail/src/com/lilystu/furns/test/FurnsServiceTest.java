@@ -31,4 +31,17 @@ public class FurnsServiceTest {
     public void deleteFurnById(){
         System.out.println("输出家具：" + furnsService.deleteFurnById(5));
     }
+
+    @Test
+    public void queryFurnById(){
+        System.out.println("找到家具：" + furnsService.queryFurnById(2));
+    }
+
+    @Test
+    public void updateFurn(){
+        Furn furn = new Furn(3, "可爱沙发~~", "L家具",
+                new BigDecimal(999.99), 100, 10,
+                "assets/images/product-image/16.jpg");
+        System.out.println("更新家具信息：" + furnsService.updateFurn(furn));
+    }
 }

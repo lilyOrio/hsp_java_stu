@@ -71,4 +71,15 @@ public class FurnServlet extends BasicServlet {
         response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
     }
 
+    protected void showFurn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Furn furn = furnsService.queryFurnById(DataUtils.parseInt(request.getParameter("id"), 0));
+        request.setAttribute("furn",furn);
+        request.getRequestDispatcher("/views/manage/furn_update.jsp").forward(request,response);
+    }
+
+    protected void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        furnsService.updateFurn(DataUtils.copyParamToBean(request.getParameterMap(),new Furn()));
+        response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
+    }
+
 }

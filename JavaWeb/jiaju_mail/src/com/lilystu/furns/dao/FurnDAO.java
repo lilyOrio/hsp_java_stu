@@ -24,4 +24,13 @@ public interface FurnDAO {
      * @return
      */
     int deleteFurnById(int id);
+
+    /**
+     * 根据id查询家具信息
+     * @param id
+     * @return
+     */
+    Furn queryFurnById(int id);
+
+    int updateFurn(Furn furn);
 }
