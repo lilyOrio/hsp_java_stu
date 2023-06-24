@@ -1,6 +1,7 @@
 <%--jsp文件头--%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %><html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -12,6 +13,17 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {//页面加载完毕
+            $("a.deleteCss").click(function () {
+                var furnName = $(this).parent().parent().find("td:eq(1)").text();
+                //弹出确认弹框
+                //确定返回true 取消返回 false
+                return confirm("确认删除【" + furnName + "】？")
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -46,6 +58,9 @@
                         <!-- Single Wedge Start -->
                         <div class="header-bottom-set dropdown">
                             <a href="#">后台管理</a>
+                        </div>
+                        <div class="header-bottom-set dropdown">
+                            <a href="views/manage/furn_add.jsp?pageNo=${requestScope.page.pageNo}">添加家具</a>
                         </div>
                     </div>
                 </div>
@@ -94,32 +109,62 @@
                             </thead>
                             <tbody>
                             <%--取出furn集合然后循环显示--%>
-                            <c:forEach items="${requestScope.furns}" var="furn">
-                            <tr>
-                                <td class="product-thumbnail">
-                                    <a href="#"><img class="img-responsive ml-3" src="${furn.imgPath}"
-                                                     alt=""/></a>
-                                </td>
-                                <td class="product-name"><a href="#">${furn.name}</a></td>
-                                <td class="product-name"><a href="#">${furn.maker}</a></td>
-                                <td class="product-price-cart"><span class="amount">${furn.price}</span></td>
-                                <td class="product-quantity">
-                                    ${furn.sales}
-                                </td>
-                                <td class="product-quantity">
-                                    ${furn.stock}
-                                </td>
-                                <td class="product-remove">
-                                    <a href="#"><i class="icon-pencil"></i></a>
-                                    <a href="#"><i class="icon-close"></i></a>
-                                </td>
-                            </tr>
+                            <c:forEach items="${requestScope.page.items}" var="furn">
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <a href="#"><img class="img-responsive ml-3" src="${furn.imgPath}"
+                                                         alt=""/></a>
+                                    </td>
+                                    <td class="product-name"><a href="#">${furn.name}</a></td>
+                                    <td class="product-name"><a href="#">${furn.maker}</a></td>
+                                    <td class="product-price-cart"><span class="amount">${furn.price}</span></td>
+                                    <td class="product-quantity">
+                                            ${furn.sales}
+                                    </td>
+                                    <td class="product-quantity">
+                                            ${furn.stock}
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href="manage/furnServlet?action=showFurn&id=${furn.id}&pageNo=${requestScope.page.pageNo}"><i
+                                                class="icon-pencil"></i></a>
+                                        <a href="manage/furnServlet?action=delete&id=${furn.id}&pageNo=${requestScope.page.pageNo}" class="deleteCss"><i
+                                                class="icon-close"></i></a>
+                                    </td>
+                                </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-6" data-aos="fade-up">
+            <ul>
+                <c:if test="${requestScope.page.pageNo>1}">
+                    <li><a href="manage/furnServlet?action=page&pageNo=${requestScope.page.pageNo-1}">上一页</a></li>
+                </c:if>
+<%--
+                    c:set 标签可以往域中保存数据，
+                    由scope指定保存在哪个域，
+                    默认保存在pageContext域
+--%>
+<%--                从第一页开始--%>
+                <c:set var="begin" value="1"/>
+<%--                最后一页是第pageTotalCount页--%>
+                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+                <c:forEach begin="${begin}" end="${end}" var="i">
+                    <c:if test="${i==requestScope.page.pageNo}">
+                        <li><a class="active" href="manage/furnServlet?action=page&pageNo=${i}">${i}</a></li>
+                    </c:if>
+                    <c:if test="${i!=requestScope.page.pageNo}">
+                        <li><a href="manage/furnServlet?action=page&pageNo=${i}">${i}</a></li>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${requestScope.page.pageNo<requestScope.page.pageTotalCount}">
+                    <li><a href="manage/furnServlet?action=page&pageNo=${requestScope.page.pageNo+1}">下一页</a></li>
+                </c:if>
+                <li><a>共${requestScope.page.pageTotalCount}页</a></li>
+            </ul>
         </div>
     </div>
 </div>

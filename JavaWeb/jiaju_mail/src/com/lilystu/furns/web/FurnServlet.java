@@ -1,6 +1,7 @@
 package com.lilystu.furns.web;
 
 import com.lilystu.furns.entity.Furn;
+import com.lilystu.furns.entity.Page;
 import com.lilystu.furns.service.FurnsService;
 import com.lilystu.furns.service.impl.FurnsServiceImpl;
 import com.lilystu.furns.utils.DataUtils;
@@ -35,13 +36,14 @@ public class FurnServlet extends BasicServlet {
         }
 
         //将集合放入到request 域中
-        request.setAttribute("furns",furnList);
+        request.setAttribute("furns", furnList);
         request.getRequestDispatcher("/views/manage/furn_manage.jsp")
-                .forward(request,response);
+                .forward(request, response);
     }
 
     /**
      * 处理添加家具请求
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -58,28 +60,45 @@ public class FurnServlet extends BasicServlet {
 //
 //        Furn furn = new Furn(null, name, maker, DataUtils.parseBigDecimal(price,new BigDecimal("0.00")), DataUtils.parseInt(sales,0),
 //                DataUtils.parseInt(stock,0), "assets/images/product-image/16.jpg");
-        furnsService.addFurn(DataUtils.copyParamToBean(request.getParameterMap(),new Furn()));
+        Furn furn = DataUtils.copyParamToBean(request.getParameterMap(), new Furn());
+        System.out.println("add furn = " + furn);
+        furnsService.addFurn(furn);
         //添加完毕后，请求转发到家具列表页面，重新走一下list方法
 //        request.getRequestDispatcher("/manage/furnServlet?action=list").forward(request,response);
-        response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
+        response.sendRedirect(getServletContext().getContextPath() + "/manage/furnServlet?action=page&pageNo="+request.getParameter("pageNo"));
     }
 
     protected void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("FurnServlet==delete==");
-        int id = DataUtils.parseInt(request.getParameter("id"),0);
+        int id = DataUtils.parseInt(request.getParameter("id"), 0);
         furnsService.deleteFurnById(id);
-        response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
+        response.sendRedirect(getServletContext().getContextPath() + "/manage/furnServlet?action=page&pageNo="+request.getParameter("pageNo"));
     }
 
     protected void showFurn(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("FurnServlet==showFurn==");
         Furn furn = furnsService.queryFurnById(DataUtils.parseInt(request.getParameter("id"), 0));
-        request.setAttribute("furn",furn);
-        request.getRequestDispatcher("/views/manage/furn_update.jsp").forward(request,response);
+        request.setAttribute("furn", furn);
+        request.getRequestDispatcher("/views/manage/furn_update.jsp").forward(request, response);
     }
 
     protected void update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        furnsService.updateFurn(DataUtils.copyParamToBean(request.getParameterMap(),new Furn()));
-        response.sendRedirect(getServletContext().getContextPath()+"/manage/furnServlet?action=list");
+        System.out.println("FurnServlet==update==");
+        furnsService.updateFurn(DataUtils.copyParamToBean(request.getParameterMap(), new Furn()));
+//        response.sendRedirect(getServletContext().getContextPath() + "/manage/furnServlet?action=list");
+        response.sendRedirect(getServletContext().getContextPath() + "/manage/furnServlet?action=page&pageNo="+request.getParameter("pageNo"));
+    }
+
+    protected void page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("FurnServlet==page==");
+        int pageNo = DataUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = DataUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+        Page page = furnsService.page(pageNo, pageSize);
+        //将page对象放入request域中
+        request.setAttribute("page",page);
+        //请求转发
+        request.getRequestDispatcher("/views/manage/furn_manage.jsp").forward(request, response);
+
     }
 
 }

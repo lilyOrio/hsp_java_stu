@@ -15,8 +15,9 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
 
     @Override
     public int addFurn(Furn furn) {
-        String sql = "INSERT INTO furn(`id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`)\n" +
-                "VALUES(NULL , ? , ? , ? , ? , ? ,?";
+        String sql = "INSERT INTO furn(`id` , `name` , `maker` , `price` , `sales` , " +
+                "`stock` , `img_path`) " +
+                "VALUES(NULL , ? , ? , ? , ? , ? ,?)";
         return update(sql, furn.getName(), furn.getMaker(), furn.getPrice(), furn.getSales(), furn.getStock()
                 , furn.getImgPath());
     }
@@ -30,7 +31,7 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
     @Override
     public Furn queryFurnById(int id) {
         String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`imgPath" +
-                "FROM furn where `id`=?";
+                " FROM furn where `id`=?";
         return querySingle(sql,Furn.class,id);
     }
 
@@ -51,7 +52,7 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
     @Override
     public List<Furn> getPageItem(int pageBegin,int pageSize) {
         String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`imgPath" +
-                "FROM furn where LIMIT ?,?";
+                " FROM furn LIMIT ?,?";
         return queryMulti(sql,Furn.class,pageBegin,pageSize);
     }
 }
