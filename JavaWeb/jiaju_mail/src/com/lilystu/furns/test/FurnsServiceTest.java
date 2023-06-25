@@ -51,4 +51,10 @@ public class FurnsServiceTest {
         Page page = furnsService.page(2, 3);
         System.out.println("分页信息：" +page);
     }
+
+    @Test
+    public void pageByName(){
+        Page<Furn> page = furnsService.pageByName(2, 2,"沙发");
+        System.out.println("分页信息：" +page);
+    }
 }

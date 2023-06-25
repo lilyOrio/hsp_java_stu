@@ -49,12 +49,12 @@ public class FurnsServiceImpl implements FurnsService {
         //一共有多少页，涉及一个小小的算法
         int pageTotalCount = totalRow / pageSize;
         if (totalRow % pageSize > 0) {
-            pageTotalCount +=1;
+            pageTotalCount += 1;
         }
         furnPage.setPageTotalCount(pageTotalCount);
 
         //每页显示的数据
-        int begin = (pageNO-1)*pageSize;
+        int begin = (pageNO - 1) * pageSize;
         List<Furn> pageItem = furnDAO.getPageItem(begin, pageSize);
         furnPage.setItems(pageItem);
 
@@ -63,5 +63,29 @@ public class FurnsServiceImpl implements FurnsService {
         return furnPage;
     }
 
+    @Override
+    public Page<Furn> pageByName(int pageNO, int pageSize, String name) {
+        //先创建一个page对象再一个一个填充数据
+        Page<Furn> furnPage = new Page<>();
+        furnPage.setPageNo(pageNO);
+        furnPage.setPageSize(pageSize);
 
+        int totalRow = furnDAO.getTotalRowByName(name);
+        furnPage.setTotalRow(totalRow);
+
+        //一共有多少页，涉及一个小小的算法
+        int pageTotalCount = totalRow / pageSize;
+        if (totalRow % pageSize > 0) {
+            pageTotalCount += 1;
+        }
+        furnPage.setPageTotalCount(pageTotalCount);
+
+        //每页显示的数据
+        int begin = (pageNO - 1) * pageSize;
+        List<Furn> pageItem = furnDAO.getPageItemByName(begin, pageSize, name);
+        furnPage.setItems(pageItem);
+
+        //url相关先放一放
+        return furnPage;
+    }
 }

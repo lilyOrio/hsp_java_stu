@@ -32,27 +32,40 @@ public class FurnDAOImpl extends BasicDAO<Furn> implements FurnDAO {
     public Furn queryFurnById(int id) {
         String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`imgPath" +
                 " FROM furn where `id`=?";
-        return querySingle(sql,Furn.class,id);
+        return querySingle(sql, Furn.class, id);
     }
 
     @Override
     public int updateFurn(Furn furn) {
         String sql = "UPDATE `furn` SET `name`=?,`maker`=?,`price`=?,`sales`=?,`stock`=?," +
                 "`img_path`=? WHERE `id`=?";
-        return update(sql,furn.getName(),furn.getMaker(),furn.getPrice(),furn.getSales(),
-                       furn.getStock(),furn.getImgPath(),furn.getId());
+        return update(sql, furn.getName(), furn.getMaker(), furn.getPrice(), furn.getSales(),
+                furn.getStock(), furn.getImgPath(), furn.getId());
     }
 
     @Override
     public int getTotalRow() {
         String sql = "select count(*) From `furn`";
-        return ((Number)queryScalar(sql)).intValue();
+        return ((Number) queryScalar(sql)).intValue();
     }
 
     @Override
-    public List<Furn> getPageItem(int pageBegin,int pageSize) {
+    public List<Furn> getPageItem(int pageBegin, int pageSize) {
         String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`imgPath" +
                 " FROM furn LIMIT ?,?";
-        return queryMulti(sql,Furn.class,pageBegin,pageSize);
+        return queryMulti(sql, Furn.class, pageBegin, pageSize);
+    }
+
+    @Override
+    public int getTotalRowByName(String name) {
+        String sql = "select count(*) From `furn` WHERE `name` LIKE ?";
+        return ((Number) queryScalar(sql, "%" + name + "%")).intValue();
+    }
+
+    @Override
+    public List<Furn> getPageItemByName(int pageBegin, int pageSize, String name) {
+        String sql = "SELECT `id` , `name` , `maker` , `price` , `sales` , `stock` , `img_path`imgPath" +
+                " FROM furn WHERE `name` LIKE ? LIMIT ?,?";
+        return queryMulti(sql, Furn.class, "%" + name + "%", pageBegin, pageSize);
     }
 }

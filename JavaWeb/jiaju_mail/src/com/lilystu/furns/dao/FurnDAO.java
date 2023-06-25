@@ -52,4 +52,19 @@ public interface FurnDAO {
      * @return
      */
     List<Furn> getPageItem(int pageBegin,int pageSize);
+
+    /**
+     * 根据名字获取总家具数量
+     * @return
+     */
+    int getTotalRowByName(String name);
+
+    /**
+     * 获取当前页显示数据
+     * @param pageBegin 从第几条数据开始显示 0开始计算
+     * @param pageSize 取出多少条记录
+     * @param name 家具名称
+     * @return
+     */
+    List<Furn> getPageItemByName(int pageBegin,int pageSize,String name);
 }

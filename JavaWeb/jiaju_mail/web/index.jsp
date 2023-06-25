@@ -8,4 +8,4 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--网站入口界面--%>
-<jsp:forward page="/customerFurnServlet?action=page&pageNo=1"></jsp:forward>
+<jsp:forward page="/customerFurnServlet?action=pageByName&pageNo=1"></jsp:forward>

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/memberServlet")
@@ -29,8 +30,18 @@ public class MemberServlet extends BasicServlet {
 //        }
 //    }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+    /**
+     * 安全退出,重定向到首页
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        //销毁当前用户session
+        session.invalidate();
+        response.sendRedirect(getServletContext().getContextPath());
     }
 
     protected void login(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +54,9 @@ public class MemberServlet extends BasicServlet {
         if (member != null) {
             //登录成功
             System.out.println(username + "登录成功!");
-            request.getRequestDispatcher("/views/member/login_ok.html").forward(request, response);
+            request.getRequestDispatcher("/views/member/login_ok.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("member", member);
         } else {
             //登录失败
             System.out.println(username + "登录失败!");

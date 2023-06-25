@@ -18,5 +18,8 @@ public interface FurnsService {
      * @param size 每页显示多少条记录
      * @return
      */
-    Page page(int pageNO ,int size);
+    Page<Furn> page(int pageNO ,int size);
+
+    Page<Furn> pageByName(int pageNO ,int size,String name);
+
 }
