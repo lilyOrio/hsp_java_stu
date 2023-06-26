@@ -36,19 +36,30 @@
                             <a href="javascript:void(0)" class="header-action-btn search-btn"><i
                                     class="icon-magnifier"></i></a>
                             <div class="dropdown_search">
-                                <form class="action-form" action="#">
-                                    <input class="form-control" placeholder="Enter your search key" type="text">
+                                <form class="action-form" action="customerFurnServlet">
+                                    <input type="hidden" name="action" value="pageByName">
+                                    <input class="form-control" name="name" placeholder="搜索家具" type="text">
                                     <button class="submit" type="submit"><i class="icon-magnifier"></i></button>
                                 </form>
                             </div>
                         </div>
                         <!-- Single Wedge Start -->
-                        <div class="header-bottom-set dropdown">
-                            <a href="../member/login.jsp">登录|注册</a>
-                        </div>
-                        <div class="header-bottom-set dropdown">
-                            <a href="#">后台管理</a>
-                        </div>
+                        <c:if test="${empty sessionScope.member}">
+                            <div class="header-bottom-set dropdown">
+                                <a href="member/login.jsp">登录|注册</a>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.member}">
+                            <div class="header-bottom-set dropdown">
+                                <a>欢迎：${sessionScope.member.username}</a>
+                            </div>
+                            <div class="header-bottom-set dropdown">
+                                <a href="#">订单管理</a>
+                            </div>
+                            <div class="header-bottom-set dropdown">
+                                <a href="memberServlet?action=logout">安全退出</a>
+                            </div>
+                        </c:if>
                         <!-- Single Wedge End -->
                         <a href="#offcanvas-cart"
                            class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
@@ -73,7 +84,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.jsp"><img width="280px" src="../../assets/images/logo/logo.png" alt="Site Logo" /></a>
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo" /></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -158,7 +169,7 @@
 <div class="pro-pagination-style text-center mb-md-30px mb-lm-30px mt-6" data-aos="fade-up">
     <ul>
         <c:if test="${requestScope.page.pageNo>1}">
-            <li><a href="customerFurnServlet?action=page&pageNo=${requestScope.page.pageNo-1}">上一页</a></li>
+            <li><a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo-1}">上一页</a></li>
         </c:if>
         <%--
                             c:set 标签可以往域中保存数据，
@@ -171,14 +182,14 @@
         <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
         <c:forEach begin="${begin}" end="${end}" var="i">
             <c:if test="${i==requestScope.page.pageNo}">
-                <li><a class="active" href="customerFurnServlet?action=page&pageNo=${i}">${i}</a></li>
+                <li><a class="active" href="${requestScope.page.url}&pageNo=${i}">${i}</a></li>
             </c:if>
             <c:if test="${i!=requestScope.page.pageNo}">
-                <li><a href="customerFurnServlet?action=page&pageNo=${i}">${i}</a></li>
+                <li><a href="${requestScope.page.url}&pageNo=${i}">${i}</a></li>
             </c:if>
         </c:forEach>
         <c:if test="${requestScope.page.pageNo<requestScope.page.pageTotalCount}">
-            <li><a href="customerFurnServlet?action=page&pageNo=${requestScope.page.pageNo+1}">下一页</a></li>
+            <li><a href="${requestScope.page.url}&pageNo=${requestScope.page.pageNo+1}">下一页</a></li>
         </c:if>
         <li><a>共${requestScope.page.pageTotalCount}页</a></li>
     </ul>

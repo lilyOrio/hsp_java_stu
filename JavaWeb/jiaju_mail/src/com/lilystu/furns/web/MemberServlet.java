@@ -6,11 +6,12 @@ import com.lilystu.furns.service.impl.MemberServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+
+import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
 @WebServlet(urlPatterns = "/memberServlet")
 public class MemberServlet extends BasicServlet {
@@ -32,6 +33,7 @@ public class MemberServlet extends BasicServlet {
 
     /**
      * 安全退出,重定向到首页
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -74,19 +76,34 @@ public class MemberServlet extends BasicServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        String code = request.getParameter("code");
 
+        String token = request.getSession().getAttribute(KAPTCHA_SESSION_KEY).toString();
+        request.getSession().removeAttribute(KAPTCHA_SESSION_KEY);
+
+        if (token == null || !token.equalsIgnoreCase(code)) {
+            //回显用户信息和验证码
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("code", code);
+            request.setAttribute("errMsg", "验证码不正确！");
+            request.getRequestDispatcher("/views/member/login.jsp")
+                    .forward(request, response);
+            return;
+        }
         //判断用户名是否可用
         if (memberService.isExistsUsername(username)) {
             //用户已存在，后面可以添加提示信息
+            request.setAttribute("errMsg_r", "用户已存在！");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
         } else {
             //注册用户
             if (memberService.register(new Member(null, username, password, email))) {
-                request.getRequestDispatcher("/views/member/register_ok.html")
+                request.getRequestDispatcher("/views/member/register_ok.jsp")
                         .forward(request, response);
             } else {
-                request.getRequestDispatcher("/views/member/register_fail.html")
+                request.getRequestDispatcher("/views/member/register_fail.jsp")
                         .forward(request, response);
             }
         }
