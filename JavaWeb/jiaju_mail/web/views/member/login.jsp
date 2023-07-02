@@ -17,7 +17,7 @@
         $(function () {//页面加载完毕
 
             //模拟点击事件选中注册页面
-            if ("${requestScope.action}"=="register"){
+            if ("${requestScope.active}"==="register"){
                 $("#register_tab")[0].click();//模拟点击
             }
             //对验证码图片做处理
@@ -63,8 +63,8 @@
 
                 //验证码不能为空
                 var code = $("#code").val();
-                code = $.timers(code);
-                if (code == "" || code == null){
+                code = $.trim(code);
+                if (code === "" || code == null){
                     //显示错误信息
                     $("span.errorMsg").text("验证码不能为空！")
                     return false;

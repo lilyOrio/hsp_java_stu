@@ -56,9 +56,9 @@ public class MemberServlet extends BasicServlet {
         if (member != null) {
             //登录成功
             System.out.println(username + "登录成功!");
-            request.getRequestDispatcher("/views/member/login_ok.jsp").forward(request, response);
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
+            request.getRequestDispatcher("/views/member/login_ok.jsp").forward(request, response);
         } else {
             //登录失败
             System.out.println(username + "登录失败!");
@@ -78,7 +78,7 @@ public class MemberServlet extends BasicServlet {
         String email = request.getParameter("email");
         String code = request.getParameter("code");
 
-        String token = request.getSession().getAttribute(KAPTCHA_SESSION_KEY).toString();
+        String token = (String) request.getSession().getAttribute(KAPTCHA_SESSION_KEY);
         request.getSession().removeAttribute(KAPTCHA_SESSION_KEY);
 
         if (token == null || !token.equalsIgnoreCase(code)) {
@@ -86,7 +86,8 @@ public class MemberServlet extends BasicServlet {
             request.setAttribute("username", username);
             request.setAttribute("email", email);
             request.setAttribute("code", code);
-            request.setAttribute("errMsg", "验证码不正确！");
+            request.setAttribute("active", "register");
+            request.setAttribute("errMsg_r", "验证码不正确！");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
             return;
@@ -94,6 +95,10 @@ public class MemberServlet extends BasicServlet {
         //判断用户名是否可用
         if (memberService.isExistsUsername(username)) {
             //用户已存在，后面可以添加提示信息
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("code", code);
+            request.setAttribute("active", "register");
             request.setAttribute("errMsg_r", "用户已存在！");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);

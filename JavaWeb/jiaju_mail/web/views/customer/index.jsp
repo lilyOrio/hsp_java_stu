@@ -46,7 +46,7 @@
                         <!-- Single Wedge Start -->
                         <c:if test="${empty sessionScope.member}">
                             <div class="header-bottom-set dropdown">
-                                <a href="member/login.jsp">登录|注册</a>
+                                <a href="views/member/login.jsp">登录|注册</a>
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.member}">
