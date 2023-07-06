@@ -31,12 +31,17 @@ public class CartServlet extends BasicServlet {
             CartItem cartItem =
                     new CartItem(furn.getId(), furn.getName(), furn.getPrice(), 1, furn.getPrice());
             //从session中获取Cart对象
-            Cart cart = (Cart)request.getSession().getAttribute("cart");
-            if (cart == null){//当前用户session没有cart
+            Cart cart = (Cart) request.getSession().getAttribute("cart");
+            if (cart == null) {//当前用户session没有cart
                 cart = new Cart();
-                request.getSession().setAttribute("cart",cart);
+                request.getSession().setAttribute("cart", cart);
             }
-                cart.addItem(cartItem);
+            cart.addItem(cartItem);
+            System.out.println("cart = " + cart);
+
+            //返回家具主页
+            //request.getHeader("Referer")请求addItem页面（即发起请求添加家具的页面）的url
+            response.sendRedirect(request.getHeader("Referer"));
         }
     }
 }
