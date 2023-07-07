@@ -1,5 +1,6 @@
 package com.lilystu.furns.web;
 
+import com.lilystu.furns.entity.Furn;
 import com.lilystu.furns.entity.Page;
 import com.lilystu.furns.service.FurnsService;
 import com.lilystu.furns.service.impl.FurnsServiceImpl;
@@ -41,7 +42,7 @@ public class CustomerFurnServlet extends BasicServlet {
         if (null == name) {
             name = "";
         }
-        Page page = furnsService.pageByName(pageNo, pageSize, name);
+        Page<Furn> page = furnsService.pageByName(pageNo, pageSize, name);
         StringBuilder url = new StringBuilder("customerFurnServlet?action=pageByName");
         if (!"".equals(name)){
             url.append("&name=").append(name);

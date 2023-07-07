@@ -3,7 +3,10 @@ package com.lilystu.furns.web;
 import com.lilystu.furns.entity.Cart;
 import com.lilystu.furns.entity.CartItem;
 import com.lilystu.furns.entity.Furn;
+import com.lilystu.furns.entity.Page;
+import com.lilystu.furns.service.CartService;
 import com.lilystu.furns.service.FurnsService;
+import com.lilystu.furns.service.impl.CartServiceImpl;
 import com.lilystu.furns.service.impl.FurnsServiceImpl;
 import com.lilystu.furns.utils.DataUtils;
 
@@ -17,8 +20,10 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/cartServlet")
 public class CartServlet extends BasicServlet {
     FurnsService furnsService = new FurnsServiceImpl();
+    CartService cartService = new CartServiceImpl();
 
     protected void addItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("CartServlet==addItem==");
         //得到添加家具的id
         int id = DataUtils.parseInt(request.getParameter("id"), 0);
         //获取对应id的家具furn
@@ -43,5 +48,19 @@ public class CartServlet extends BasicServlet {
             //request.getHeader("Referer")请求addItem页面（即发起请求添加家具的页面）的url
             response.sendRedirect(request.getHeader("Referer"));
         }
+    }
+
+    protected void page(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("CartServlet==page==");
+        int pageNo = DataUtils.parseInt(request.getParameter("pageNo"), 1);
+        int pageSize = DataUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
+        Cart cart = (Cart)request.getSession().getAttribute("cart");
+        if (cart == null){
+            return;
+        }
+        Page<CartItem> pageCart = cartService.page(cart, pageNo, pageSize);
+        pageCart.setUrl("cartServlet?action=page");
+        request.setAttribute("pageCart",pageCart);
+        request.getRequestDispatcher("/views/cart/cart.jsp").forward(request,response);
     }
 }
