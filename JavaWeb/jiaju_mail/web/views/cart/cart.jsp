@@ -33,6 +33,18 @@
             //    在这里发出更新购物车的请求
                 location.href = "cartServlet?action=updateCount&id=" + $button.parent().find("input").attr("furnId");
             });
+
+            //删除确认
+            $("a.delItem").click(function () {
+            //    获取家具的名字
+                var furnName = $(this).parent().parent().find("td:eq(1)").text();
+                return confirm("确认删除【"+furnName+"】？");//返回true就会删除
+            })
+
+            //确认清楚
+            $("a.clear").click(function () {
+                return confirm("确认清空购物车？");//返回true就会删除
+            })
         })
     </script>
 </head>
@@ -145,7 +157,7 @@
                                         </td>
                                         <td class="product-subtotal">${entry.value.totalPrice}</td>
                                         <td class="product-remove">
-                                            <a href="#"><i class="icon-close"></i></a>
+                                            <a class="delItem" href="cartServlet?action=delItem&id=${entry.value.id}"><i class="icon-close"></i></a>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -162,7 +174,7 @@
                                 </div>
                                 <div class="cart-clear">
                                     <button>继 续 购 物</button>
-                                    <a href="#">清 空 购 物 车</a>
+                                    <a class="clear" href="cartServlet?action=clear">清 空 购 物 车</a>
                                 </div>
                             </div>
                         </div>
