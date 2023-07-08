@@ -66,6 +66,7 @@
             $offCanvasOverlay = $(".offcanvas-overlay"),
             $mobileMenuToggle = $(".mobile-menu-toggle");
         $offCanvasToggle.on("click", function(e) {
+            //preventDefault 阻止超链接点击动作
             e.preventDefault();
             var $this = $(this),
                 $target = $this.attr("href");

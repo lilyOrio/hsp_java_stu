@@ -72,8 +72,10 @@
                             </div>
                         </c:if>
                         <!-- Single Wedge End -->
-                        <a href="#offcanvas-cart"
-                           class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                        <%--通过分析，发现offcanvas-toggle在main.js中做了阻止触发超链接动作==》preventDefault，
+                        去掉offcanvas-toggle可以恢复超链接本身机制--%>
+                        <a href="views/cart/cart.jsp"
+                           class="header-action-btn header-action-btn-cart pr-0">
                             <i class="icon-handbag"> 购物车</i>
                             <%--sessionScope.cart.totalCount 本质是调用getTotalCount()方法--%>
                             <span class="header-action-num">${sessionScope.cart.totalCount}</span>
