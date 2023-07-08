@@ -63,4 +63,20 @@ public class CartServlet extends BasicServlet {
         request.setAttribute("pageCart",pageCart);
         request.getRequestDispatcher("/views/cart/cart.jsp").forward(request,response);
     }
+
+    protected void updateCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("CartServlet==updateCount==");
+        //得到添加家具的id
+        int id = DataUtils.parseInt(request.getParameter("id"), 0);
+        int count = DataUtils.parseInt(request.getParameter("count"), 1);
+
+        //获取session中的cart
+        Cart cart = (Cart)request.getSession().getAttribute("cart");
+        if (cart != null){
+            cart.updateCount(id,count);
+        }
+        //返回家具主页
+        //request.getHeader("Referer")返回发起请求添加家具的页面的url
+        response.sendRedirect(request.getHeader("Referer"));
+    }
 }
