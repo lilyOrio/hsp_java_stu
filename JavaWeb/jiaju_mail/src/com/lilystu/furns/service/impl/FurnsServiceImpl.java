@@ -37,7 +37,7 @@ public class FurnsServiceImpl implements FurnsService {
     }
 
     @Override
-    public Page page(int pageNO, int pageSize) {
+    public Page<Furn> page(int pageNO, int pageSize) {
         //先创建一个page对象再一个一个填充数据
         Page<Furn> furnPage = new Page<>();
         furnPage.setPageNo(pageNO);

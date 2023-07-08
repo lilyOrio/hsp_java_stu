@@ -93,7 +93,7 @@ public class FurnServlet extends BasicServlet {
         System.out.println("FurnServlet==page==");
         int pageNo = DataUtils.parseInt(request.getParameter("pageNo"), 1);
         int pageSize = DataUtils.parseInt(request.getParameter("pageSize"), Page.PAGE_SIZE);
-        Page page = furnsService.page(pageNo, pageSize);
+        Page<Furn> page = furnsService.page(pageNo, pageSize);
         //将page对象放入request域中
         request.setAttribute("page",page);
         //请求转发

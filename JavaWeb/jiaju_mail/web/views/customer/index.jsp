@@ -3,14 +3,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
     <title>韩顺平教育-家居网购~</title>
     <base href="<%=request.getContextPath() + "/"%>">
     <!-- 移动端适配 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(function () {//页面加载完毕
+            $("button.add-to-cart").click(function () {
+                //获取到点击的furn的id
+                var furnId = $(this).attr("furnId");
+                //发出一个添加家具请求
+                location.href = "cartServlet?action=addItem&id=" + furnId;
+            })
+        })
+    </script>
 </head>
 
 <body>
@@ -61,10 +72,13 @@
                             </div>
                         </c:if>
                         <!-- Single Wedge End -->
-                        <a href="#offcanvas-cart"
-                           class="header-action-btn header-action-btn-cart offcanvas-toggle pr-0">
+                        <%--通过分析，发现offcanvas-toggle在main.js中做了阻止触发超链接动作==》preventDefault，
+                        去掉offcanvas-toggle可以恢复超链接本身机制--%>
+                        <a href="views/cart/cart.jsp"
+                           class="header-action-btn header-action-btn-cart pr-0">
                             <i class="icon-handbag"> 购物车</i>
-                            <span class="header-action-num">88</span>
+                            <%--sessionScope.cart.totalCount 本质是调用getTotalCount()方法--%>
+                            <span class="header-action-num">${sessionScope.cart.totalCount}</span>
                         </a>
                         <a href="#offcanvas-mobile-menu"
                            class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
@@ -84,7 +98,7 @@
                 <!-- Header Logo Start -->
                 <div class="col-auto align-self-center">
                     <div class="header-logo">
-                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo" /></a>
+                        <a href="index.jsp"><img width="280px" src="assets/images/logo/logo.png" alt="Site Logo"/></a>
                     </div>
                 </div>
                 <!-- Header Logo End -->
@@ -114,7 +128,8 @@
                     <div class="tab-pane fade show active" id="tab-product-new-arrivals">
                         <div class="row">
                             <c:forEach items="${requestScope.page.items}" var="furn">
-                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 " data-aos="fade-up" data-aos-delay="800">
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 " data-aos="fade-up"
+                                     data-aos-delay="800">
                                     <!-- Single Prodect -->
                                     <div class="product">
                                         <div class="thumb">
@@ -127,10 +142,11 @@
                                             </span>
                                             <div class="actions">
                                                 <a href="#" class="action wishlist" data-link-action="quickview"
-                                                   title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                                   title="Quick view" data-bs-toggle="modal"
+                                                   data-bs-target="#exampleModal"><i
                                                         class="icon-size-fullscreen"></i></a>
                                             </div>
-                                            <button title="Add To Cart~" class=" add-to-cart">Add
+                                            <button title="Add To Cart~" furnId=${furn.id} class="add-to-cart">Add
                                                 To Cart
                                             </button>
                                         </div>
@@ -310,38 +326,48 @@
                         <div class="swiper-container gallery-top mb-4">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/1.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/1.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/2.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/2.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/3.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/3.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/4.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/4.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/5.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/5.jpg"
+                                         alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="swiper-container gallery-thumbs slider-nav-style-1 small-nav">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/1.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/1.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/2.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/2.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/3.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/3.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/4.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/4.jpg"
+                                         alt="">
                                 </div>
                                 <div class="swiper-slide">
-                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/5.jpg" alt="">
+                                    <img class="img-responsive m-auto" src="../../assets/images/product-image/5.jpg"
+                                         alt="">
                                 </div>
                             </div>
                             <!-- Add Arrows -->
