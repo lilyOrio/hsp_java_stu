@@ -19,6 +19,9 @@ public class Cart {
         return  items.size() == 0;
     }
 
+    /**
+     * 清空购物车
+     */
     public void clear() {
         items.clear();
     }
