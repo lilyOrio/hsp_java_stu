@@ -3,7 +3,41 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-<!--  配置 kaptchaServlet  -->
+    <!--  过滤器适配放在最前面  -->
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.lilystu.furns.filter.AuthFilter</filter-class>
+        <init-param>
+            <param-name>excludedUrls</param-name>
+            <param-value>/views/manage/manage_login.jsp,/views/member/login.jsp</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <!--
+                1.方式一在这里精准配置
+                2.将无需过滤的url写到init-param
+        -->
+        <url-pattern>/views/cart/*</url-pattern>
+        <url-pattern>/views/member/*</url-pattern>
+        <url-pattern>/views/manager/*</url-pattern>
+        <url-pattern>/views/order/*</url-pattern>
+        <url-pattern>/cartServlet</url-pattern>
+        <url-pattern>/manage/furnServlet</url-pattern>
+        <url-pattern>/orderServlet</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>TransactionFilter</filter-name>
+        <filter-class>com.lilystu.furns.filter.TransactionFilter</filter-class>
+
+    </filter>
+    <filter-mapping>
+        <filter-name>TransactionFilter</filter-name>
+<!--对所有请求都进行事务管理-->
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--  配置 kaptchaServlet  -->
     <servlet>
         <servlet-name>KaptchaServlet</servlet-name>
         <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>

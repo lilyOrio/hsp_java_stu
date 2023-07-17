@@ -30,6 +30,7 @@ public abstract class BasicServlet extends HttpServlet {
             declaredMethod.invoke(this,req,resp);//this：对象实例；req,resp：方法参数
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

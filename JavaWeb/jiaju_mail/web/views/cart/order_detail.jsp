@@ -1,6 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"/>
@@ -10,45 +11,6 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css"/>
-    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            var CartPlusMinus = $(".cart-plus-minus");
-            CartPlusMinus.prepend('<div class="dec qtybutton">-</div>');
-            CartPlusMinus.append('<div class="inc qtybutton">+</div>');
-            $(".qtybutton").on("click", function() {
-                var $button = $(this);
-                var oldValue = $button.parent().find("input").val();
-                if ($button.text() === "+") {
-                    var newVal = parseFloat(oldValue) + 1;
-                } else {
-                    // Don't allow decrementing below zero
-                    if (oldValue > 1) {
-                        var newVal = parseFloat(oldValue) - 1;
-                    } else {
-                        newVal = 1;
-                    }
-                }
-                $button.parent().find("input").val(newVal);
-            //    在这里发出更新购物车的请求
-                var frunId = $button.parent().find("input").attr("furnId");
-                //这里我们发出修改购物车的请求
-                location.href = "cartServlet?action=updateCount&count=" + newVal + "&id=" + frunId;
-            });
-
-            //删除确认
-            $("a.delItem").click(function () {
-            //    获取家具的名字
-                var furnName = $(this).parent().parent().find("td:eq(1)").text();
-                return confirm("确认删除【"+furnName+"】？");//返回true就会删除
-            })
-
-            //确认清楚
-            $("a.clear").click(function () {
-                return confirm("确认清空购物车？");//返回true就会删除
-            })
-        })
-    </script>
 </head>
 
 <body>
@@ -71,10 +33,10 @@
                 <div class="col align-self-center">
                     <div class="header-actions">
                         <div class="header-bottom-set dropdown">
-                            <a>欢迎: hello</a>
+                            <a>欢迎: ${sessionScope.member.username}</a>
                         </div>
                         <div class="header-bottom-set dropdown">
-                            <a href="orderServlet?action=manageOrder">订单管理</a>
+                            <a href="#">订单管理</a>
                         </div>
                         <div class="header-bottom-set dropdown">
                             <a href="#">安全退出</a>
@@ -123,7 +85,7 @@
 <!-- Cart Area Start -->
 <div class="cart-main-area pt-100px pb-100px">
     <div class="container">
-        <h3 class="cart-page-title">Your cart items</h3>
+        <h3 class="cart-page-title">订单-${requestScope.orderId}</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                 <form action="#">
@@ -131,57 +93,40 @@
                         <table>
                             <thead>
                             <tr>
-                                <th>图片</th>
+
                                 <th>家居名</th>
                                 <th>单价</th>
                                 <th>数量</th>
                                 <th>金额</th>
-                                <th>操作</th>
+
                             </tr>
                             </thead>
-                            <tbody>
-                            <c:if test="${not empty sessionScope.cart.items}">
-                                <%--取出的是一对k-v 所以var用entry表示 entry.value才表示cartItem--%>
-                                <c:forEach items="${sessionScope.cart.items}" var="entry">
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="#"><img class="img-responsive ml-3"
-                                                             src="assets/images/product-image/1.jpg"
-                                                             alt=""/></a>
-                                        </td>
-                                        <td class="product-name"><a href="#">${entry.value.name}</a></td>
-                                        <td class="product-price-cart"><span class="amount">${entry.value.price}</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input furnId="${entry.value.id}" class="cart-plus-minus-box" type="text" name="qtybutton"
-                                                       value="${entry.value.count}"/>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">${entry.value.totalPrice}</td>
-                                        <td class="product-remove">
-                                            <a class="delItem" href="cartServlet?action=delItem&id=${entry.value.id}"><i class="icon-close"></i></a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </c:if>
-                            </tbody>
+                            <c:set var="totalPrice_" value="${0}"/>
+                            <c:forEach items="${requestScope.orderItemById}" var="item">
+                                <tbody>
+                                <tr>
+                                    <td class="product-name"><a href="#">${item.name}</a></td>
+                                    <td class="product-price-cart"><span class="amount">${item.price}</span></td>
+                                    <td class="product-quantity">${item.count}</td>
+                                    <td class="product-subtotal">${item.totalPrice}</td>
+                                </tr>
+                                </tbody>
+                                ${totalPrice_ = totalPrice_+item.totalPrice}
+                            </c:forEach>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="cart-shiping-update-wrapper">
-                                <h4>共${sessionScope.cart.totalCount}件商品 总价${sessionScope.cart.cartTotalPrice}元</h4>
-                                <div class="cart-shiping-update">
-                                    <a href="orderServlet?action=saveOrder">购 物 车 结 账</a>
-                                </div>
+                                <h4>共${requestScope.orderItemById.size()}件商品 总价 ${totalPrice_}元</h4>
                                 <div class="cart-clear">
-                                    <button>继 续 购 物</button>
-                                    <a class="clear" href="cartServlet?action=clear">清 空 购 物 车</a>
+                                    <a href="index.jsp">继 续 购 物</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

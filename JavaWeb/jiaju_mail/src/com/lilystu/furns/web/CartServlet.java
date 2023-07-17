@@ -28,8 +28,9 @@ public class CartServlet extends BasicServlet {
         int id = DataUtils.parseInt(request.getParameter("id"), 0);
         //获取对应id的家具furn
         Furn furn = furnsService.queryFurnById(id);
-        if (furn == null) {//未找到对应家具
+        if (furn == null || furn.getStock() == 0) {//未找到对应家具
             //todo:
+            response.sendRedirect(request.getHeader("Referer"));
             return;
         } else {
             //根据furn构建cartItem
