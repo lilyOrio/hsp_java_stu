@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业5</title>
+    <script type="text/javascript">
+        let arr = [1,2,3]
+        let fun = arr =>{
+            let res = 0;
+            for (let i = 0; i < arr.length; i++) {
+                res += arr[i]
+            }
+            return res
+        }
+       let f = (arr,fun) =>{
+           console.log("结果",fun(arr))
+       }
+       // f(arr,fun)
+        f([1,2,3],(arr) =>{
+            let res = 0;
+            for (let i = 0; i < arr.length; i++) {
+                res += arr[i]
+            }
+            return res
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
