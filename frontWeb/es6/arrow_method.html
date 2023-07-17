@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>箭头函数的使用</title>
+    <script type="text/javascript">
+        var f1 = function (n) {
+            return n * 2;
+        }
+        console.log("f1==>", f1(2))
+
+        //箭头函数
+        let f2 = (n) => {
+            return n * 3;
+        }
+        //可简写
+        let f3 = n => n * 4 //默认返回 n*4
+        console.log("f2==>", f2(2))
+        console.log("f3==>", f3(2))
+
+        //箭头函数也可以作为参数使用
+        function hi(f4) {
+            console.log("f4==>", f4(2))
+        }
+
+        hi(n => n * 10);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

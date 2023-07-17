@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作业4</title>
+    <script type="text/javascript">
+        let cal = {oper: "+", arr: [1, 2, 3, 4]};
+
+        function f({oper, arr}) {
+            let res = 0;
+            //判断arr是否为空，以及数组长度
+            console.log(oper)
+            if ("+" === oper) {
+                res = arr[0];
+                for (let i = 1; i < arr.length; i++) {
+                    res += arr[i];
+                }
+            } else {
+            }
+            console.log(res)
+        }
+        f(cal);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
