@@ -9,7 +9,8 @@
         <filter-class>com.lilystu.furns.filter.AuthFilter</filter-class>
         <init-param>
             <param-name>excludedUrls</param-name>
-            <param-value>/views/manage/manage_login.jsp,/views/member/login.jsp</param-value>
+            <param-value>/views/manage/manage_login.jsp,
+                /views/member/login.jsp</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -34,7 +35,7 @@
     </filter>
     <filter-mapping>
         <filter-name>TransactionFilter</filter-name>
-<!--对所有请求都进行事务管理-->
+        <!--对所有请求都进行事务管理-->
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!--  配置 kaptchaServlet  -->
@@ -46,4 +47,14 @@
         <servlet-name>KaptchaServlet</servlet-name>
         <url-pattern>/kaptchaServlet</url-pattern>
     </servlet-mapping>
+    
+<!--    错误页面提示    -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/views/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/views/error/500.jsp</location>
+    </error-page>
 </web-app>

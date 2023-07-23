@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %><html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html lang="en">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +13,35 @@
     <link rel="stylesheet" href="assets/css/vendor/vendor.min.css"/>
     <link rel="stylesheet" href="assets/css/plugins/plugins.min.css"/>
     <link rel="stylesheet" href="assets/css/style.min.css">
+    <style type="text/css">
+        #pic {
+            position: relative;
+        }
+        input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 150px;
+            opacity: 0;
+            cursor: pointer;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function prev(event) {
+            //获取展示图片的区域
+            var img = document.getElementById("prevView");
+            //获取文件对象
+            var file = event.files[0];
+            //获取文件阅读器： Js的一个类，直接使用即可
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                //给img的src设置图片url
+                img.setAttribute("src", this.result);
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -72,12 +102,12 @@
         <h3 class="cart-page-title">家居后台管理-修改家居</h3>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="manage/furnServlet" method="post">
-                    <%--传id--%>
-                    <input type="hidden" name="id" value="${requestScope.furn.id}">
-                    <%--定调用servlet的update方法--%>
-                    <input type="hidden" name="action" value="update">
-                    <input type="hidden" name="pageNo" value="${param.pageNo}">
+                <form action="manage/furnServlet?id=${requestScope.furn.id}&action=update&pageNo=${param.pageNo}" enctype="multipart/form-data" method="post">
+<%--                    &lt;%&ndash;传id&ndash;%&gt;--%>
+<%--                    <input type="hidden" name="id" value="${requestScope.furn.id}">--%>
+<%--                    &lt;%&ndash;定调用servlet的update方法&ndash;%&gt;--%>
+<%--                    <input type="hidden" name="action" value="update">--%>
+<%--                    <input type="hidden" name="pageNo" value="${param.pageNo}">--%>
                     <div class="table-content table-responsive cart-table-content">
                         <table>
                             <thead>
@@ -94,22 +124,34 @@
                             <tbody>
                             <tr>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img class="img-responsive ml-3" src="assets/images/product-image/default.jpg"
-                                                     alt=""/></a>
+                                    <div id="pic">
+                                        <img id="prevView" class="img-responsive ml-3"
+                                             src="${requestScope.furn.imgPath}"
+                                             alt=""/>
+                                        <input type="file" name="imgPath" id="" value="${requestScope.furn.imgPath}"
+                                        onchange="prev(this)">
+                                    </div>
                                 </td>
-                                <td class="product-name"><input name="name" style="width: 60%" type="text" value="${requestScope.furn.name}"/></td>
-                                <td class="product-name"><input name="maker" style="width: 90%" type="text" value="${requestScope.furn.maker}"/></td>
-                                <td class="product-price-cart"><input name="price" style="width: 90%" type="text" value="${requestScope.furn.price}"/></td>
+                                <td class="product-name"><input name="name" style="width: 60%" type="text"
+                                                                value="${requestScope.furn.name}"/></td>
+                                <td class="product-name"><input name="maker" style="width: 90%" type="text"
+                                                                value="${requestScope.furn.maker}"/></td>
+                                <td class="product-price-cart"><input name="price" style="width: 90%" type="text"
+                                                                      value="${requestScope.furn.price}"/></td>
                                 <td class="product-quantity">
-                                    <input name="sales" style="width: 90%" type="text" value="${requestScope.furn.sales}"/>
+                                    <input name="sales" style="width: 90%" type="text"
+                                           value="${requestScope.furn.sales}"/>
                                 </td>
                                 <td class="product-quantity">
-                                    <input name="stock" style="width: 90%" type="text" value="${requestScope.furn.stock}"/>
+                                    <input name="stock" style="width: 90%" type="text"
+                                           value="${requestScope.furn.stock}"/>
                                 </td>
                                 <td>
-<!--                                    <a href="#"><i class="icon-pencil"></i></a>-->
-<!--                                    <a href="#"><i class="icon-close"></i></a>-->
-                                    <input type="submit" style="width: 90%;background-color: silver;border: silver;border-radius: 20%;" value="修改家居"/>
+                                    <!--                                    <a href="#"><i class="icon-pencil"></i></a>-->
+                                    <!--                                    <a href="#"><i class="icon-close"></i></a>-->
+                                    <input type="submit"
+                                           style="width: 90%;background-color: silver;border: silver;border-radius: 20%;"
+                                           value="修改家居"/>
                                 </td>
                             </tr>
                             </tbody>

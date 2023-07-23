@@ -1,5 +1,6 @@
 package com.lilystu.furns.web;
 
+import com.google.gson.Gson;
 import com.lilystu.furns.entity.Member;
 import com.lilystu.furns.service.MemberService;
 import com.lilystu.furns.service.impl.MemberServiceImpl;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
@@ -44,6 +47,49 @@ public class MemberServlet extends BasicServlet {
         //销毁当前用户session
         session.invalidate();
         response.sendRedirect(getServletContext().getContextPath());
+    }
+
+    /**
+     * 验证某个用户名是否已经存在
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void isExistUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("MemberServlet==isExistUsername==");
+        String username = request.getParameter("username");
+        System.out.println("username" + username);
+        //判断用户是否存在
+        boolean existsUsername = memberService.isExistsUsername(username);
+        //返回json格式数据（要根据前端需求来）
+        //格式==》{"isExist":false}
+//        String resultJson ="{\"isExist\":"+existsUsername+"}";
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("isExist", existsUsername);
+//        resultMap.put("email", "existsUsername");
+//        resultMap.put("job", "java");
+        String resultJson = new Gson().toJson(resultMap);
+        //返回json数据
+        response.getWriter().write(resultJson);
+    }
+
+    //ajax验证验证码是否正确
+    protected void isCodeRight(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("MemberServlet==isExistUsername==");
+        String code = request.getParameter("code");
+        System.out.println("code = " + code);
+        boolean isRight = false;
+        if (code != null &&
+                code.equals((String) request.getSession().getAttribute(KAPTCHA_SESSION_KEY))) {
+            isRight = true;
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("isRight", isRight);
+        String resultJson = new Gson().toJson(resultMap);
+        //返回json数据
+        response.getWriter().write(resultJson);
     }
 
     protected void login(HttpServletRequest request, HttpServletResponse response)

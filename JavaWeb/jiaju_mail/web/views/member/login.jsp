@@ -16,8 +16,55 @@
     <script type="text/javascript">
         $(function () {//页面加载完毕
 
+            //验证码信息验证
+            $("#code").blur(function () {
+                var code = $("#code").val();
+                code = $.trim(code);
+                $.getJSON(
+                    "memberServlet",
+                    {
+                        action: "isCodeRight",
+                        code: code
+                    },
+                    function (data) {
+                        console.log("data==", data.isRight)
+                        if (data.isRight) {
+                            $("span.codeMsg").text("验证码正确！")
+                        } else {
+                            $("span.codeMsg").text("验证码错误！")
+                        }
+                    })
+            })
+
+
+            //给用户名输入绑定一个blur
+            $("#username").blur(function () {
+                let username = this.value;
+                // $.getJSON(
+                //     "memberServlet",
+                //     "action=isExistUsername&username="+username,
+                //     function (data){
+                //         console.log("data=",data)
+                //     }
+                // )
+                $.getJSON(
+                    "memberServlet",
+                    {
+                        action: "isExistUsername",
+                        username: username
+                    },
+                    function (data) {
+                        console.log("data==", data.isExist)
+                        if (data.isExist) {
+                            $("span.errorMsg").text("用户名已存在")
+                        }
+                    }
+                )
+
+            })
+
             //模拟点击事件选中注册页面
-            if ("${requestScope.active}"==="register"){
+            if ("${requestScope.active}" === "register") {
                 $("#register_tab")[0].click();//模拟点击
             }
             //对验证码图片做处理
@@ -47,7 +94,7 @@
 
                 //确认密码
                 var repwd = $("#repwd").val();
-                if (repwd != password){
+                if (repwd != password) {
                     $("span.errorMsg").text("密码不一致！")
                     return false;
                 }
@@ -64,7 +111,7 @@
                 //验证码不能为空
                 var code = $("#code").val();
                 code = $.trim(code);
-                if (code === "" || code == null){
+                if (code === "" || code == null) {
                     //显示错误信息
                     $("span.errorMsg").text("验证码不能为空！")
                     return false;
@@ -141,7 +188,8 @@
                                     </span>
                                     <form action="memberServlet" method="post">
                                         <input type="hidden" name="action" value="login">
-                                        <input type="text" name="username" placeholder="Username" value="${requestScope.username}"/>
+                                        <input type="text" name="username" placeholder="Username"
+                                               value="${requestScope.username}"/>
                                         <input type="password" name="password" placeholder="Password"/>
                                         <div class="button-box">
                                             <div class="login-toggle-btn">
@@ -165,16 +213,22 @@
                                     </span>
                                     <form action="memberServlet" method="post">
                                         <input type="hidden" name="action" value="register">
-                                        <input type="text" id="username" name="username" placeholder="Username" value="${requestScope.username}"/>
+                                        <input type="text" id="username" name="username" placeholder="Username"
+                                               value="${requestScope.username}"/>
                                         <input type="password" id="password" name="password" placeholder="输入密码"/>
                                         <input type="password" id="repwd" name="repassword" placeholder="确认密码"/>
-                                        <input name="email" id="email" placeholder="电子邮件" type="email" value="${requestScope.email}"/>
-                                        <input type="text" id="code" name="code" style="width: 50%" value="${requestScope.code}"
-                                               placeholder="验证码"/>　　<img id="codeimg" alt="" src="kaptchaServlet">
+                                        <input name="email" id="email" placeholder="电子邮件" type="email"
+                                               value="${requestScope.email}"/>
+                                        <input type="text" id="code" name="code" style="width: 50%"
+                                               value="${requestScope.code}"
+                                               placeholder="验证码"/><img id="codeimg" alt="" src="kaptchaServlet">
                                         <div class="button-box">
                                             <button type="submit" id="sub-btn"><span>会员注册</span></button>
                                         </div>
                                     </form>
+                                    <span class="codeMsg"
+                                          style="float: right; font-weight: bold; font-size: 5pt; margin-left: 10px;"/>
+
                                 </div>
                             </div>
                         </div>

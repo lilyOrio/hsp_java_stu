@@ -19,7 +19,28 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="893195cf-223a-4069-9b69-c892e373c40b" name="Default Changelist" comment="" />
+    <list default="true" id="893195cf-223a-4069-9b69-c892e373c40b" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../jiaju_mail/.idea/libraries/gson_2_2_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jiaju_mail/web/WEB-INF/lib/gson-2.2.4.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jiaju_mail/web/views/error/404.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../jiaju_mail/web/views/error/500.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/jiaju_mail.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/jiaju_mail.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/dao/BasicDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/dao/BasicDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/utils/JDBCUtilsByDruid.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/utils/JDBCUtilsByDruid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/web/BasicServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/web/BasicServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/web/MemberServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/classes/com/lilystu/furns/web/MemberServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/views/member/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/artifacts/jiaju_mail_war_exploded/views/member/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/dao/BasicDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/dao/BasicDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/utils/JDBCUtilsByDruid.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/utils/JDBCUtilsByDruid.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/web/BasicServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/web/BasicServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/web/MemberServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/out/production/jiaju_mail/com/lilystu/furns/web/MemberServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/filter/TransactionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/filter/TransactionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/web/BasicServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/web/BasicServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/web/MemberServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/src/com/lilystu/furns/web/MemberServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/web/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../jiaju_mail/web/views/member/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/../jiaju_mail/web/views/member/login.jsp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,7 +68,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../json-ajax" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -75,6 +96,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -87,11 +109,12 @@
       <updated>1685019031860</updated>
       <workItem from="1685019036466" duration="6731000" />
       <workItem from="1685326380945" duration="12000" />
+      <workItem from="1689781273625" duration="50000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -110,6 +133,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="446" y="49" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680/0.-1080.1920.1040@0.0.1280.680" timestamp="1685019755299" />
+    <state x="-913" y="184" key="FileChooserDialogImpl" timestamp="1689781322748">
+      <screen x="-1280" y="0" width="1280" height="976" />
+    </state>
+    <state x="-913" y="184" key="FileChooserDialogImpl/0.0.1536.816/-1280.0.1280.976@-1280.0.1280.976" timestamp="1689781322748" />
     <state width="1237" height="220" key="GridCell.Tab.0.bottom" timestamp="1685104617990">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

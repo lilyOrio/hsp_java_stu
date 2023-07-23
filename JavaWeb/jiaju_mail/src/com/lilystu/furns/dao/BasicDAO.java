@@ -66,8 +66,6 @@ public class BasicDAO<T> { //泛型指定具体类型
 
         } catch (SQLException e) {
             throw  new RuntimeException(e); //将编译异常->运行异常 ,抛出
-        } finally {
-            JDBCUtilsByDruid.close(null, null, connection);
         }
     }
 

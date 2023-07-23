@@ -15,10 +15,28 @@
     <script type="text/javascript">
         $(function () {//页面加载完毕
             $("button.add-to-cart").click(function () {
-                //获取到点击的furn的id
-                var furnId = $(this).attr("furnId");
-                //发出一个添加家具请求
-                location.href = "cartServlet?action=addItem&id=" + furnId;
+                // //获取到点击的furn的id
+                // var furnId = $(this).attr("furnId");
+                // //发出一个添加家具请求
+                // location.href = "cartServlet?action=addItem&id=" + furnId;
+
+                let furnId = $(this).attr("furnId");
+                $.getJSON(
+                    "cartServlet",
+                    {
+                        action: "addItemByAjax",
+                        id: furnId
+                    },
+                    function (data) {
+                        if (data.url == undefined) {//没有url返回，已经登录过
+                            $("span.header-action-num").text(data.cartCount);
+                        } else {
+                            //当前服务器返回url，要你定位
+                            console.log("url=", data.url)
+                            location.href = data.url;
+                        }
+                    }
+                )
             })
         })
     </script>

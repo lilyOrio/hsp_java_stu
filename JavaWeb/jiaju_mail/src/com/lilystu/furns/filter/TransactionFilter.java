@@ -35,6 +35,7 @@ public class TransactionFilter implements Filter {
             //问题一分析：BasicServlet中捕获了异常，这里的try{}中就不会异常
             //小收货：异常也是可以参与业务逻辑的
             JDBCUtilsByDruid.rollback();
+            throw new RuntimeException(e);//抛出异常，让Tomcat可以捕获到这个异常
         }
     }
 
