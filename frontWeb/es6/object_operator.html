@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象拓展运算符</title>
+    <script type="text/javascript">
+        //拷贝对象（深拷贝）
+        let cat = {name:"mimi",age:1}
+        let cat2 = cat; //浅拷贝 两个cat共用一份内存空间，两者内容修改会相互影响
+        cat2.name = "miao";
+        console.log("cat==>",cat);//cat的name值变成了“miao”
+
+        let cat3 = {...cat}//深拷贝，cat和cat3内存空间独立
+        cat3.name = "miao2";
+        console.log("cat==>",cat);//cat的name值仍然是“miao”
+
+
+        //合并对象 (也使用了深拷贝
+        let master = {name:"白骨精",age:100}
+        let car = {brand:"奔驰",price:800000}
+        let master_car = {...master,...car}//master_car是一个独立对象，master和car的值变化不会影响master_car
+        master.age=101;
+        car.price=400000;
+        console.log("master_car==>",master_car)//age:100,price:800000
+    </script>
+</head>
+<body>
+
+</body>
+</html>

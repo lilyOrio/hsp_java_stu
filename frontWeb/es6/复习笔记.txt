@@ -1,0 +1,136 @@
+ES6新特性
+		1.定义：ECMAScript6.0 是JS语言的下一代标准，于2015-6发布
+		2.ES6设计目标：达到JavaScript 语言可以用来编写复杂的大型程序，成为企业级开发语言
+		3.ECMAScript 和JavaScript 的关系：ECMAScript 是JavaScript 的规范/规则，JavaScript 是ECMAScript 的一种实现
+	let声明变量
+		1. let 声明的变量有严格局部作用域
+		2. let 只能声明一次, var 可以声明多次
+		3. let 不存在变量提升, var 存在变量提升
+	const声明常量/只读变量
+		1. 常量在定义时，需要赋值
+		2. 常量赋值后不能修改
+	解构赋值
+		基本介绍：1. 解构赋值是对赋值运算符的扩展
+				  2. 是一种针对数组或者对象进行模式匹配，然后对其中的变量进行赋值
+				  3. 主要有两种形式： 数组解构和对象解构
+		数组解构：
+			let [a, b, c] = arr;
+			console.log(a, b, c);
+			let [num1, num2, num3] = [100, 200, 300];
+			console.log(num1, num2, num3);
+		对象解构：
+			let monster = {name: '牛魔王', age: 800};
+			let {name, age} = monster;
+			//let {name, age} = {name: '牛魔王', age: 800};
+			function f1({name, age}) {
+				console.log("f1-name=", name, " ", "f1-age=", age)
+			}
+			f1(monster);
+	模板字符串：
+		1.模板字符串使用反引号` 将字符串包裹
+		2.可作为普通字符串
+		3.可用来定义多行字符串，即可以将换行字符串原生输出
+		4.字符串插入变量和表达式, 使用${}
+		5.字符串中调用函数
+			//1、字符串，换行会原生输出
+				let str1 = `for(int i = 0;i < 10;i++){
+					System.out.println("i="+i);
+				}`;
+			//2. 字符串插入变量和表达式。变量名写在${} 中，${} 中可以放入JavaScript 表达式。
+				let name = "hspedu 教育";
+				//老师解读
+				//(1) 当解析${name}, 就找最近的name 遍历, 进行替换
+				//(2) 然后可以得到最后解析的字符串
+				let str2 = `教育名称=${name}`;
+				let str3 = `1+2=${1 + 2}`;
+				let n1 = 80;
+				let n2 = 20;
+				let str4 = `${n1}+${n2}=${n1 + n2}`;
+			//3. 字符串中调用函数	
+				function sayHi(name) {
+					return "hi " + name;
+				}
+				let name2 = "tom";
+				let str5 = `sayHi() 返回的结果是=${sayHi('jack')}`;
+				let str6 = `sayHi() 返回的结果是=${sayHi(name2)}`;
+	对象相关新特性：
+		声明对象简写：
+			const age = 800;
+			const name = "牛魔王";
+			// ES6 声明/定义对象
+			//老师解读
+			//1. {name, age} : 表示对象的属性名是name 和age
+			//2. 属性name 的值是从变量/常量name 来的
+			let monster02 = {name, age};
+		对象方法简写：
+			// ES6-对象方法定义
+			let monster2 = {
+				name: "红孩儿~",
+				age: 900,
+				sayHi() {
+					console.log("信息: name=", this.name, " age=", this.age);
+				},
+				f1() {
+					console.log("f1()");
+				}
+			}
+			monster2.sayHi();
+			monster2.f1();
+		对象拓展运算符：
+			let cat = {name: "小花猫", age: 2};
+			// 拷贝对象(深拷贝)
+			let cat2 = {...cat};
+			cat2.name = "中花猫";
+			console.log("cat=>", cat);//小花猫
+			console.log("cat2=>", cat2);//中花猫
+			
+			// 合并对象[深拷贝]
+			let monster = {name: "白骨精", age: 100};
+			let car = {brand: "奔驰", price: 800000};
+			let monster_car = {...monster, ...car}
+			monster_car.name = "狐狸精";
+			console.log("monster=>", monster);
+			console.log("monster_car=>", monster_car);
+	箭头函数：
+			1. 箭头函数提供更加简洁的函数书写方式。
+			2. 基本语法是：(参数列表) => { 函数体}
+			3. 箭头函数没有参数或有多个参数，要用() 括起来,箭头函数只有一个参数, 可以省略()
+			4. 箭头函数函数体有多行语句，用{} 包裹起来，表示代码块
+			5. 函数体只有一行语句，并且需要返回结果时，可以省略{} , 结果会自动返回
+			7. 箭头函数多用于匿名函数的定义
+		// ES6 , 箭头函数使用
+			let f2 = (n) => {
+				return n * 2;
+			}
+			console.log("f2() 结果= ", f2(100));//200
+			//上面的es6 函数写法，还可以简化
+			let f3 = n => n * 3;
+			
+			//函数也可以传给一个变量=> 看看java 基础匿名内部类
+			function hi(f4) {
+				console.log(f4(900));
+			}
+			hi((n) => {
+				return n + 100
+			});
+			hi((n) => {
+				return n - 100
+			});
+		箭头函数使用：	
+			// ES6 , 箭头函数使用
+			let f2 = (n, m) => {
+			var res = 0
+				for (var i = n; i <= m; i++) {
+				  res += i
+				}
+			 return res
+			};
+			console.log(f2(1, 10));
+			
+			let f3 = ({age, name, skill}) => {
+				console.log("skill=", skill, " age=", age, " name=", name);
+			}
+			f3(monster);
+			
+			2.7.5.1 箭头函数+对象解构, 注意参数是({属性名})
+			2.7.5.2 ({属性名}) 是由{} 包括的，属性名需要和对象属性名一致，使用到了对象解构
