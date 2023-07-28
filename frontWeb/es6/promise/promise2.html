@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用promise完成多次ajax请求-代码重排</title>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        function get(url) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: url,
+                    success(resultData) {
+                        console.log("使用promise发出ajax请求拿到基本信息==》", resultData)
+                        resolve(resultData)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                })
+            })
+        }
+
+        get("data/monster.json")
+            .then(resultData => {
+                get(`data/monster_detail_${resultData.id}.json`)
+            }).then(resultData => {
+            get(`data/monster_gf_${resultData.gfid}.json`)
+        }).catch(err => {
+            console.log("promise异步请求异常==》", err)
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>

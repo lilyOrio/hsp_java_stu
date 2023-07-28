@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用promise完成多次ajax请求</title>
+    <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        //先请求到monster
+        //resolve--成功了可以调用这个函数，函数名可以程序员自己指定
+        //reject--失败可以调用的函数
+        //箭头函数提依然是通过jQuery发出ajax请求
+        let p = new Promise((resolve,reject)=>{
+            $.ajax({
+                url: "data/monster.json",
+                success(resultData){
+                    console.log("ajax请求拿到基本信息==》",resultData)
+                    resolve(resultData)//这个方法可以将resultData传给p.then里面箭头函数的参数resultData
+                                        //如果不调用这个方法，p.then就不会被调用
+                },
+                error(err){
+                    reject(err)
+                }
+            })
+        })
+        //这里我们可以继续编写请求成功后的业务
+        p.then(resultData=>{
+        //     console.log("p.then得到了==》",resultData)
+        //    这里可以继续发出请求
+            return new Promise(((resolve, reject) => {
+                $.ajax({
+                    url: `data/monster_detail_${resultData.id}.json`,
+                    success(resultData) {
+                        console.log("第二次使用promise发出ajax请求拿到基本信息==》",resultData)
+                        resolve(resultData)
+                    },
+                    error(err){
+                        reject(err)
+                    }
+                })
+            }))
+        }).then(resultData=>{
+            //     console.log("p.then得到了==》",resultData)
+            //    这里可以继续发出请求
+            return new Promise(((resolve, reject) => {
+                $.ajax({
+                    url: `data/monster_gf_${resultData.gfid}.json`,
+                    success(resultData) {
+                        console.log("第三次使用promise发出ajax请求拿到基本信息==》",resultData)
+                    },
+                    error(err){
+                        reject(err)
+                    }
+                })
+            }))
+        }).catch(err=>{
+            console.log("promise异步请求异常==》",err)
+        })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
