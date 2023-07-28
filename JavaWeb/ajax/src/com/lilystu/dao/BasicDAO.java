@@ -1,4 +1,4 @@
-package com.lilystu.furns.dao;
+package com.lilystu.dao;
 
 
 import com.lilystu.utils.JDBCUtilsByDruid;

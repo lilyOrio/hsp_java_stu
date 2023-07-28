@@ -19,6 +19,7 @@ public class AdminServlet extends BasicServlet {
         String password = request.getParameter("password");
         Member manager = memberService.login(new Member(null, username, password, null));
         if (manager != null){
+            request.getSession().setAttribute("member",manager);
             request.getRequestDispatcher("/views/manage/manage_menu.jsp")
                     .forward(request,response);
         }else {

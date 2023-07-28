@@ -15,10 +15,28 @@
     <script type="text/javascript">
         $(function () {//页面加载完毕
             $("button.add-to-cart").click(function () {
-                //获取到点击的furn的id
-                var furnId = $(this).attr("furnId");
-                //发出一个添加家具请求
-                location.href = "cartServlet?action=addItem&id=" + furnId;
+                // //获取到点击的furn的id
+                // var furnId = $(this).attr("furnId");
+                // //发出一个添加家具请求
+                // location.href = "cartServlet?action=addItem&id=" + furnId;
+
+                let furnId = $(this).attr("furnId");
+                $.getJSON(
+                    "cartServlet",
+                    {
+                        action: "addItemByAjax",
+                        id: furnId
+                    },
+                    function (data) {
+                        if (data.url == undefined) {//没有url返回，已经登录过
+                            $("span.header-action-num").text(data.cartCount);
+                        } else {
+                            //当前服务器返回url，要你定位
+                            console.log("url=", data.url)
+                            location.href = data.url;
+                        }
+                    }
+                )
             })
         })
     </script>
@@ -57,7 +75,7 @@
                         <!-- Single Wedge Start -->
                         <c:if test="${empty sessionScope.member}">
                             <div class="header-bottom-set dropdown">
-                                <a href="member/login.jsp">登录|注册</a>
+                                <a href="views/member/login.jsp">登录|注册</a>
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.member}">
@@ -146,9 +164,16 @@
                                                    data-bs-target="#exampleModal"><i
                                                         class="icon-size-fullscreen"></i></a>
                                             </div>
-                                            <button title="Add To Cart~" furnId=${furn.id} class="add-to-cart">Add
-                                                To Cart
-                                            </button>
+                                            <c:if test="${furn.stock > 0}">
+                                                <button title="Add To Cart~" furnId=${furn.id} class="add-to-cart">Add
+                                                    To Cart
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${furn.stock == 0}">
+                                                <button title="Add To Cart~" furnId=${furn.id} class="add-to-cart">Add
+                                                    To Cart[缺货]
+                                                </button>
+                                            </c:if>
                                         </div>
                                         <div class="content">
                                             <h5 class="title">

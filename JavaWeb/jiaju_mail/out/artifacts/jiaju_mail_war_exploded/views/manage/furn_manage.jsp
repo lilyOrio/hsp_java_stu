@@ -149,9 +149,36 @@
                     默认保存在pageContext域
 --%>
 <%--                从第一页开始--%>
-                <c:set var="begin" value="1"/>
-<%--                最后一页是第pageTotalCount页--%>
-                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+<%--                <c:set var="begin" value="1"/>--%>
+<%--&lt;%&ndash;                最后一页是第pageTotalCount页&ndash;%&gt;--%>
+<%--                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>--%>
+                <c:choose>
+                    <%--如果总页数<=5, 就全部显示--%>
+                    <c:when test="${requestScope.page.pageTotalCount <=5 }">
+                        <c:set var="begin" value="1"/>
+                        <c:set var="begin" value="${requestScope.page.pageTotalCount}"/>
+                    </c:when>
+                    <%--如果总页数>5--%>
+                    <c:when test="${requestScope.page.pageTotalCount > 5}">
+                        <c:choose>
+                            <%--如果当前页是前3页, 就显示1-5--%>
+                            <c:when test="${requestScope.page.pageNo <= 3}">
+                                <c:set var="begin" value="1"/>
+                                <c:set var="end" value="5"/>
+                            </c:when>
+                            <%--如果当前页是后3页, 就显示最后5页--%>
+                            <c:when test="${requestScope.page.pageNo > requestScope.page.pageTotalCount - 3}">
+                                <c:set var="begin" value="${requestScope.page.pageTotalCount - 4}"/>
+                                <c:set var="end" value="${requestScope.page.pageTotalCount}"/>
+                            </c:when>
+                            <%--如果当前页是中间页, 就显示 当前页前2页, 当前页 , 当前页后两页--%>
+                            <c:otherwise>
+                                <c:set var="begin" value="${requestScope.page.pageNo - 2}"/>
+                                <c:set var="end" value="${requestScope.page.pageNo + 2}"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
                 <c:forEach begin="${begin}" end="${end}" var="i">
                     <c:if test="${i==requestScope.page.pageNo}">
                         <li><a class="active" href="manage/furnServlet?action=page&pageNo=${i}">${i}</a></li>

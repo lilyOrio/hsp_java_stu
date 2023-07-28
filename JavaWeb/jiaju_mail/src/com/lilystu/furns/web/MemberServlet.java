@@ -1,5 +1,6 @@
 package com.lilystu.furns.web;
 
+import com.google.gson.Gson;
 import com.lilystu.furns.entity.Member;
 import com.lilystu.furns.service.MemberService;
 import com.lilystu.furns.service.impl.MemberServiceImpl;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
@@ -46,6 +49,49 @@ public class MemberServlet extends BasicServlet {
         response.sendRedirect(getServletContext().getContextPath());
     }
 
+    /**
+     * 验证某个用户名是否已经存在
+     *
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void isExistUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("MemberServlet==isExistUsername==");
+        String username = request.getParameter("username");
+        System.out.println("username" + username);
+        //判断用户是否存在
+        boolean existsUsername = memberService.isExistsUsername(username);
+        //返回json格式数据（要根据前端需求来）
+        //格式==》{"isExist":false}
+//        String resultJson ="{\"isExist\":"+existsUsername+"}";
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("isExist", existsUsername);
+//        resultMap.put("email", "existsUsername");
+//        resultMap.put("job", "java");
+        String resultJson = new Gson().toJson(resultMap);
+        //返回json数据
+        response.getWriter().write(resultJson);
+    }
+
+    //ajax验证验证码是否正确
+    protected void isCodeRight(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("MemberServlet==isExistUsername==");
+        String code = request.getParameter("code");
+        System.out.println("code = " + code);
+        boolean isRight = false;
+        if (code != null &&
+                code.equals((String) request.getSession().getAttribute(KAPTCHA_SESSION_KEY))) {
+            isRight = true;
+        }
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("isRight", isRight);
+        String resultJson = new Gson().toJson(resultMap);
+        //返回json数据
+        response.getWriter().write(resultJson);
+    }
+
     protected void login(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         System.out.println("MemberServlet==login==");
@@ -56,9 +102,9 @@ public class MemberServlet extends BasicServlet {
         if (member != null) {
             //登录成功
             System.out.println(username + "登录成功!");
-            request.getRequestDispatcher("/views/member/login_ok.jsp").forward(request, response);
             HttpSession session = request.getSession();
             session.setAttribute("member", member);
+            request.getRequestDispatcher("/views/member/login_ok.jsp").forward(request, response);
         } else {
             //登录失败
             System.out.println(username + "登录失败!");
@@ -78,7 +124,7 @@ public class MemberServlet extends BasicServlet {
         String email = request.getParameter("email");
         String code = request.getParameter("code");
 
-        String token = request.getSession().getAttribute(KAPTCHA_SESSION_KEY).toString();
+        String token = (String) request.getSession().getAttribute(KAPTCHA_SESSION_KEY);
         request.getSession().removeAttribute(KAPTCHA_SESSION_KEY);
 
         if (token == null || !token.equalsIgnoreCase(code)) {
@@ -86,7 +132,8 @@ public class MemberServlet extends BasicServlet {
             request.setAttribute("username", username);
             request.setAttribute("email", email);
             request.setAttribute("code", code);
-            request.setAttribute("errMsg", "验证码不正确！");
+            request.setAttribute("active", "register");
+            request.setAttribute("errMsg_r", "验证码不正确！");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
             return;
@@ -94,6 +141,10 @@ public class MemberServlet extends BasicServlet {
         //判断用户名是否可用
         if (memberService.isExistsUsername(username)) {
             //用户已存在，后面可以添加提示信息
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
+            request.setAttribute("code", code);
+            request.setAttribute("active", "register");
             request.setAttribute("errMsg_r", "用户已存在！");
             request.getRequestDispatcher("/views/member/login.jsp")
                     .forward(request, response);
