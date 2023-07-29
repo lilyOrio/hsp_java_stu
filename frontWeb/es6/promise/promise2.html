@@ -5,12 +5,12 @@
     <title>使用promise完成多次ajax请求-代码重排</title>
     <script type="text/javascript" src="script/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
-        function get(url) {
+        function get(url, resultData) {
             return new Promise((resolve, reject) => {
                 $.ajax({
                     url: url,
+                    data: resultData,
                     success(resultData) {
-                        console.log("使用promise发出ajax请求拿到基本信息==》", resultData)
                         resolve(resultData)
                     },
                     error(err) {
@@ -20,11 +20,15 @@
             })
         }
 
-        get("data/monster.json")
-            .then(resultData => {
-                get(`data/monster_detail_${resultData.id}.json`)
-            }).then(resultData => {
-            get(`data/monster_gf_${resultData.gfid}.json`)
+        get("data/monster.json").then(resultData => {
+            console.log("第1次ajax请求返回数据=", resultData);
+            return get(`data/monster_detail_${resultData.id}.json`)
+        }).then(resultData => {
+            console.log("第2次ajax请求返回数据=", resultData);
+            // console.log("第2次ajax请求url=", `data/monster_gf_${resultData.gfid}.json`);
+            return get(`data/monster_gf_${resultData.gfid}.json`)
+        }).then(resultData => {
+            console.log("第3次ajax请求返回数据=", resultData);
         }).catch(err => {
             console.log("promise异步请求异常==》", err)
         })
