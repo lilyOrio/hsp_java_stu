@@ -1,0 +1,17 @@
+1.B/S框架：，意思是前端(Browser 浏览器)和服务器端(Server)组成的系统的框架结构。B/S架构也可理解为web架构，包含前端、后端、数据库三大组成部分。
+	前端：前端开发技术工具包括三要素：HTML、CSS 和JavaScript，还有很多高级的前端框架，如bootstrap、jquery，VUE 等。
+	后端：后端开发技术工具主要有：Net、JAVA、PHP, Go 等
+	数据库：主流的三种关系型数据库：Mysql、SQLserver、Oracle ，还有Nosql 非关系型数据库：Redis、Mogodb 等。
+2.HTML：网络内容的载体。内容就是网页制作者放在页面上想要让用户浏览的信息，包括文字、图片、视频等等
+		HTML（HyperText Mark-up Language）即超文本标签语言(可以展示的内容类型很多)
+3.CSS：css样式是表现，就像是网页的外衣。比如标题字体、颜色。或者为标题加入背景图片、边框等
+	   CSS 指的是层叠样式表* (Cascading Style Sheets)	
+	   CSS 可以让html 元素(内容) + 样式(CSS)分离，更好的控制页面
+4.javaScript：js是用来实现网页上的特效效果
+			  简称js，能改变HTML 内容，能改变HTML 属性，能改变HTML 样式(CSS)，能完成页面的数据验证
+5.DOM：DOM 全称是Document Object Model 文档对象模型
+	   就是把文档中的标签，属性，文本，转换成为对象来管理
+	   doucment：它管理了所有的HTML 文档内容，它是一种树结构的文档。有层级关系在dom 中把所有的标签都对象化
+6.xml：xml 文件做配置文件可以说非常的普遍，比如我们的tomcat 服务器的server.xml ，web.xml	   
+	   xml 可以充当小型的数据库=> 程序自己的数据格式存放
+	   DOM4j：不管是html 文件还是xml 文件它们都是标记型文档，都可以使用w3c 组织制定的dom 技术来解析
