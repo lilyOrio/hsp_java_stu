@@ -144,4 +144,80 @@ promise
 		3.2.3.2 .then((data)=>{}) 的data 数据是上一次正确执行后resolve(data) 返回传入的
 		3.2.3.3 通过多级.then() 可以对异步请求分层次请求，实现代码重排，代码逻辑更加清晰合理
 		3.2.3.4 通过多级.then() 后面的.catch((err) => {}) 可捕获发生异常，便于调试
-	
+模块化编程
+	基本介绍：
+		传统非模块化开发有如下的缺点：(1)命名冲突(2)文件依赖
+		Javascript 代码越来越庞大，Javascript 引入模块化编程，开发者只需要实现核心的业务逻辑，其他都可以加载别人已经写好的模块
+		Javascript 使用"模块"（module）的概念来实现模块化编程, 解决非模块化编程问题
+		模块化也是ES6 的新特性
+	ES5模块化编程：
+		导出：
+			exports = {
+				sum,
+				sub,
+				name,
+				PI
+			}
+		导入：
+			//1. 在es5 中, 我们通过require 就包对应.js 中的
+			//数据/对象，引入
+			//2. 我们使用的时候，通过m.属性就可以使用
+			//3. 如果我们导入时，不需要所有的，可以导入部分数据
+			const m = require("./function.js");
+			const {sub} = require("./function.js");
+	    要看运行效果，需要Node 环境, node 环境我们后面搭建, 只要use.js 可以解析sum 和sub 说明是正确的
+	ES6 模块编程：
+		介绍：
+			1、ES6 使用(1)export {名称/对象/函数/变量/常量} (2) export 定义= (3) export default {}导出模块
+			2、使用import {} from "xx.js" / import 名称form "xx.js" 导入模块
+		ES6 的模块化，需要用Babel 转码ES5 后再执行, 我们后面在整体项目中使用即可, 只要es6_use.js 可以识别变量名说明是正确的
+		方式一：选择导出
+			导出：
+				exports = {
+					sum,
+					sub,
+					name,
+					PI
+				}
+			导入：
+			/**
+				* 老韩解读
+				* 1. 我可以{} 来接收导出的数据
+				* 2. 可以全部接收，也可以选择的接收
+				* 3. 细节： 这时要求导入的名称和导出的名称一致
+			*/
+				import {sub,sum,name} from "./common";
+				import {monster} from "./common";
+		方式二：定义时导出
+			导出：
+				//定义sum 函数时，就直接导出
+				//老韩说明：如果在定义时，导出的数据， 在导入时，要保持名字一致
+				export const sum = function (a, b) {
+					return parseInt(a) + parseInt(b);
+				}
+			导入：
+				//可以导入模块/数据
+				import {sum} from "./common2";
+				//没有导出的数据, 是不可以导入
+				//import {sub} from "./common2";
+		方式三：默认导出
+			导出：
+				export default {
+					sum(a,b) {
+						return parseInt(a) + parseInt(b);
+					},
+					sub(a,b) {
+						return parseInt(a) - parseInt(b);
+					}
+				}
+			导入：
+				//导入默认导出模块/数据
+				//好处是m 名称是可以自己指定的.
+				//因为m 名字, 程序员可以自己指定，因此我们就可以解决名称冲突问题
+				import m from "./common3";
+		注意事项和使用细节：
+			ES6 的模块化无法在Node.js 中执行，需要用Babel 转码ES5 后再执行
+			export 不仅可以导出对象，一切JS 变量都可以导出。比如：基本类型变量、函数、数组、对象
+			没有导出的不能使用
+			es6 有导出方式较多, 不同的导出方式对导入方式也有一定影响
+			
