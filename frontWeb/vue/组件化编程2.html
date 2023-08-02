@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>组件化编程-全局组件</title>
+</head>
+<body>
+<div id="app">
+<!--  引用全局组件  -->
+<!--  this表示这个组件的button  -->
+    <counter></counter><br/>
+    <counter></counter>
+</div>
+<script src="vue.js"></script>
+<script>
+    //1.定义一个全局组件 名称为 counter（自定义
+    //后面的{}表示对象
+    //2.template：指定改组件的界面，因为可能会引用到数据池中的数据，所以这里使用模板字符串``
+    //3.要把组件是为一个Vue对象，也有自己的数据池和方法池
+    //4.对于组件，数据池的数据是使用方法返回的，不能使用原来的方式（原来的方式数据时共享的），保证数据的独立性
+    Vue.component("counter",{
+        template:`<button v-on:click="click">点击次数{{count}}【全局组件化】</button>`,
+        data(){//当某个组件引用这个counter的数据池中的数据时，它是以return的方式给你返回
+            return{
+                count:0
+            }
+        },
+        methods:{
+            click(){
+                this.count++;//this指的是使用的组件
+            }
+        }
+    })
+
+    let vm = new Vue({
+        el:"#app",
+
+    })
+</script>
+</body>
+</html>

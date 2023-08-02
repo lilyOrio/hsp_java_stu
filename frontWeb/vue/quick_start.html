@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue快速入门</title>
+<!--
+    从案例可以体会声明式渲染：Vue.js 采用简洁的模板语法来声明式地将数据渲染进DOM 的系统， 做到数据和显示分离
+    Vue 没有繁琐的DOM 操作，如果使用jQuery，我们需要先找到div 节点，获取到DOM对象，然后进行节点操作, 显然Vue 更加简洁
+-->
+</head>
+<body>
+<!--1.div（即view）要写在script（即model）前面；顺序执行
+    2.不一定使用div，也可以span，只不过div比较适合做一个容器，一般都是使用div（一般将vue对象挂载到div
+    3.id值由程序员指定
+    4.可以创建两个vue实例分别绑定不一样的div，一般情况下一个就够了
+    5.
+-->
+<div id="app">
+<!--  解读：
+        {{message}}：插值表达式，message来自数据池
+        当代码执行时，回到data中去匹配数据，如果没有匹配上就会输出空
+-->
+<h1>欢迎你{{message}}-{{name}}</h1>
+</div>
+<!--引入vue.js-->
+<script src="vue.js"></script>
+<script>
+    //创建vue对象
+    let vm = new Vue({//会触发绑定机制，去找目标div
+        el:"#app",//创建的vue实例挂载到id=app的div，el和data是规定好的属性名，不能乱写
+        data:{//表示数据池，以k-v形式保存（设置）根据业务需求设置
+            message:"hello vue",
+            name:"hsp教育"
+        }
+    })
+    console.log("vm=>", vm);
+    console.log(vm._data.message);
+    console.log(vm._data.name);
+    console.log(vm.name);
+    console.log(vm.message);
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for 列表循环练习</title>
+</head>
+<body>
+<div id="app">
+    <input type="checkbox" v-model="sel">显示及格学生
+    <!--<table v-show="!sel" width="400px" border="1">-->
+    <!--    <tr v-for="student in students">-->
+    <!--        <td v-for="e in student">{{e}}</td>-->
+    <!--    </tr>-->
+    <!--</table>-->
+
+    <table width="400px" border="1">
+        <tr v-show="!sel||student.score>=60" v-for="student in students">
+            <td v-for="e in student">{{e}}</td>
+        </tr>
+    </table>
+</div>
+<script src="../vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            sel: false,
+            students: [
+                {
+                    id: 1,
+                    name: "jack",
+                    score: 80
+                }, {
+                    id: 2,
+                    name: "luck",
+                    score: 70
+                }, {
+                    id: 3,
+                    name: "jone",
+                    score: 50
+                }
+            ]
+        }
+    })
+</script>
+</body>
+</html>

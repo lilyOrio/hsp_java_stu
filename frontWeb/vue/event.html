@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:>
+<head>
+    <meta charset="UTF-8">
+    <title>事件处理</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{message}}</h1>
+    <!--
+    v-on:click表示要给这个button绑定一个点击事件，对应方法从方法池中获取
+    v-on:简写=》@ (需要浏览器支持
+    如果方法没有参数可以省略() (需要浏览器支持
+    -->
+    <button @click="sayHi">点击输出</button>
+    <button v-on:click="sayOk()">点击输出</button>
+    <button>点击输出</button>
+    <button>点击输出</button>
+</div>
+<script src="vue.js"></script>
+<script>
+
+    let vm = new Vue({//创建的vue实例可以不用vm接收，接收了就方便调试信息输出
+        el:"#app",//el=》 element的简写
+        //数据池
+        data:{//数据池 表示model中的数据
+            message:"vue事件处理案例",
+            img_src:"1.jpg",
+            img_width:"200px"
+        },
+        //方法池
+        methods:{//表示vm的一个method属性，对应的值是一个对象，在{}中可以写很多方法
+            sayHi(){
+                console.log("hi~银角大王")
+            },
+            sayOk(){
+                console.log("ok~金角大王")
+            }
+        }
+    })
+    console.log("vw=>",vm)
+</script>
+</body>
+</html>

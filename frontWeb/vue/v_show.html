@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染v-show</title>
+</head>
+<body>
+<div id="app">
+    <input type="checkbox" v-model="sel">是否同意条款[v-show 实现]
+    <!--v-show不管条件是T/F，都会创建组件，只是会通过display属性将它显示或隐藏-->
+    <!--<h1 style="display: none;">你不同意条款</h1>-->
+    <h1 v-show="sel">你同意条款</h1>
+    <h1 v-show="!sel">你不同意条款</h1>
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {//data 数据池
+            sel: false
+        }
+    })
+</script>
+</body>
+</html>

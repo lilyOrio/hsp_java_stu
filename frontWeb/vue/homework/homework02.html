@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homework02</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{message}}</h1>
+    <input type="text" v-model:value="toast_Msg">
+    <button @click="show">点击显示弹窗</button>
+</div>
+<script src="../vue.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: "#app",
+        //数据池
+        data: {
+            message: "演示vue事件绑定操作",
+            toast_Msg:""
+        },
+        //方法池
+        methods: {
+            show(){
+                alert(this.toast_Msg)
+            }
+        }
+    })
+    console.log("vw=>", vm)
+</script>
+</body>
+</html>

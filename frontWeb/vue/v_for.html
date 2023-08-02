@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for 列表渲染</title>
+</head>
+<body>
+<div id="app">
+    <!--
+    基本语法:
+    <li v-for="变量in 数字">{{ 变量}}</li>
+    -->
+    <h1>简单的列表渲染</h1>
+    <li v-for="i in arr">
+        {{i}}
+    </li>
+    <!--<li v-for="(变量, 索引) in 值">{{ 变量}} - {{ 索引}}</li>-->
+    <h1>简单的列表渲染-带索引</h1>
+    <li v-for="(i,index) in arr">
+        {{index}}-{{i}}
+    </li>
+    <!-- 语法:
+    <tr v-for="对象in 对象数组">
+    <td>{{对象的属性}}</td>
+    </tr>
+    -->
+    <h1>遍历数据列表</h1>
+    <table width="400px" border="1">
+        <tr v-for="monster in arr_obj">
+            <td v-for="e in monster">{{e}}</td>
+        </tr>
+    </table>
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            arr: [1, 2, 3],
+            arr_obj: [
+                {
+                    id: 1,
+                    name: "牛魔王",
+                    age: 800
+                }, {
+                    id: 2,
+                    name: "铁扇公主",
+                    age: 800
+                }, {
+                    id: 3,
+                    name: "红孩儿",
+                    age: 200
+                }
+            ]
+        }
+    })
+</script>
+</body>
+</html>

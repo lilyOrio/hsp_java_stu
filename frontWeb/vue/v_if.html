@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-model="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染v-if</title>
+</head>
+<body>
+<div id="app">
+    <!--<input type="checkbox" v-model:checked="sel">是否同意条款[v-if 实现]-->
+    <input type="checkbox" v-model="sel">是否同意条款[v-if 实现]
+    <!--v-if根据返回值决定是否创建/销毁改标签-->
+    <!--以为会涉及销毁以及不断创建组件，所以如果切换频繁就不会使用它-->
+    <h1 v-if="sel">你同意条款</h1>
+    <h1 v-else>你不同意条款</h1>
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data: {//data 数据池
+            sel: false
+        }
+    })
+</script>
+</body>
+</html>
