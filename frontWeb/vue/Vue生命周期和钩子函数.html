@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>演示生命周期和钩子函数</title>
+</head>
+<body>
+<div id="app">
+    <span id="num">{{num}}</span>
+    <button @click="num++">赞！</button>
+    <h2>{{name}}，有{{num}}次点赞</h2>
+</div>
+<script src="vue.js"></script>
+<script type="text/javascript">
+    let vm = new Vue({
+        el:"#app",
+        data: {//数据池
+            name: "kristina",
+            num: 0
+        },
+        methods: {
+            show() {
+                return this.name;
+            },
+            add() {
+                this.num++;
+            }
+        },
+        beforeCreate(){//生命周期函数-vue实例数据池和方法初始化前
+            console.log("===beforeCreate===")
+            console.log("演示数据池中的数据是否被加载了？N",this.name," ",this.num)//undefined,undefined
+            // console.log("演示方法可不可以使用？N",this.show())//报错
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？N",document.getElementById("num"))//可以访问<span id="num">{{num}}</span>；
+                                                                                // {{num}}没有被渲染
+        },
+        created(){//生命周期函数-vue实例数据池和方法初始化
+            console.log("===created===")
+            console.log("演示数据池中的数据是否被加载了？Y",this.name," ",this.num)//kristina,0
+            console.log("演示方法可不可以使用？Y",this.show())//kristina
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？N",document.getElementById("num"))//可以访问<span id="num">{{num}}</span>；
+            // {{num}}没有被渲染
+            //这个位置可以发出ajax请求--数据池的数据可以使用，并且数据还未渲染到页面显示，会在请求后得到数据再更新到数据池，后面就可以直接显示更新后的数据
+            // console.log("更新数据池数据",this.add())
+            //发出ajax请求-接收返回的数据-再次去更新数据池数据-编译内存模板结构-。。。
+        },
+        //在这之间进行内存模板编译
+        beforeMount(){//挂载前
+            console.log("===beforeMount===")
+            console.log("演示数据池中的数据是否被加载了？Y",this.name," ",this.num)//kristina,0
+            console.log("演示方法可不可以使用？Y",this.show())//kristina
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？N",document.getElementById("num"))//可以访问<span id="num">{{num}}</span>；
+        },
+        mounted(){//挂载
+            console.log("===mounted===")
+            console.log("演示数据池中的数据是否被加载了？Y",this.name," ",this.num)//kristina,0
+            console.log("演示方法可不可以使用？Y",this.show())//kristina
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？Y",document.getElementById("num"))//可以访问<span id="num">{{num}}</span>；
+        },
+        beforeUpdate(){//数据更新前
+            console.log("===beforeUpdate===")
+            console.log("演示数据池中的数据是否被加载了？Y",this.name," ",this.num)//kristina,1
+            console.log("演示方法可不可以使用？Y",this.show())//kristina
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？Y",document.getElementById("num"))//可以访问<span id="num">1</span>；
+            console.log("界面数据是否被更新？N",document.getElementById("num").innerText)//0
+            //在这里可以进行数据校验
+            if (this.num <10){
+                this.num = 8
+            }
+        },
+        updated(){//数据更新
+            console.log("===update===")
+            console.log("演示数据池中的数据是否被加载了？Y",this.name," ",this.num)//kristina,1
+            console.log("演示方法可不可以使用？Y",this.show())//kristina
+            console.log("用户页面dom是否可以使用？Y 数据是否被渲染？Y",document.getElementById("num"))//可以访问<span id="num">1</span>；
+            console.log("界面数据是否被更新？Y",document.getElementById("num").innerText)//1
+        }
+    })
+</script>
+</body>
+</html>
