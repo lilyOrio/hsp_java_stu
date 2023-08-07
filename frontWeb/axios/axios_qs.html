@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios</title>
+</head>
+<body>
+<div id="app">
+    <table border="1px" width="200px">
+        <tr>
+            <td>name</td>
+            <td>age</td>
+        </tr>
+        <tr v-for="monster in monsterList">
+            <td v-for="e in monster">
+                {{e}}
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="vue.js"></script>
+<script src="axios.min.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            monsterList: []
+        },
+        methods: {
+            list() {
+                axios.get("http://localhost:63342/axios/data/response.data.json")
+                    .then(responseData => {
+                        console.log("responseData=>", responseData)
+                        console.log("responseData=>", responseData.data.data.items)
+                        //Json对象转出字符串
+                        console.log("responseData to String=>", JSON.stringify(responseData.data.data.items))
+                        this.monsterList = responseData.data.data.items
+                        //可以在这里再次发出以此Ajax请求
+                        // return axios.get("url")
+                    }).catch(err => {
+                    console.log("异常==》", err)
+                })
+            }
+        },
+        created() {
+            this.list();
+        }
+    })
+</script>
+</body>
+</html>
