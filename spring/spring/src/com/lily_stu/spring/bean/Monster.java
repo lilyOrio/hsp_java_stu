@@ -6,6 +6,7 @@ public class Monster {
     private String skill;
 
     public Monster(Integer id, String name, String skill) {
+//        System.out.println("该构造器被调用。。。");
         this.id = id;
         this.name = name;
         this.skill = skill;

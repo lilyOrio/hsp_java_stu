@@ -1,12 +1,20 @@
 package com.lily_stu.spring.test;
 
 import com.lily_stu.spring.bean.Car;
+import com.lily_stu.spring.bean.Master;
 import com.lily_stu.spring.bean.Monster;
+import com.lily_stu.spring.service.MemberServiceImpl;
+import jdk.nashorn.internal.ir.LexicalContext;
+import jdk.nashorn.internal.ir.LexicalContextNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SpringBeanTest {
@@ -61,5 +69,81 @@ public class SpringBeanTest {
         ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
         Car bean = (Car) ioc.getBean("car01");
         System.out.println("car bean==>" + bean);
+    }
+
+    /**
+     * 通过类型来获取容器的bean 对象
+     */
+    @Test
+    public void getBeanByType() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Car bean = ioc.getBean(Car.class);
+        System.out.println("car bean==>" + bean);
+    }
+
+    /**
+     * 通过构造器来设置属性
+     */
+    @Test
+    public void setBeanByConstructor() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster monster03 =  ioc.getBean("monster03",Monster.class);//可以不用类型转换
+//        Monster monster03 =  (Monster) ioc.getBean("monster03");
+        System.out.println("monster03 bean==>" + monster03);
+    }
+
+    @Test
+    public void getMonsterByP() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster monster06 = ioc.getBean("monster06", Monster.class);
+        System.out.println("monster04=" + monster06);
+    }
+
+    /**
+     * 引用/注入其它bean 对象
+     */
+    @Test
+    public void setBeanByRef() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        MemberServiceImpl memberServiceImpl = ioc.getBean("memberServiceImpl02",
+                MemberServiceImpl.class);
+        memberServiceImpl.add();
+    }
+
+    /**
+     * 测试引用/注入集合/数组类型
+     */
+    @Test
+    public void setCollectionByPro() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Master master01 = ioc.getBean("master01", Master.class);
+        //获取list 集合
+        System.out.println("======list=======");
+        List<Monster> monster_list = master01.getMonsterList();
+        for (Monster monster : monster_list) {
+            System.out.println(monster);
+        }
+        System.out.println("======map=======");
+        Map<String, Monster> monsterMap = master01.getMonsterMap();
+        Set<Map.Entry<String, Monster>> entries = monsterMap.entrySet();
+        for (Map.Entry<String, Monster> entry : entries) {
+            System.out.println(entry);
+        }
+        System.out.println("======set=======");
+        Set<Monster> monsterSet = master01.getMonsterSet();
+        for (Monster monster : monsterSet) {
+            System.out.println(monster);
+        }
+        System.out.println("======array=======");
+        String[] monsterName = master01.getMonsterName();
+        for (int i = 0; i < monsterName.length; i++) {
+            System.out.println(monsterName[i]);
+        }
+        System.out.println("======properties=======");
+        Properties pros = master01.getPros();
+        Set<Map.Entry<Object, Object>> entries1 = pros.entrySet();
+        for (Map.Entry<Object, Object> objectObjectEntry : entries1) {
+            System.out.println(objectObjectEntry);
+        }
     }
 }
