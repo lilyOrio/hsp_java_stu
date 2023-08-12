@@ -20,4 +20,24 @@ id属性表示该Java对象在Spring容器中的id，通过id可以获取到该�
         <property name="name" value="牛魔王"/>
         <property name="skill" value="芭蕉扇"/>
     </bean>
+
+<!--  默认id=com.lily_stu.spring.bean.Monster#0   -->
+    <bean class="com.lily_stu.spring.bean.Monster">
+        <property name="id" value="300"/>
+        <property name="name" value="牛魔王"/>
+        <property name="skill" value="芭蕉扇"/>
+    </bean>
+
+    <!--  默认id=com.lily_stu.spring.bean.Monster#1   -->
+    <bean class="com.lily_stu.spring.bean.Monster">
+        <property name="id" value="600"/>
+        <property name="name" value="牛魔王"/>
+        <property name="skill" value="芭蕉扇"/>
+    </bean>
+
+    <bean class="com.lily_stu.spring.bean.Car" id="car01">
+        <property name="id" value="100"/>
+        <property name="name" value="比亚迪"/>
+        <property name="price" value="20"/>
+    </bean>
 </beans>
