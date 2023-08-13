@@ -2,8 +2,96 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       https://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--    ioc先创建所有bean对象再处理它们之间的引用关系-->
 
+    <!--    引入属性文件-->
+    <context:property-placeholder location="classpath:my.properties"/>
+    <bean class="com.lily_stu.spring.bean.Monster" id="monster1000">
+        <property name="name" value="${name}"/>
+        <property name="id" value="${monsterId}"/>
+        <property name="skill" value="${skill}"/>
+    </bean>
+
+    <!--配置House对象，演示整个Bean的生命周期
+ 老师解读
+ 1. init-method="init" 指定bean的初始化方法 , 在setter方法后执行
+ 2. init方法执行的时机，有spring容器来控制
+ 3. destroy-method="destroy" 指定bean的销毁方法, 在容器关闭的时候执行
+ 4. destroy方法执行的时机，有spring容器来控制
+ -->
+    <bean class="com.lily_stu.spring.bean.House" id="house"
+          init-method="init"
+          destroy-method="destroy">
+        <property name="name" value="北京豪宅"/>
+    </bean>
+
+    <!--默认情况下 scope的属性是singleton（单例
+            表示在ioc容器中只有一个这个bean对象，即每次getBean返回的是同一个对象实例
+        如果希望每次返回的是一个新的bean对象，则可以将scope属性值设置为prototype
+    -->
+    <bean class="com.lily_stu.spring.bean.Cat" id="cat" scope="prototype">
+        <property name="name" value="小白"/>
+        <property name="id" value="100"/>
+    </bean>
+
+    <!--bean配置信息服用-->
+    <bean class="com.lily_stu.spring.bean.Monster" id="monster10" abstract="true">
+        <property name="id" value="100"/>
+        <property name="name" value="牛魔王"/>
+        <property name="skill" value="芭蕉扇"/>
+    </bean>
+    <bean class="com.lily_stu.spring.bean.Monster" id="monster11" parent="monster10"/>
+
+    <!--  通过FactoryBean来获取bean对象  -->
+    <bean id="monster_05" class="com.lily_stu.spring.factory.MyFactoryBean">
+        <property name="key" value="monster01"/>
+    </bean>
+
+    <!--  通过工厂来获取Bean对象  -->
+    <bean class="com.lily_stu.spring.factory.StaticInstanceFactory" id="factory01"/>
+    <bean class="com.lily_stu.spring.factory.StaticInstanceFactory" id="factory02"/>
+    <!--  静态  monster_03和monster_04是同一个对象-->
+    <bean id="monster_03" class="com.lily_stu.spring.factory.StaticInstanceFactory" factory-method="getMonsterMapS">
+        <constructor-arg value="monster03"/>
+    </bean>
+    <bean id="monster_04" class="com.lily_stu.spring.factory.StaticInstanceFactory" factory-method="getMonsterMapS">
+        <constructor-arg value="monster03"/>
+    </bean>
+    <!--  实例  monster_01和monster_02不是一个对象-->
+    <bean id="monster_01" factory-bean="factory01" factory-method="getMonsterMapI">
+        <constructor-arg value="monster01"/>
+    </bean>
+    <bean id="monster_02" factory-bean="factory02" factory-method="getMonsterMapI">
+        <constructor-arg value="monster01"/>
+    </bean>
+
+
+    <!--    配置Dept对象-->
+    <bean id="dept" class="com.lily_stu.spring.bean.Dept"/>
+    <bean id="emp" class="com.lily_stu.spring.bean.Emp">
+        <property name="name" value="小刘"/>
+        <property name="dept" ref="dept"/>
+        <!--        在这里我希望给dept的name属性赋值[级联属性赋值]-->
+        <property name="dept.name" value="java开发部门"/>
+    </bean>
+
+    <!--    定义一个util:list 可以达到数据复用效果-->
+    <util:list id="myBookList">
+        <value>水浒传</value>
+        <value>三国演义</value>
+        <value>西游记</value>
+        <value>红楼梦</value>
+    </util:list>
+
+    <bean class="com.lily_stu.spring.bean.BookStore" id="bookStore">
+        <property name="bookList" ref="myBookList"/>
+    </bean>
 
     <!-- 给集合属性注入值
  -->
@@ -67,7 +155,7 @@
   -->
     <bean id="memberServiceImpl02" class="com.lily_stu.spring.service.MemberServiceImpl">
         <property name="memberDAO">
-            <bean class="com.lily_stu.spring.DAO.MemberDAOImpl"/>
+            <bean class="com.lily_stu.spring.dao.MemberDAOImpl"/>
         </property>
     </bean>
 
@@ -75,7 +163,7 @@
      1. 其它含义和前面一样
      2. ref 表示memberDAO 这个属性将引用/指向id = memberDAOImpl 对象
     -->
-    <bean id="memberDAO" class="com.lily_stu.spring.DAO.MemberDAOImpl"/>
+    <bean id="memberDAO" class="com.lily_stu.spring.dao.MemberDAOImpl"/>
     <bean id="memberServiceImpl" class="com.lily_stu.spring.service.MemberServiceImpl">
         <property name="memberDAO" ref="memberDAO"/>
     </bean>

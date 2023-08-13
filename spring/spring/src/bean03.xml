@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--    配置OrderDao对象-->
+    <bean class="com.lily_stu.spring.dao.OrderDao" id="orderDao"/>
+    <!--    配置OrderService对象
+            1.autowire="byType"表示 在创建orderService时
+              根据对象类型给对象属性 自动完成赋值/引用
+            2.比如OrderService有OrderDao属性
+            3.就会在容器中找有没有OrderDao的bean对象
+            4.如果有，就会自动装配，注意：这个时候容器中OrderDao类型的bean对象只能有一个
+            5.如果对象中没有属性就没必要配置autowire
+
+            7.autowire="byName"表示通过名字完成自动装配
+            8. 比如下面的 autowire="byName" class="com.hspedu.spring.service.OrderService"
+           1) 先看 OrderService 属性 private OrderDao orderDao
+           2) 再根据这个属性的setXxx()方法的 xxx 来找对象id
+           3) public void setOrderDao() 就会找id=orderDao对象来进行自动装配
+           4) 如果没有就装配失败
+    -->
+    <bean autowire="byName" class="com.lily_stu.spring.service.OrderService" id="orderService"/>
+    <!--    配置OrderAction-->
+    <bean autowire="byType" class="com.lily_stu.spring.web.OrderAction" id="orderAction"/>
+</beans>

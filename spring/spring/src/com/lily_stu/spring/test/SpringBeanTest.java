@@ -1,13 +1,12 @@
 package com.lily_stu.spring.test;
 
-import com.lily_stu.spring.bean.Car;
-import com.lily_stu.spring.bean.Master;
-import com.lily_stu.spring.bean.Monster;
+import com.lily_stu.spring.bean.*;
 import com.lily_stu.spring.service.MemberServiceImpl;
 import jdk.nashorn.internal.ir.LexicalContext;
 import jdk.nashorn.internal.ir.LexicalContextNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
@@ -87,7 +86,7 @@ public class SpringBeanTest {
     @Test
     public void setBeanByConstructor() {
         ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
-        Monster monster03 =  ioc.getBean("monster03",Monster.class);//可以不用类型转换
+        Monster monster03 = ioc.getBean("monster03", Monster.class);//可以不用类型转换
 //        Monster monster03 =  (Monster) ioc.getBean("monster03");
         System.out.println("monster03 bean==>" + monster03);
     }
@@ -145,5 +144,79 @@ public class SpringBeanTest {
         for (Map.Entry<Object, Object> objectObjectEntry : entries1) {
             System.out.println(objectObjectEntry);
         }
+    }
+
+    @Test
+    public void setBeanByUtilList() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        BookStore bookStore = ioc.getBean("bookStore", BookStore.class);
+        List<String> bookList = bookStore.getBookList();
+        System.out.println("bookList=" + bookList);
+    }
+
+    @Test
+    public void setBeanByRelation() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Emp emp = ioc.getBean("emp", Emp.class);
+        System.out.println("emp=" + emp);
+    }
+
+    @Test
+    public void getBeanByExtend() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster monster11 = ioc.getBean("monster11", Monster.class);
+        System.out.println("monster11=" + monster11);
+    }
+
+    //单例多例
+    @Test
+    public void getBeanScope() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Cat cat1 = ioc.getBean("cat", Cat.class);
+        Cat cat2 = ioc.getBean("cat", Cat.class);
+        Cat cat3 = ioc.getBean("cat", Cat.class);
+        System.out.println(cat1);
+        System.out.println(cat2);
+        System.out.println(cat3);
+//        com.lily_stu.spring.bean.Cat@49ec71f8
+//        com.lily_stu.spring.bean.Cat@1d2adfbe
+//        com.lily_stu.spring.bean.Cat@36902638
+
+        /*
+        细节：
+        Scope=singleton时bean对象在一开始就会创建（懒加载属性lazy_init是false
+                        此时将lazy_init = true,那么该对象即是单例也是懒加载的
+        scope=prototype时之后在getBean时才会创建对象（无论lazy_init是true还是false
+         */
+    }
+
+    //测试Bean的生命周期
+    @Test
+    public void testBeanLife() {
+
+        ApplicationContext ioc =
+                new ClassPathXmlApplicationContext("beans.xml");
+
+        House house = ioc.getBean("house", House.class);
+
+        System.out.println("使用house=" + house);
+
+        //关闭容器
+        //1. 这里又要考察大家的java基础
+        //2. ioc的编译类型 ApplicationContext , 运行类型 ClassPathXmlApplicationContext
+        //3. 因为ClassPathXmlApplicationContext 实现了 ConfigurableApplicationContext
+        //4. ClassPathXmlApplicationContext 是有close
+        //5. 将ioc 转成ClassPathXmlApplicationContext,再调用close
+        //ioc.close();
+        //关闭ioc容器.
+        ((ConfigurableApplicationContext) ioc).close();
+    }
+
+    @Test
+    public void setBeanByFile(){
+        ApplicationContext ioc =
+                new ClassPathXmlApplicationContext("beans.xml");
+        Monster monster1000 = ioc.getBean("monster1000", Monster.class);
+        System.out.println(monster1000);
     }
 }

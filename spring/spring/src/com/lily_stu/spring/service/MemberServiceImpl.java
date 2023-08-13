@@ -1,6 +1,6 @@
 package com.lily_stu.spring.service;
 
-import com.lily_stu.spring.DAO.MemberDAOImpl;
+import com.lily_stu.spring.dao.MemberDAOImpl;
 
 public class MemberServiceImpl {
     private MemberDAOImpl memberDAO;

@@ -1,4 +1,4 @@
-package com.lily_stu.spring.DAO;
+package com.lily_stu.spring.dao;
 
 public class MemberDAOImpl {
     public MemberDAOImpl(){
