@@ -15,3 +15,96 @@
 6.xml：xml 文件做配置文件可以说非常的普遍，比如我们的tomcat 服务器的server.xml ，web.xml	   
 	   xml 可以充当小型的数据库=> 程序自己的数据格式存放
 	   DOM4j：不管是html 文件还是xml 文件它们都是标记型文档，都可以使用w3c 组织制定的dom 技术来解析
+7.Tomcat:
+8.Servlet:（需要引入servlet-api.jar包
+		  Servlet 在开发动态WEB 工程中，得到广泛的应用，掌握好Servlet 非常重要了, Servlet(基石)是SpringMVC 的基础
+		  他是由服务器端调用和执行的(一句话：是Tomcat解析和执行);
+		  他是用java语言编写的, 本质就是Java类;
+		  他是按照Servlet规范开发的(除了tomcat->Servlet weblogic->Servlet)
+		  功能强大，可以完成几乎所有的网站功能(在以前，我们老程员，使用Servlet开发网站) 技术栈要求高
+	ServletConfig:
+			ServletConfig 类是为Servlet 程序的配置信息的类
+			Servlet 程序和ServletConfig 对象都是由Tomcat 负责创建
+			Servlet 程序默认是第1 次访问的时候创建，ServletConfig 在Servlet 程序创建时，就创建一个对应的ServletConfig对象
+	ServletContext：
+			1. ServletContext 是一个接口，它表示Servlet 上下文对象
+			2. 一个web 工程，只有一个ServletContext 对象实例
+			3. ServletContext 对象是在web 工程启动的时候创建，在web 工程停止的时销毁
+			4. ServletContext 对象可以通过ServletConfig.getServletContext 方法获得对ServletContext对象的引用，也可以通过this.getServletContext()来获得其对象的引用。
+			5. 由于一个WEB 应用中的所有Servlet 共享同一个ServletContext 对象，因此Servlet 对象之间可以通过ServletContext 对象来实现多个Servlet 间通讯。ServletContext 对象通常也被称之为域对象
+		可以使用它做什么？
+			1. 获取web.xml 中配置的上下文参数context-param [信息和整个web 应用相关，而不是属于某个Servlet]
+				ServletContext servletContext = getServletContext();
+			2. 获取当前的工程路径，格式: /工程路径=》比如/servlet
+			3. 获取工程部署后在服务器硬盘上的绝对路径( 比如:D:\hspedu_javaweb\servlet\out\artifacts\servlet_war_exploded)
+	HttpServletRequest 
+			1. HttpServletRequest 对象代表客户端的请求
+			2. 当客户端/浏览器通过HTTP 协议访问服务器时，HTTP 请求头中的所有信息都封装在这个对象中
+			3. 通过这个对象的方法，可以获得客户端这些信息。
+	HttpServletResponse
+			1. 每次HTTP 请求，Tomcat 会创建一个HttpServletResponse 对象传递给Servlet 程序去使用。
+			2. HttpServletRequest 表示请求过来的信息，HttpServletResponse 表示所有响应的信息，如果需要设置返回给客户端的信息，通过HttpServletResponse 对象来进行设置即可
+9.http协议：
+			超文本传输协议(HTTP，HyperText Transfer Protocol)是互联网上应用广泛的一种网络协议。是工作在tcp/ip 协议基础上的,所有的WWW 文件都遵守这个标准。
+		MIME 类型：
+			1.MIME 是HTTP 协议中数据类型。MIME 的英文全称是"Multipurpose Internet MailExtensions" 多功能Internet 邮件扩充服务。MIME 类型的格式是"大类型/小类型"，
+				并与某一种文件的扩展名相对应
+			2.在响应包的Content-Type 就有指定
+12.会话技术：
+		cookie：
+			1. Cookie 是服务器在客户端保存用户的信息，比如登录名，浏览历史等, 就可以以cookie方式保存.
+			2.数据量不大，服务器端在需要的时候可以从客户端/浏览器读取(http 协议)
+		session：
+			1. Session 是服务器端技术，服务器在运行时为每一个用户的浏览器创建一个其独享的session 对象/集合
+			2. 由于session 为各个用户浏览器独享，所以用户在访问服务器的不同页面时，可以从各自的session 中读取/添加数据, 从而完成相应任务
+			3. 这个session 对象也可看做是一个容器/集合,session 对象默认存在时间为30min(这是在tomcat/conf/web.xml)，也可修改
+13.服务器渲染技术-JSP：（需要引入jsp-api.jar包;
+			1. JSP 全称是Java Server Pages，Java 的服务器页面
+			2. JSP 这门技术的最大的特点在于，写JSP 就像在写HTML
+			3. jsp 技术基于Servlet, 你可以理解成JSP 就是对Servlet 的包装.
+		page 指令(常用的)	
+			<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+			1. language 表示jsp 翻译后是什么语言文件, 只支持java
+			2. contentType 表示jsp 返回的数据类型，对应源码中response.setContentType()参数值
+			3. pageEncoding 属性表示当前jsp 页面文件本身的字符集
+			4. import 属性跟java 源代码中一样。用于导包，导类
+		JSP 三种常用脚本:
+			<%! 声明java 代码%>
+			<%=表达式%>
+			<% java 代码%>
+		EL:	
+			1.EL 表达式全称：Expression Language，是表达式语言
+			2. EL 表达式主要是代替jsp 页面的表达式脚本<%=request.getAttribute("xx")%>
+			3. EL 表达式输出数据的时，比jsp 的表达式脚本简洁
+			4. EL 表达式基本语法： ${key1}, 你可以理解就是一个语法糖
+		JSTL:(需要导入包==》taglibs-standard-impl-1.2.1.jar;taglibs-standard-spec-1.2.1.jar
+							<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+			1. JSTL 标签库是指JSP Standard Tag Library JSP 标准标签库
+			2. EL 表达式是为了替换jsp 中的表达式脚本，JSTL 是为了替换代码脚本。这样jsp 页面变得更佳简洁
+14.JavaWeb 三大组件之监听器Listener	
+			1. Listener 监听器它是JavaWeb 的三大组件之一。JavaWeb 的三大组件分别是：Servlet 程序、Listener 监听器、Filter 过滤器
+			2. Listener 是JavaEE 的规范，就是接口
+			3. 监听器的作用是，监听某种变化(一般就是对象创建/销毁, 属性变化), 触发对应方法完成相应的任务
+15.Filter 过滤器
+			1. Filter 过滤器它是JavaWeb 的三大组件之一(Servlet 程序、Listener 监听器、Filter 过滤器)
+			2. Filter 过滤器是JavaEE 的规范，是接口
+			3. Filter 过滤器它的作用是：拦截请求，过滤响应。
+16.JavaScript 开发利器之jQuery：
+			1. jQuery 是一个快速的，简洁的javaScript 库，使用户能更方便地处理HTML,css,dom...
+			2. 提供方法、events、选择器，并且方便地为网站提供AJAX 交互
+			3. 其宗旨是—WRITE LESS,DO MORE,写更少的代码,做更多的事情.
+			4. jQuery 实现了浏览器的兼容问题
+		我们下载production jQuery 3.6.0 , 把内容保存到jquery-3.6.0.min.js 文件即可
+		使用<script type="text/javascript" src="./script/jquery-3.6.0.min.js"></script> 引入jQuery 库文件
+		1. jQuery 对象就是对DOM 对象进行包装后产生的对象
+17.	数据交换和异步请求- JSON & Ajax：
+		JSON 指的是JavaScript 对象表示法（JavaScript Object Notation）--JSON 是轻量级的文本数据交换格式
+		AJAX 即"Asynchronous Javascript And XML"(异步JavaScript和XML)--Ajax 是一种浏览器异步发起请求(指定发哪些数据)，局部更新页面的技术
+18.线程数据共享和安全-ThreadLocal
+		ThreadLocal 的作用，可以实现在同一个线程数据共享, 从而解决多线程数据安全问题.	
+		每一个ThreadLocal 对象，只能为当前线程关联一个数据，如果要为当前线程关联多个数据，就需要使用多个ThreadLocal 对象实例
+		ThreadLocal 可以给当前线程关联一个数据(普通变量、对象、数组)set 方法[源码!]
+		ThreadLocal 可以像Map 一样存取数据，key 为当前线程, get 方法
+19.web 应用常用功能-文件上传下载
+		文件上传下载需要传入两个jar包
+		commons-fileupload-1.2.1.jar;commons-io-1.4.jar
