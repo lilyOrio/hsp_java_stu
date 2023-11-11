@@ -97,7 +97,7 @@
 		我们下载production jQuery 3.6.0 , 把内容保存到jquery-3.6.0.min.js 文件即可
 		使用<script type="text/javascript" src="./script/jquery-3.6.0.min.js"></script> 引入jQuery 库文件
 		1. jQuery 对象就是对DOM 对象进行包装后产生的对象
-17.	数据交换和异步请求- JSON & Ajax：
+17.数据交换和异步请求- JSON & Ajax：
 		JSON 指的是JavaScript 对象表示法（JavaScript Object Notation）--JSON 是轻量级的文本数据交换格式
 		AJAX 即"Asynchronous Javascript And XML"(异步JavaScript和XML)--Ajax 是一种浏览器异步发起请求(指定发哪些数据)，局部更新页面的技术
 18.线程数据共享和安全-ThreadLocal
@@ -108,3 +108,21 @@
 19.web 应用常用功能-文件上传下载
 		文件上传下载需要传入两个jar包
 		commons-fileupload-1.2.1.jar;commons-io-1.4.jar
+		
+前端技术栈
+	promise：
+		基本介绍：Promise 是异步编程的一种解决方案。
+					
+		
+主流框架
+Spring：
+1.基本介绍
+	Spring 核心学习内容IOC、AOP, jdbcTemplate, 声明式事务
+	IOC: 控制反转, 可以管理java 对象
+	AOP : 切面编程
+	JDBCTemplate : 是spring 提供一套访问数据库的技术, 应用性强，相对好理解
+	声明式事务: 基于ioc/aop 实现事务管理
+2.Spring 几个重要概念：
+ Spring 可以整合其他的框架(老韩解读: Spring 是管理框架的框架)
+ Spring 有两个核心的概念: IOC 和AOP
+ IOC [Inversion Of Control 反转控制]

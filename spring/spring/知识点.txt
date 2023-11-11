@@ -1,0 +1,9 @@
+手搓Spring注解配置bean
+	需求：自己写一个简单的Spring 容器, 通过读取类的注解(@Component @Controller @Service @Reponsitory)，将对象注入到IOC 容器
+		也就是说，不使用Spring 原生框架，我们自己使用IO+Annotaion+反射+集合技术实现, 打通Spring 注解方式开发的技术痛点
+	思路分析：我们使用注解方式完成, 这里不用xml 来配置
+	实现：
+		1.搭建基本结构，并获取要扫描的包
+		2.扫描包下面的所有.class文件
+		3.获取全类名 反射创建对象 放入容器
+	
