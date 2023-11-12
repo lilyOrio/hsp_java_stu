@@ -1,6 +1,7 @@
 package com.lily_stu.spring.test;
 
 import com.lily_stu.spring.bean.*;
+import com.lily_stu.spring.component.UserDAO;
 import com.lily_stu.spring.service.MemberServiceImpl;
 import jdk.nashorn.internal.ir.LexicalContext;
 import jdk.nashorn.internal.ir.LexicalContextNode;
@@ -218,5 +219,17 @@ public class SpringBeanTest {
                 new ClassPathXmlApplicationContext("beans.xml");
         Monster monster1000 = ioc.getBean("monster1000", Monster.class);
         System.out.println(monster1000);
+    }
+
+    //通过注解来配置bean
+    @Test
+    public void setBeanByAnnotation(){
+        ApplicationContext ioc =
+                new ClassPathXmlApplicationContext("beans05.xml");
+        UserDAO userDAO = ioc.getBean(UserDAO.class);
+//        在默认情况下类名首字母小写会作为对象的id 也可以在注释后面自定义id
+        UserDAO userDAO01 = ioc.getBean("userDAO",UserDAO.class);
+
+        System.out.println(userDAO);
     }
 }
