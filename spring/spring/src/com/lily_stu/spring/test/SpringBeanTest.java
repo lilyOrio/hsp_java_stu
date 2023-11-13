@@ -2,6 +2,8 @@ package com.lily_stu.spring.test;
 
 import com.lily_stu.spring.bean.*;
 import com.lily_stu.spring.component.UserDAO;
+import com.lily_stu.spring.depinjection.BookService;
+import com.lily_stu.spring.depinjection.PhoneService;
 import com.lily_stu.spring.service.MemberServiceImpl;
 import jdk.nashorn.internal.ir.LexicalContext;
 import jdk.nashorn.internal.ir.LexicalContextNode;
@@ -231,5 +233,16 @@ public class SpringBeanTest {
         UserDAO userDAO01 = ioc.getBean("userDAO",UserDAO.class);
 
         System.out.println(userDAO);
+    }
+
+    //泛型依赖注入
+    @Test
+    public void setProByDepInjectionAutowired(){
+        ApplicationContext ioc =
+                new ClassPathXmlApplicationContext("beans04.xml");
+        PhoneService phoneService = ioc.getBean(PhoneService.class);
+        BookService bookService = ioc.getBean(BookService.class);
+        phoneService.hi();
+        bookService.hi();
     }
 }
