@@ -19,21 +19,39 @@ public class SmartAnimalAspect {
                 Arrays.asList(joinPoint.getArgs()));
     }
 
-    @AfterReturning(value = "execution(public float com.lily_stu.spring.aop.aspectj.SmartDog.getSub(float,float))")
-    public void showSuccessEndLog(JoinPoint joinPoint) {
+    @AfterReturning(value = "execution(public float com.lily_stu.spring.aop.aspectj.SmartDog.getSub(float,float))",returning = "res")
+    public void showSuccessEndLog(JoinPoint joinPoint,Object res) {
         System.out.println("返回通知");
         Signature signature = joinPoint.getSignature();
 // 3. 在目标方法结束后打印“方法结束”日志
-        System.out.println("日志--方法名：" + signature.getName() + "--方法正常结束 --~");
+        System.out.println("日志--方法名：" + signature.getName() + "--方法正常结束 --~" + "返回值：" + res);
     }
 
-    @AfterThrowing(value = "execution(public float com.lily_stu.spring.aop.aspectj.SmartDog.getSub(float,float))")
-    public void showExceptionLog() {
-        System.out.println("异常通知");
+    @AfterThrowing(value = "execution(public float com.lily_stu.spring.aop.aspectj.SmartDog.getSub(float,float))",throwing = "throwing")
+    public void showExceptionLog(JoinPoint joinPoint,Throwable throwing) {
+        System.out.println("方法："+joinPoint.getSignature().getName()+" 异常通知:" + throwing);
     }
 
-    @After(value = "execution(public * com.lily_stu.spring.aop.*.*.*(..))")
+    @After(value = "execution(public void com.lily_stu.spring.aop.homework.UsbInterface.work(String))")
     public void showFinallyEndLog() {
         System.out.println("最终通知");
     }
+    @Before(value = "execution(public void Car.run())")
+    public void ok(JoinPoint joinPoint){
+        System.out.println("前置通知");
+        Signature signature = joinPoint.getSignature();
+        System.out.println("日志--方法名：" + signature.getName() + "--方法开始--参数： " +
+                Arrays.asList(joinPoint.getArgs()));
+    }
+
+    /*JoinPoint
+    通过JoinPoint 可以获取到调用方法的签名，和其它相关信息
+        joinPoint.getSignature().getName(); // 获取目标方法名
+        joinPoint.getSignature().getDeclaringType().getSimpleName(); // 获取目标方法所属类的简单类名
+        joinPoint.getSignature().getDeclaringTypeName(); // 获取目标方法所属类的类名
+        joinPoint.getSignature().getModifiers(); // 获取目标方法声明类型(public、private、protected)
+        Object[] args = joinPoint.getArgs(); // 获取传入目标方法的参数，返回一个数组
+        joinPoint.getTarget(); // 获取被代理的对象
+        joinPoint.getThis(); // 获取代理对象自己
+     */
 }

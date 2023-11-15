@@ -14,6 +14,7 @@ public class SmartDog implements SmartAnimal{
     @Override
     public float getSub(float i, float j) {
         float result = i - j;
+//        result = 1/0;//模拟算数异常
         System.out.println("getSum() 方法内部打印result= " + result);
         return result;
     }
