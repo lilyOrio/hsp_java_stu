@@ -1,7 +1,9 @@
 package com.lilystu.spring.component;
 
 import com.lilystu.spring.annotation.Component;
+import com.lilystu.spring.annotation.Scope;
 
-@Component("monsterDao")
+@Component
+@Scope("prototype")
 public class MonsterDao {
 }

@@ -2,6 +2,7 @@ package com.lilystu.spring.ioc;
 
 import com.lilystu.spring.annotation.Component;
 import com.lilystu.spring.annotation.ComponentScan;
+import com.lilystu.spring.annotation.Scope;
 
 import java.io.File;
 import java.net.URL;
@@ -17,8 +18,13 @@ public class LilySpringApplicationContext {
      * 用于存放通过反射创建的对象
      */
     private final ConcurrentHashMap<String, Object> singletonObject = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
-    public LilySpringApplicationContext(Class configClass) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public LilySpringApplicationContext(Class configClass) throws Exception {
+        beanDefinitionsByscan(configClass);
+    }
+
+    private void beanDefinitionsByscan(Class configClass) throws Exception {
         this.configClass = configClass;//拿到配置类的Class对象就可以获取到config里面的注解以及注解的value
         System.out.println("this.configClass = " + this.configClass);
         //获取要扫描的包
@@ -40,32 +46,41 @@ public class LilySpringApplicationContext {
             File[] files = file.listFiles();
             for (File f : files) {
                 System.out.println("=============");
-//                System.out.println(f.getAbsolutePath());
                 String fileAbsolutePath = f.getAbsolutePath();//类的全路径
                 // 过滤.class文件
                 if (fileAbsolutePath.endsWith(".class")) {
                     // a.获取类名
                     String className = fileAbsolutePath.substring(fileAbsolutePath.lastIndexOf("\\") + 1, fileAbsolutePath.indexOf(".class"));
-//                System.out.println("className = " + className);
                     // b.获取类的全类名
                     String classFullName = path.replace("/", ".") + "." + className;
-//                    System.out.println("classFullPath = " + classFullName);
                     // c.判断该类是否需要注入容器中（是否有对应注解
                     //   获得bean的Class对象
                     Class<?> aClass = loader.loadClass(classFullName);//通过全类名获取Class对象，类似于Class.forName(classFullName),后者会调用该类的静态方法，前者不会比较轻量级
                     if (aClass.isAnnotationPresent(Component.class)) {
-                        //这是就可以反射对象，并放入到容器中
-                        System.out.println(className + "是一个bean,全类名：" + classFullName);
-                    }else {
-                        System.out.println(className + "不是一个bean,全类名：" + classFullName);
+                        //获取bean的id
+                        Component annotation = aClass.getDeclaredAnnotation(Component.class);
+                        String id = annotation.value();
+                        if ("".equals(id)) {
+                            id = "m" + className;
+                        }
+                        BeanDefinition beanDefinition = new BeanDefinition();
+                        beanDefinition.setClazz(aClass);
+                        if (aClass.isAnnotationPresent(Scope.class)) {
+                            Scope scope = aClass.getDeclaredAnnotation(Scope.class);
+                            beanDefinition.setScope(scope.value());
+                        } else {
+                            beanDefinition.setScope("singleton");
+                        }
+                        beanDefinitionMap.put(id, beanDefinition);
+                    } else {
+
                     }
                 }
             }
         }
     }
 
-//    public Object getBean(String id) {
-//        return singletonObject.get(id);
-//    }
-
+    public Object getBean(String id) {
+        return null;
+    }
 }
