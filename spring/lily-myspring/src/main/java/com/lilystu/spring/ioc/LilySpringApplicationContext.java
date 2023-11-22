@@ -5,7 +5,9 @@ import com.lilystu.spring.annotation.ComponentScan;
 import com.lilystu.spring.annotation.Scope;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -17,11 +19,47 @@ public class LilySpringApplicationContext {
     /**
      * 用于存放通过反射创建的对象
      */
-    private final ConcurrentHashMap<String, Object> singletonObject = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
     public LilySpringApplicationContext(Class configClass) throws Exception {
         beanDefinitionsByscan(configClass);
+        System.out.println(beanDefinitionMap);
+
+        //通过beanDefinitionMap , 初始化singletonObjects bean 单列池
+        Enumeration<String> keys = beanDefinitionMap.keys();
+        while (keys.hasMoreElements()){
+            //得到beanName
+            String beanName = keys.nextElement();
+            //通过beanName 得到beanDefinition
+            BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
+            if ("singleton".equalsIgnoreCase(beanDefinition.getScope())){
+                //将该bean 实例放入singletonObjects
+                Object bean = createBean(beanDefinition);
+                singletonObjects.put(beanName, bean);
+            }
+        }
+        System.out.println("singletonObjects 单例池= " + singletonObjects);
+    }
+
+    //先简单实现实现，后面在完善.
+    private Object createBean(BeanDefinition beanDefinition) {
+        //得到bean 的类型
+        Class clazz = beanDefinition.getClazz();
+        try {
+            Object instance = clazz.getDeclaredConstructor().newInstance();
+            return instance;
+        }catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        //如果没有创建成功，返回null
+        return null;
     }
 
     private void beanDefinitionsByscan(Class configClass) throws Exception {
@@ -45,7 +83,6 @@ public class LilySpringApplicationContext {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             for (File f : files) {
-                System.out.println("=============");
                 String fileAbsolutePath = f.getAbsolutePath();//类的全路径
                 // 过滤.class文件
                 if (fileAbsolutePath.endsWith(".class")) {
@@ -81,6 +118,18 @@ public class LilySpringApplicationContext {
     }
 
     public Object getBean(String id) {
-        return null;
+        if (beanDefinitionMap.containsKey(id)){
+            BeanDefinition beanDefinition = beanDefinitionMap.get(id);
+            //得到bean 的scope , 分别处理
+            if("singleton".equalsIgnoreCase(beanDefinition.getScope())) {
+                //单例，直接从bean 单例池获取
+                return singletonObjects.get(id);
+            } else {
+                //不是单例，则没有返回新的实例
+                return createBean(beanDefinition);
+            }
+        }else {
+            throw new NullPointerException("没有该bean");
+        }
     }
 }
