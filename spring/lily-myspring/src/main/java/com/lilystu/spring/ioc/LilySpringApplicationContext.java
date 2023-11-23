@@ -1,10 +1,12 @@
 package com.lilystu.spring.ioc;
 
+import com.lilystu.spring.annotation.AutoWire;
 import com.lilystu.spring.annotation.Component;
 import com.lilystu.spring.annotation.ComponentScan;
 import com.lilystu.spring.annotation.Scope;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Enumeration;
@@ -45,17 +47,20 @@ public class LilySpringApplicationContext {
     //先简单实现实现，后面在完善.
     private Object createBean(BeanDefinition beanDefinition) {
         //得到bean 的类型
-        Class clazz = beanDefinition.getClazz();
+        Class<?> clazz = beanDefinition.getClazz();
         try {
             Object instance = clazz.getDeclaredConstructor().newInstance();
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(AutoWire.class)){
+                    String name = field.getName();
+                    Object bean = getBean(name);
+                    field.setAccessible(true);
+                    field.set(instance,bean);
+                }
+            }
             return instance;
-        }catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
+        }catch (Exception e) {
             e.printStackTrace();
         }
         //如果没有创建成功，返回null

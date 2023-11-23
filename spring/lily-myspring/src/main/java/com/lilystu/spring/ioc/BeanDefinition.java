@@ -19,4 +19,12 @@ public class BeanDefinition {
     public void setScope(String scope) {
         this.scope = scope;
     }
+
+    @Override
+    public String toString() {
+        return "BeanDefinition{" +
+                "clazz=" + clazz +
+                ", scope='" + scope + '\'' +
+                '}' + "\n";
+    }
 }
