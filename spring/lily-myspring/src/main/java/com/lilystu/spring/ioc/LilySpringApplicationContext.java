@@ -4,12 +4,15 @@ import com.lilystu.spring.annotation.AutoWire;
 import com.lilystu.spring.annotation.Component;
 import com.lilystu.spring.annotation.ComponentScan;
 import com.lilystu.spring.annotation.Scope;
+import com.lilystu.spring.processe.BeanPostProcessor;
+import com.lilystu.spring.processe.InitializingBean;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -23,44 +26,65 @@ public class LilySpringApplicationContext {
      */
     private final ConcurrentHashMap<String, Object> singletonObjects = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+    private final List<BeanPostProcessor> processorList = new ArrayList<>();
+
 
     public LilySpringApplicationContext(Class configClass) throws Exception {
         beanDefinitionsByscan(configClass);
-        System.out.println(beanDefinitionMap);
 
         //通过beanDefinitionMap , 初始化singletonObjects bean 单列池
         Enumeration<String> keys = beanDefinitionMap.keys();
-        while (keys.hasMoreElements()){
+        while (keys.hasMoreElements()) {
             //得到beanName
             String beanName = keys.nextElement();
             //通过beanName 得到beanDefinition
             BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
-            if ("singleton".equalsIgnoreCase(beanDefinition.getScope())){
+            if ("singleton".equalsIgnoreCase(beanDefinition.getScope())) {
                 //将该bean 实例放入singletonObjects
-                Object bean = createBean(beanDefinition);
+                Object bean = createBean(beanName, beanDefinition);
                 singletonObjects.put(beanName, bean);
             }
         }
-        System.out.println("singletonObjects 单例池= " + singletonObjects);
     }
 
     //先简单实现实现，后面在完善.
-    private Object createBean(BeanDefinition beanDefinition) {
+    private Object createBean(String beanName, BeanDefinition beanDefinition) {
         //得到bean 的类型
         Class<?> clazz = beanDefinition.getClazz();
         try {
             Object instance = clazz.getDeclaredConstructor().newInstance();
+
+            //完成依赖注入
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {
-                if (field.isAnnotationPresent(AutoWire.class)){
+                if (field.isAnnotationPresent(AutoWire.class)) {
                     String name = field.getName();
                     Object bean = getBean(name);
                     field.setAccessible(true);
-                    field.set(instance,bean);
+                    field.set(instance, bean);
                 }
             }
+            //执行后置处理器Before方法
+            for (BeanPostProcessor processor : processorList) {
+                Object current = processor.postProcessBeforeInitialization(instance, beanName);
+                if (current != null) {
+                    instance = current;
+                }
+            }
+            //执行初始化方法
+            if (instance instanceof InitializingBean) {
+                ((InitializingBean) instance).afterPropertiesSet();
+            }
+            //执行后置处理器After方法
+            for (BeanPostProcessor processor : processorList) {
+                Object current = processor.postProcessAfterInitialization(instance, beanName);
+                if (current != null) {
+                    instance = current;
+                }
+            }
+            System.out.println("---------------------------");
             return instance;
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         //如果没有创建成功，返回null
@@ -99,6 +123,12 @@ public class LilySpringApplicationContext {
                     //   获得bean的Class对象
                     Class<?> aClass = loader.loadClass(classFullName);//通过全类名获取Class对象，类似于Class.forName(classFullName),后者会调用该类的静态方法，前者不会比较轻量级
                     if (aClass.isAnnotationPresent(Component.class)) {
+                        //为了方便将后置处理器添加到processorList集合中保存
+                        if (BeanPostProcessor.class.isAssignableFrom(aClass)) {
+                            BeanPostProcessor instance = (BeanPostProcessor) aClass.newInstance();
+                            processorList.add(instance);
+                            continue;
+                        }
                         //获取bean的id
                         Component annotation = aClass.getDeclaredAnnotation(Component.class);
                         String id = annotation.value();
@@ -114,8 +144,6 @@ public class LilySpringApplicationContext {
                             beanDefinition.setScope("singleton");
                         }
                         beanDefinitionMap.put(id, beanDefinition);
-                    } else {
-
                     }
                 }
             }
@@ -123,17 +151,17 @@ public class LilySpringApplicationContext {
     }
 
     public Object getBean(String id) {
-        if (beanDefinitionMap.containsKey(id)){
+        if (beanDefinitionMap.containsKey(id)) {
             BeanDefinition beanDefinition = beanDefinitionMap.get(id);
             //得到bean 的scope , 分别处理
-            if("singleton".equalsIgnoreCase(beanDefinition.getScope())) {
+            if ("singleton".equalsIgnoreCase(beanDefinition.getScope())) {
                 //单例，直接从bean 单例池获取
                 return singletonObjects.get(id);
             } else {
                 //不是单例，则没有返回新的实例
-                return createBean(beanDefinition);
+                return createBean(id, beanDefinition);
             }
-        }else {
+        } else {
             throw new NullPointerException("没有该bean");
         }
     }
