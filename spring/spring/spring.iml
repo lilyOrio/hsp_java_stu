@@ -20,6 +20,9 @@
         <fileset id="fileset4" name="Beans09" removed="false">
           <file>file://$MODULE_DIR$/src/beans09.xml</file>
         </fileset>
+        <fileset id="fileset5" name="JdbcTemplate_ioc" removed="false">
+          <file>file://$MODULE_DIR$/src/JdbcTemplate_ioc.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -50,5 +53,6 @@
     <orderEntry type="library" name="dom4j-1.6.1" level="project" />
     <orderEntry type="library" name="spring-aop-5.3.8" level="project" />
     <orderEntry type="library" name="com.springsource.net.sf.cglib-2.2.0" level="project" />
+    <orderEntry type="library" name="c3p0-0.9.1.2" level="project" />
   </component>
 </module>
