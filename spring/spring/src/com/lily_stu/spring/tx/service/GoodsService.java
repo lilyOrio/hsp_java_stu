@@ -2,10 +2,11 @@ package com.lily_stu.spring.tx.service;
 
 import com.lily_stu.spring.tx.dao.GoodsDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+@Service
 public class GoodsService {
     @Autowired
     private GoodsDao goodsDao;

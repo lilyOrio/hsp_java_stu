@@ -39,10 +39,10 @@ public class JdbcTemplateTest {
 //        得到JdbcTemplate bean
         JdbcTemplate bean = ioc.getBean(JdbcTemplate.class);
         // 1. 添加方式1
-        // String sql = "INSERT INTO monster VALUES(400, '红孩儿', '枪法厉害')";
-        // bean.execute(sql);
+         String sql = "INSERT INTO monster VALUES(400, '红孩儿', '枪法厉害')";
+         bean.execute(sql);
         //2. 添加方式2, 绑定参数
-        String sql = "INSERT INTO monster VALUES(?, ?, ?)";
+         sql = "INSERT INTO monster VALUES(?, ?, ?)";
         int affected = bean.update(sql, 700, "红孩儿2", "枪法厉害2");
         System.out.println("add ok affected= " + affected);
     }
@@ -97,7 +97,7 @@ public class JdbcTemplateTest {
         ApplicationContext ioc = new ClassPathXmlApplicationContext("JdbcTemplate_ioc.xml");
         //得到JdbcTemplate bean
         JdbcTemplate bean = ioc.getBean(JdbcTemplate.class);
-        String sql = "SELECT id,name,skill FROM monster WHERE id = ?";
+        String sql = "SELECT id,name,skill FROM monster WHERE id > ?";
         //下面这个rowmapper 是一个接口，可以将查询的结果，封装到你指定的Monster 对象中.
         RowMapper<Monster> rowMapper = new BeanPropertyRowMapper<>(Monster.class);
         List<Monster> monsterList = bean.query(sql, rowMapper, 100);
@@ -148,7 +148,7 @@ public class JdbcTemplateTest {
         //得到NamedParameterJdbcTemplate bean
         NamedParameterJdbcTemplate namedParameterJdbcTemplate =
                 ioc.getBean(NamedParameterJdbcTemplate.class);
-        String sql = "INSERT INTO monster VALUES(:monsterId:name,:skill)";
+        String sql = "INSERT INTO monster VALUES(:id,:name,:skill)";
         Monster monster = new Monster(900, "狐狸精", "狐媚之术");
         SqlParameterSource source = new BeanPropertySqlParameterSource(monster);
         namedParameterJdbcTemplate.update(sql, source);

@@ -13,6 +13,6 @@ public class MonsterDao {
     //添加master
     public void save(Monster monster){
         String sql = "INSERT INTO monster VALUES(?, ?, ?)";
-        jdbcTemplate.update(sql,monster.getId(),monster.getId(),monster.getSkill());
+        jdbcTemplate.update(sql,monster.getId(),monster.getName(),monster.getSkill());
     }
 }
