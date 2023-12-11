@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       https://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean class="com.lily_stu.spring.aop.xml.SmartDog" id="smartDog"/>
+    <bean class="com.lily_stu.spring.aop.xml.SmartAnimalXMLAspect" id="smartAnimalXMLAspect"/>
+    <bean class="com.lily_stu.spring.aop.homework02.MyCal"/>
+    <bean class="com.lily_stu.spring.aop.homework02.CallXMLAspect" id="callXMLAspect"/>
+<!--    <context:component-scan base-package="com.lily_stu.spring.aop.homework02"/>-->
+<!--    <aop:aspectj-autoproxy/>-->
+
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(public float com.lily_stu.spring.aop.xml.SmartDog.getSub(float ,float))"/>
+        <aop:pointcut id="myPointcut02" expression="execution(public int com.lily_stu.spring.aop.homework02.MyCal.*(int))"/>
+        <aop:aspect ref="smartAnimalXMLAspect" order="1">
+            <aop:before method="showBegin" pointcut-ref="myPointcut"/>
+            <aop:after-returning method="showSuccessEndLog" pointcut-ref="myPointcut" returning="res"/>
+            <aop:after-throwing method="showExceptionLog" pointcut-ref="myPointcut" throwing="throwing"/>
+            <aop:after method="showFinallyEndLog" pointcut-ref="myPointcut"/>
+        </aop:aspect>
+        <aop:aspect ref="callXMLAspect" order="2">
+            <aop:before method="showBegin" pointcut-ref="myPointcut02"/>
+            <aop:after-returning method="showSuccessEndLog" pointcut-ref="myPointcut02" returning="res"/>
+            <aop:after-throwing method="showExceptionLog" pointcut-ref="myPointcut02" throwing="throwing"/>
+            <aop:after method="showFinallyEndLog" pointcut-ref="myPointcut02"/>
+        </aop:aspect>
+    </aop:config>
+
+
+
+</beans>

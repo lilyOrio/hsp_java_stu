@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+<!--    配置容器要扫描的包
+    1.component-scan 要对指定的包下的类进行扫描
+    2.base-package 指定需要扫描的包
+    3.在容器初始化时对指定包下有注解的类进行扫描
+    4.exclude-filter 排除不需要扫描的类
+    5. use-default-filters="false" 不使用默认的扫描机制
+    6.include-filter 指定只需要扫描的类
+    7.在默认情况下类名首字母小写会作为对象的id
+-->
+    <context:component-scan base-package="com.lily_stu.spring.component">
+<!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+</beans>
