@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!-- 配置自动扫描包-->
     <context:component-scan base-package="com.lily_stu.web"/>
     <!-- 配置SpringMVC 的视图解析器, 比如我们的controller return 的是ok
@@ -12,4 +13,20 @@
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <!--
+    1. 配置可以解析自定义的视图的解析器
+    2. BeanNameViewResolver 这个就是可以解析自定义视图的解析器
+    3. name="order" ：表示给这个解析器设置优先级, 默认优先级很低值Integer.MAX_VALUE
+    4. 一般来说明，我们自己的视图解析优先级高，Order 值越小，优先级越高
+    -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="99"/>
+    </bean>
+
+    <!-- 加入两个常规配置-->
+    <!-- 能支持SpringMVC 高级功能，比如JSR303 校验，映射动态请求-->
+    <mvc:annotation-driven/>
+    <!-- 将SpringMVC 不能处理的请求交给Tomcat, 比如请求css,js 等-->
+    <mvc:default-servlet-handler/>
 </beans>
