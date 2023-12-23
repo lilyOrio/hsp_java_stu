@@ -1,6 +1,7 @@
 package com.lilystu.lilyspringmvc.context;
 
 import com.lilystu.lilyspringmvc.annotation.Controller;
+import com.lilystu.lilyspringmvc.annotation.Service;
 import com.lilystu.lilyspringmvc.xml.XMLPaser;
 
 import java.io.File;
@@ -75,9 +76,30 @@ public class LilyWebApplicationContext {
                             clazz.getSimpleName().substring(1);
                     ioc.put(beanName, clazz.newInstance());
                 }//如果有其它注解，可以在这里扩展
+
+                if (clazz.isAnnotationPresent(Service.class)){
+                    Service serviceAnnotation = clazz.getAnnotation(Service.class);
+                    String beanName = serviceAnnotation.value();
+                    if ("".equals(beanName)){
+                        //如果@Service 没有指定value
+                        //得到该Service 的所有接口名(首字母小写)
+                        //相当于可以通过该类的多个接口名来,注入该Service 实例
+                        Object instance = clazz.newInstance();
+                        Class<?>[] interfaces = clazz.getInterfaces();
+                        for (Class<?> anInterface : interfaces) {
+                            String beanName2 = anInterface.getSimpleName().substring(0, 1).toLowerCase() +
+                                    anInterface.getSimpleName().substring(1);
+                            ioc.put(beanName2,instance);
+                        }
+                    }else {
+                        ioc.put(beanName, clazz.newInstance());
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+
         }
         System.out.println(ioc);
     }
