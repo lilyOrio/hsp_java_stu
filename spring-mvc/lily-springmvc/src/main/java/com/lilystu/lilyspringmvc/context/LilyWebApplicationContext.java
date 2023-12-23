@@ -1,13 +1,17 @@
 package com.lilystu.lilyspringmvc.context;
 
+import com.lilystu.lilyspringmvc.annotation.AutoWired;
 import com.lilystu.lilyspringmvc.annotation.Controller;
 import com.lilystu.lilyspringmvc.annotation.Service;
 import com.lilystu.lilyspringmvc.xml.XMLPaser;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LilyWebApplicationContext {
@@ -16,11 +20,14 @@ public class LilyWebApplicationContext {
     public ConcurrentHashMap<String, Object> ioc =
             new ConcurrentHashMap<>();
 
-    public LilyWebApplicationContext(){}
+    public LilyWebApplicationContext() {
+    }
+
     //这个就是我们的spring 容器配置文件,
     //这个contextConfigLocation 形式为classpath:xx.xml
     private String configLocation = "";
-    public LilyWebApplicationContext(String configLocation){
+
+    public LilyWebApplicationContext(String configLocation) {
         this.configLocation = configLocation;
     }
 
@@ -34,6 +41,9 @@ public class LilyWebApplicationContext {
         }
 //        System.out.println(classFullPathList);
         executeInstance();
+
+        //完成Spring 容器中对象的自动装配/注入
+        executeAutoWired();
     }
 
     public void scanPackage(String pack) {
@@ -77,10 +87,10 @@ public class LilyWebApplicationContext {
                     ioc.put(beanName, clazz.newInstance());
                 }//如果有其它注解，可以在这里扩展
 
-                if (clazz.isAnnotationPresent(Service.class)){
+                if (clazz.isAnnotationPresent(Service.class)) {
                     Service serviceAnnotation = clazz.getAnnotation(Service.class);
                     String beanName = serviceAnnotation.value();
-                    if ("".equals(beanName)){
+                    if ("".equals(beanName)) {
                         //如果@Service 没有指定value
                         //得到该Service 的所有接口名(首字母小写)
                         //相当于可以通过该类的多个接口名来,注入该Service 实例
@@ -89,18 +99,53 @@ public class LilyWebApplicationContext {
                         for (Class<?> anInterface : interfaces) {
                             String beanName2 = anInterface.getSimpleName().substring(0, 1).toLowerCase() +
                                     anInterface.getSimpleName().substring(1);
-                            ioc.put(beanName2,instance);
+                            ioc.put(beanName2, instance);
                         }
-                    }else {
+                    } else {
                         ioc.put(beanName, clazz.newInstance());
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
         System.out.println(ioc);
+    }
+
+    private void executeAutoWired() {
+        if (ioc.isEmpty()) {
+            throw new RuntimeException("容器中, 没有可以装配的bean");
+        }
+        //遍历ioc 容器中所有，已经实例化的bean
+        Set<Map.Entry<String, Object>> entrySet = ioc.entrySet();
+        for (Map.Entry<String, Object> entry : entrySet) {
+            Object o = entry.getValue();
+            Field[] fields = o.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(AutoWired.class)) {
+                    AutoWired autoWired = field.getAnnotation(AutoWired.class);
+                    String filedName = autoWired.value();
+                    if ("".equals(filedName)) {
+                        //未指定要注入的bean的名字
+                        Class<?> type = field.getType();
+                        //获取被标注@AutoWired 字段的类型的名字(首字母小写)
+                        filedName = type.getSimpleName().substring(0, 1).toLowerCase() +
+                                type.getSimpleName().substring(1);
+                    }
+                    //放在该@AutoWired 属性是private
+                    field.setAccessible(true);
+                    try {
+                        if (ioc.get(filedName) == null) {
+                            throw new RuntimeException("ioc 容器中, 没有可以注入的bean");
+                        }
+                        field.set(o, ioc.get(filedName));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 }
