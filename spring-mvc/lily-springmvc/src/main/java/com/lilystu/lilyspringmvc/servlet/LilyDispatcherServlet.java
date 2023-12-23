@@ -5,6 +5,7 @@ import com.lilystu.lilyspringmvc.annotation.RequestMapping;
 import com.lilystu.lilyspringmvc.context.LilyWebApplicationContext;
 import com.lilystu.lilyspringmvc.handler.LilyHandler;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,9 @@ public class LilyDispatcherServlet extends HttpServlet {
     private ArrayList<LilyHandler> handlerList = new ArrayList<>();
 
     @Override
-    public void init() throws ServletException {
-        lilyWebApplicationContext = new LilyWebApplicationContext();
+    public void init(ServletConfig config) throws ServletException {
+        String configLocation = config.getInitParameter("contextConfigLocation");
+        lilyWebApplicationContext = new LilyWebApplicationContext(configLocation);
         lilyWebApplicationContext.init();
         initHandlerMapping();
         System.out.println("初始化handlerList = " + handlerList);

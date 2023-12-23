@@ -15,8 +15,16 @@ public class LilyWebApplicationContext {
     public ConcurrentHashMap<String, Object> ioc =
             new ConcurrentHashMap<>();
 
+    public LilyWebApplicationContext(){}
+    //这个就是我们的spring 容器配置文件,
+    //这个contextConfigLocation 形式为classpath:xx.xml
+    private String configLocation = "";
+    public LilyWebApplicationContext(String configLocation){
+        this.configLocation = configLocation;
+    }
+
     public void init() {
-        String aPackage = XMLPaser.getbasePackage("lilyspringmvc.xml");
+        String aPackage = XMLPaser.getbasePackage(configLocation.split(":")[1]);
         String[] packs = aPackage.split(",");
         if (packs.length > 0) {
             for (String pack : packs) {
