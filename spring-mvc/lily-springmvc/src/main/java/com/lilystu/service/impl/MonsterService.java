@@ -29,4 +29,23 @@ public class MonsterService implements IMonsterService, ITest {
         monsters.add(new Monster(200, "蜘蛛精", "吐口水", 200));
         return monsters;
     }
+
+    @Override
+    public List<Monster> findMonstersByName(String name) {
+        ArrayList<Monster> monsters = new ArrayList<>();
+        monsters.add(new Monster(100, "牛魔王", "芭蕉扇", 500));
+        monsters.add(new Monster(200, "蜘蛛精", "吐口水", 200));
+        monsters.add(new Monster(300, "白骨精", "吐口水~", 200));
+        monsters.add(new Monster(400, "青牛怪", "吐口水~~", 200));
+
+        ArrayList<Monster> findMonsters = new ArrayList<>();
+        for (Monster monster : monsters) {
+            if (monster.getName().contains(name)){
+                findMonsters.add(monster);
+            }
+        }
+        return findMonsters;
+    }
+
+
 }
