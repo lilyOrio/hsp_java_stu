@@ -24,7 +24,7 @@ public class MonsterController {
     private ITest monsterService2;
 
     @RequestMapping("/monster/list")
-    public void listMonsters(HttpServletRequest request, HttpServletResponse response){
+    public void listMonsters(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=utf-8");
         System.out.println(monsterService);
         System.out.println(monsterService2);
@@ -40,17 +40,17 @@ public class MonsterController {
             content.append("</table>");
             PrintWriter printWriter = response.getWriter();
             printWriter.write(content.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @RequestMapping("/monster/find")
     public void findMonsters(HttpServletRequest request, HttpServletResponse response,
-                           String name){
+                             String name) {
         response.setContentType("text/html;charset=utf-8");
         try {
-            System.out.println("妖怪查找~："+name);
+            System.out.println("妖怪查找~：" + name);
             List<Monster> monsters = monsterService.findMonstersByName(name);
             StringBuilder content = new StringBuilder("<h1>你找到的妖怪列表</h1>");
             content.append("<table width='400px' style='border-collapse: collapse' border='1px'>");
@@ -62,8 +62,26 @@ public class MonsterController {
             content.append("</table>");
             PrintWriter printWriter = response.getWriter();
             printWriter.write(content.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/monster/login")
+    public String login(HttpServletRequest request,
+                        HttpServletResponse response, String mName) {
+        boolean b = monsterService.login(mName);
+        System.out.println("mName = " + mName);
+        request.setAttribute("mName",mName);
+        if (b) {
+            //重定向
+            return "redirect:/login_ok.jsp";
+            //默认是转发
+//            return "/login_ok.jsp";
+            //转发
+//            return "forward:/login_ok.jsp";
+        } else {
+            return "forward:/login_error.jsp";
         }
     }
 }

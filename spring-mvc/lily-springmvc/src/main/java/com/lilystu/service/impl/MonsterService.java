@@ -40,12 +40,19 @@ public class MonsterService implements IMonsterService, ITest {
 
         ArrayList<Monster> findMonsters = new ArrayList<>();
         for (Monster monster : monsters) {
-            if (monster.getName().contains(name)){
+            if (monster.getName().contains(name)) {
                 findMonsters.add(monster);
             }
         }
         return findMonsters;
     }
 
-
+    @Override
+    public boolean login(String name) {
+        if ("白骨精".equals(name)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

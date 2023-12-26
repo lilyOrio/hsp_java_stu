@@ -42,6 +42,7 @@ public class LilyDispatcherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws
             ServletException, IOException {
         System.out.println("doPost");
+        req.setCharacterEncoding("utf-8");
         executeDispatch(req,resp);
     }
 
@@ -133,7 +134,21 @@ public class LilyDispatcherServlet extends HttpServlet {
                         }
                     }
                 }
-                handler.getMethod().invoke(handler.getController(),params);
+                Object result = handler.getMethod().invoke(handler.getController(), params);
+                if (result instanceof String){
+                    String viewName = (String)result;
+                    if (viewName.contains(":")){
+                        String viewType = viewName.split(":")[0];//请求类型
+                        String viewPage = viewName.split(":")[1];//请求资源
+                        if ("forward".equals(viewType)){
+                            req.getRequestDispatcher(viewPage).forward(req,resp);
+                        }else if ("redirect".equals(viewType)) {//如果是重定向
+                            resp.sendRedirect(viewPage);
+                        }
+                    }else {//默认请求转发
+                        req.getRequestDispatcher(viewName).forward(req,resp);
+                    }
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
