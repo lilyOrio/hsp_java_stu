@@ -1,8 +1,10 @@
 package com.lilystu.lilyspringmvc.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lilystu.lilyspringmvc.annotation.Controller;
 import com.lilystu.lilyspringmvc.annotation.RequestMapping;
 import com.lilystu.lilyspringmvc.annotation.RequestParam;
+import com.lilystu.lilyspringmvc.annotation.ResponseBody;
 import com.lilystu.lilyspringmvc.context.LilyWebApplicationContext;
 import com.lilystu.lilyspringmvc.handler.LilyHandler;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
@@ -147,6 +150,19 @@ public class LilyDispatcherServlet extends HttpServlet {
                         }
                     }else {//默认请求转发
                         req.getRequestDispatcher(viewName).forward(req,resp);
+                    }
+                }
+                if (result instanceof ArrayList){
+                    //返回json 数据
+                    Method method = handler.getMethod();
+                    if (method.isAnnotationPresent(ResponseBody.class)){
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        String json = objectMapper.writeValueAsString(result);
+                        resp.setContentType("text/html;charset=utf-8");
+                        PrintWriter writer = resp.getWriter();
+                        writer.write(json);
+                        writer.flush();
+                        writer.close();
                     }
                 }
             }

@@ -1,10 +1,7 @@
 package com.lilystu.controller;
 
 import com.lilystu.entity.Monster;
-import com.lilystu.lilyspringmvc.annotation.AutoWired;
-import com.lilystu.lilyspringmvc.annotation.Controller;
-import com.lilystu.lilyspringmvc.annotation.RequestMapping;
-import com.lilystu.lilyspringmvc.annotation.RequestParam;
+import com.lilystu.lilyspringmvc.annotation.*;
 import com.lilystu.service.IMonsterService;
 import com.lilystu.service.ITest;
 import com.lilystu.service.impl.MonsterService;
@@ -83,5 +80,13 @@ public class MonsterController {
         } else {
             return "forward:/login_error.jsp";
         }
+    }
+
+    @RequestMapping(value = "/monster/list/json")
+    @ResponseBody
+    public List<Monster> listMonstersByJson(HttpServletRequest request,
+                                            HttpServletResponse response) {
+        List<Monster> monsters = monsterService.listMonsters();
+        return monsters;
     }
 }
