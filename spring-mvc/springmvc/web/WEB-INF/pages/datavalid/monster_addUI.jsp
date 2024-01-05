@@ -20,10 +20,10 @@
 2. SpringMVC 的form:form 标签的action 属性值中的/ 不代表WEB 应用的根目录.
 -->
 <form:form action="save" method="POST" modelAttribute="monster">
-    妖怪名字: <form:input path="name"/> <br><br>
-    妖怪年龄~: <form:input path="age"/> <br><br>
-    妖怪生日: <form:input path="birthday"/> 要求以"9999-11-11"的形式<br><br>
-    妖怪工资: <form:input path="salary"/> 要求以"123,890.12"的形式<br><br>
+    妖怪名字: <form:input path="name"/> <form:errors path="name"/><br><br>
+    妖怪年龄~: <form:input path="age"/> <form:errors path="age"/><br><br>
+    妖怪生日: <form:input path="birthday"/> <form:errors path="birthday"/>要求以"9999-11-11"的形式<br><br>
+    妖怪工资: <form:input path="salary"/> <form:errors path="salary"/>要求以"123,890.12"的形式<br><br>
     电子邮件: <form:input path="email"/> <br><br>
     <input type="submit" value="添加妖怪"/>
 </form:form>

@@ -1,5 +1,7 @@
 package com.lily_stu.web.datavalid;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -7,8 +9,11 @@ import java.util.Date;
 
 public class Monster {
     private Integer id;
+    @NotEmpty(message = "电子邮件不为空~~~~")
     private String email;
+    @Range(min=1,max=120)
     private Integer age;
+    @NotEmpty
     private String name;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;

@@ -2,9 +2,12 @@ package com.lily_stu.web.datavalid;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -28,9 +31,20 @@ public class MonsterHandler {
 
     //处理添加，更加请求的方法来确定
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(Monster monster) {
+    public String save(@Valid Monster monster, Errors errors, Map<String,Object> map) {
         //注意观察输出内容
         System.out.println("monster= " + monster);
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            System.out.println("key = " + entry.getKey()+"\n" + "value = " + entry.getValue());
+        }
+        if (errors.hasErrors()){
+            System.out.println("验证出错!");
+            for (ObjectError error : errors.getAllErrors()) {
+                System.out.println(error);
+            }
+            //返回添加界面
+            return "/datavalid/monster_addUI";
+        }
         return "datavalid/success";
     }
 }

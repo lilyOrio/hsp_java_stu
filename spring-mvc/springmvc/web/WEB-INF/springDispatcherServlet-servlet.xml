@@ -29,4 +29,11 @@
     <mvc:annotation-driven/>
     <!-- 将SpringMVC 不能处理的请求交给Tomcat, 比如请求css,js 等-->
     <mvc:default-servlet-handler/>
+    <!-- 配置国际化错误信息的资源处理bean -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <!-- 配置国际化文件名字
+        如果你这样配的话，表示messageSource 回到src/i18nXXX.properties 去读取错误信息
+        -->
+        <property name="basename" value="i18n"></property>
+    </bean>
 </beans>
