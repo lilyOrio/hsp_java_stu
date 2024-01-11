@@ -5,18 +5,26 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Monster {
     private Integer id;
+
     @NotEmpty(message = "电子邮件不为空~~~~")
     private String email;
-    @Range(min=1,max=120)
+
+    @NotNull(message = "年龄必须填写1-100")
+    @Range(min = 1, max = 120)
     private Integer age;
-    @NotEmpty
-    private String name;
+
+    private String name = "lily";
+
+    @NotNull(message = "生日不能为空")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
+
+    @NotNull(message = "薪水不能为空")
     @NumberFormat(pattern = "###,###.##")
     private float salary;
 

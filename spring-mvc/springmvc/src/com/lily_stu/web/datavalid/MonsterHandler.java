@@ -2,8 +2,11 @@ package com.lily_stu.web.datavalid;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.DataBinder;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,9 +34,10 @@ public class MonsterHandler {
 
     //处理添加，更加请求的方法来确定
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid Monster monster, Errors errors, Map<String,Object> map) {
+    public String save(@Valid Monster monster, Errors errors, Map<String,Object> map,String name) {
         //注意观察输出内容
         System.out.println("monster= " + monster);
+        System.out.println("name= " + name);//输出的是初始化name值
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             System.out.println("key = " + entry.getKey()+"\n" + "value = " + entry.getValue());
         }
@@ -46,5 +50,21 @@ public class MonsterHandler {
             return "/datavalid/monster_addUI";
         }
         return "datavalid/success";
+    }
+
+    /**
+     * 取消某个属性的绑定
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder){
+    //1. setDisallowedFields() 是可变形参，可以指定多个字段
+    //2. 当将一个字段/属性，设置为disallowed,就不在接收表单提交的值
+    //3. 那么这个字段/属性的值，就是该对象默认的值(具体看程序员定义时指定)
+    //4. 一般来说，如果不接收表单字段提交数据，则该对象字段的验证也就没有意义了
+    // ,可以注销掉，比如注销//@NotEmpty
+    // //@NotEmpty
+    // private String name;
+    //测试完，记得注销了.
+        dataBinder.setDisallowedFields("name");
     }
 }
