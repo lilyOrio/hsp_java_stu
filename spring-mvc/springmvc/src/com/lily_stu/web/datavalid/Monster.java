@@ -18,7 +18,8 @@ public class Monster {
     @Range(min = 1, max = 120)
     private Integer age;
 
-    private String name = "lily";
+    @NotEmpty
+    private String name;
 
     @NotNull(message = "生日不能为空")
     @DateTimeFormat(pattern = "yyyy-MM-dd")

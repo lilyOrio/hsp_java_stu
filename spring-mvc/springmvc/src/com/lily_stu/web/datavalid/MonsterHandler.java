@@ -65,6 +65,6 @@ public class MonsterHandler {
     // //@NotEmpty
     // private String name;
     //测试完，记得注销了.
-        dataBinder.setDisallowedFields("name");
+//        dataBinder.setDisallowedFields("name");
     }
 }
