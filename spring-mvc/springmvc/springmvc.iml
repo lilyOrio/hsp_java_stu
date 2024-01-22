@@ -30,5 +30,6 @@
     <orderEntry type="library" name="c3p0-0.9.1.2" level="project" />
     <orderEntry type="library" name="servlet-api" level="project" />
     <orderEntry type="library" name="classmate-0.8.0" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.9.8" level="project" />
   </component>
 </module>
