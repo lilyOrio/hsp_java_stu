@@ -63,5 +63,13 @@ a:<input id="age" type="text"><br/>
 
 <h1>下载文件的测试</h1>
 <a href="downFile">点击下载文件</a>
+
+<h1>文件上传的演示</h1>
+<form action="fileUpload" method="post"
+      enctype="multipart/form-data">
+    文件介绍:<input type="text" name="introduce"><br>
+    选择文件:<input type="file" name="file"><br>
+    <input type="submit" value="上传文件">
+</form>
 </body>
 </html>

@@ -24,6 +24,9 @@
         <property name="order" value="99"/>
     </bean>
 
+    <!-- 配置一个springmvc 的文件上传解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
     <!-- 加入两个常规配置-->
     <!-- 能支持SpringMVC 高级功能，比如JSR303 校验，映射动态请求-->
     <mvc:annotation-driven/>
