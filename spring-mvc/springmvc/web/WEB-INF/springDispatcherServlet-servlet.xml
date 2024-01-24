@@ -37,6 +37,24 @@
         <!-- 配置国际化文件名字
         如果你这样配的话，表示messageSource 回到src/i18nXXX.properties 去读取错误信息
         -->
-        <property name="basename" value="i18n"></property>
+        <property name="basename" value="i18n"/>
     </bean>
+
+    <!-- 如何配置自定义的拦截器-->
+    <!--
+    了解:
+    1. 创建实现HandlerInterceptor 接口的bean
+    2. 在mvc:interceptors 中配置拦截器
+    -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/hi"/>
+            <mvc:mapping path="/hello"/>
+            <ref bean="myInterceptor01"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/hi"/>
+            <ref bean="myInterceptor02"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
