@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置MyBatis 自带的日志输出, 还可以是其它日志比如SLF4J | LOG4J | LOG4J2 |JDK_LOGGING 等-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <typeAliases>
+        <!-- 为某个mapper 指定一个别名, 下面可以在XxxxxMapper.xml 做相应简化处理
+        -->
+        <typeAlias type="com.lilystu.entity.Monster" alias="Monster"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://127.0.0.1:3306/mybatis?useSSL=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="lily"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 这里会引入(注册)我们的Mapper.xml 文件-->
+        <mapper resource="com/lilystu/mapper/MonsterMapper.xml"/>
+    </mappers>
+
+</configuration>
+

@@ -1,0 +1,49 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper: 表示一个映射器, 文
+档:https://mybatis.org/mybatis-3/zh/sqlmap-xml.html#insert_update_and_delete
+1. namespace="com.lilystu.mapper.MonsterMapper"
+说明本mapper.xml 文件是用来映射管理MonsterMapper 接口
+,主要是去实现MonsterMapper 接口声明方法
+2. select: 实现一个查询操作insert:表示一个添加操作
+3. id="addMonster" 表示MonsterMapper 接口的方法名
+4. resultType="xx" 返回的结果类型，如果没有就不需要写
+5. parameterType="com.lilystu.entity.Monster" 表示该方法输入的参数类型
+6. (age,birthday,email,gender,name,salary) 表的字段名
+7. #{age},#{birthday},#{email},#{gender},#{name},#{salary} 是实体类Monster 的属性名
+-->
+<mapper namespace="com.lilystu.mapper.MonsterMapper">
+    <!--
+    没有在mybatis-config.xml 指定typealiases 时，需要给Monster 指定全类名
+    <insert id="addMonster" parameterType="com.hspedu.entity.Monster"-->
+    <!-- useGeneratedKeys="true" keyProperty="id"-->
+    <!-- >-->
+    <insert id="addMonster" parameterType="com.lilystu.entity.Monster"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO monster (age,birthday,email,gender,name,salary)
+        VALUES(#{age},#{birthday},#{email},#{gender},#{name},#{salary})
+    </insert>
+
+    <delete id="delMonster" parameterType="Integer">
+        DELETE FROM monster
+        WHERE id=#{id}
+    </delete>
+
+    <update id="updateMonster" parameterType="Monster">
+        UPDATE monster SET age=#{age}, birthday=#{birthday}, email = #{email},
+        gender= #{gender}, name=#{name}, salary=#{salary} WHERE id=#{id}
+    </update>
+
+    <!-- 实现getMonsterById 方法-->
+    <select id="getMonsterById" parameterType="Integer"
+            resultType="Monster">
+        SELECT * FROM monster WHERE id = #{id}
+    </select>
+
+    <select id="findAllMonster"
+            resultType="Monster">
+        SELECT * FROM monster
+    </select>
+
+</mapper>
