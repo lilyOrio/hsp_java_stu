@@ -17,8 +17,8 @@ public class MonsterMapperTest {
     @Before
     public void init(){
         sqlSession = MyBatisUtils.getSqlSession();
-        MonsterMapper mapper = sqlSession.getMapper(MonsterMapper.class);
-        System.out.println("MonsterMapper = " + mapper.getClass());
+        monsterMapper = sqlSession.getMapper(MonsterMapper.class);
+        System.out.println("MonsterMapper = " + monsterMapper.getClass());
     }
 
     @Test
