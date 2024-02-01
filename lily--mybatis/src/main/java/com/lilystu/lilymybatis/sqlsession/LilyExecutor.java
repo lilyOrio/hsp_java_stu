@@ -52,7 +52,7 @@ public class LilyExecutor implements Executor{
 
     private Connection getConnection() {
         try {
-            Connection connection = lilyConfiguration.build("hsp_config.xml");
+            Connection connection = lilyConfiguration.build("lily_config.xml");
             return connection;
         } catch (Exception e) {
             e.printStackTrace();

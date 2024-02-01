@@ -13,7 +13,7 @@ public class LilyMybatisTest {
     public static void main(String[] args) {
         LilyConfiguration lilyConfiguration = new LilyConfiguration();
         //获取到一个Connection
-        Connection connection = lilyConfiguration.build("hsp_config.xml");
+        Connection connection = lilyConfiguration.build("lily_config.xml");
         System.out.println(connection);
     }
 
