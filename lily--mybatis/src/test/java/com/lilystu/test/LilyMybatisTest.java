@@ -5,6 +5,7 @@ import com.lilystu.lilymybatis.sqlsession.Executor;
 import com.lilystu.lilymybatis.sqlsession.LilyConfiguration;
 import com.lilystu.lilymybatis.sqlsession.LilyExecutor;
 import com.lilystu.lilymybatis.sqlsession.LilySqlSession;
+import com.lilystu.lilymybatis.sqlsession.config.MapperBean;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -30,5 +31,12 @@ public class LilyMybatisTest {
         Monster monster = lilySqlSession
                 .selectOne("select * from monster where id=?", 2);
         System.out.println("monster== " + monster);
+    }
+
+    @Test
+    public void testReadMapper(){
+        LilyConfiguration lilyConfiguration = new LilyConfiguration();
+        MapperBean mapperBean = lilyConfiguration.readMapper("MonsterMapper");
+        System.out.println("mapperBean = " + mapperBean);
     }
 }
