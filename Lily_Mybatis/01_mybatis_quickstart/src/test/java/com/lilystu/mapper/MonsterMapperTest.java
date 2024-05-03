@@ -23,7 +23,7 @@ public class MonsterMapperTest {
 
     @Test
     public void addMonster(){
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 3; i++) {
             Monster monster = new Monster();
             monster.setAge(100 + i);
             monster.setBirthday(new Date());
@@ -62,7 +62,7 @@ public class MonsterMapperTest {
         monster.setGender(2);
         monster.setName("狐狸精");
         monster.setSalary(9234.89);
-        monster.setId(2);
+        monster.setId(3);
         monsterMapper.updateMonster(monster);
         if (sqlSession != null) {
             sqlSession.commit();
@@ -73,7 +73,7 @@ public class MonsterMapperTest {
     //测查询单个对象
     @Test
     public void getMonsterById() {
-        Monster monster = monsterMapper.getMonsterById(2);
+        Monster monster = monsterMapper.getMonsterById(3);
         System.out.println(monster);
         if (sqlSession != null) {
             sqlSession.close();
