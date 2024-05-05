@@ -24,4 +24,12 @@ public class MapperBean {
     public void setList(List<Function> list) {
         this.list = list;
     }
+
+    @Override
+    public String toString() {
+        return "MapperBean{" +
+                "interfaceName='" + interfaceName + '\'' +
+                ", list=" + list +
+                '}';
+    }
 }

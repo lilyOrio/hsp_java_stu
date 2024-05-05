@@ -98,7 +98,7 @@ public class LilyConfiguration {
             mapperBean.setInterfaceName(rootElement.attributeValue("nameSpace").trim());
             //用来存储方法的List
             List<Function> list = new ArrayList<Function>();
-            for (Iterator rootIter = rootElement.elementIterator();rootIter.hasNext()){
+            for (Iterator rootIter = rootElement.elementIterator();rootIter.hasNext();){
                 Function fun = new Function(); //用来存储一条方法的信息
                 Element e = (Element) rootIter.next();
                 String sqltype = e.getName().trim();

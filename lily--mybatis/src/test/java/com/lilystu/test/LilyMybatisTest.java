@@ -21,7 +21,7 @@ public class LilyMybatisTest {
     @Test
     public void testLilyExecutor() {
         Executor executor = new LilyExecutor();
-        Monster monster = executor.query("select * from monster where id = ?", 2);
+        Monster monster = executor.query("select * from monster where id = ?", 1);
         System.out.println("monster= " + monster);
     }
 
@@ -29,14 +29,14 @@ public class LilyMybatisTest {
     public void testLilySqlSession(){
         LilySqlSession lilySqlSession = new LilySqlSession();
         Monster monster = lilySqlSession
-                .selectOne("select * from monster where id=?", 2);
+                .selectOne("select * from monster where id=?", 1);
         System.out.println("monster== " + monster);
     }
 
     @Test
     public void testReadMapper(){
         LilyConfiguration lilyConfiguration = new LilyConfiguration();
-        MapperBean mapperBean = lilyConfiguration.readMapper("MonsterMapper");
+        MapperBean mapperBean = lilyConfiguration.readMapper("MonsterMapper.xml");
         System.out.println("mapperBean = " + mapperBean);
     }
 }

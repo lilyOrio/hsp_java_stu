@@ -49,4 +49,15 @@ public class Function {
     public void setParameterType(String parameterType) {
         this.parameterType = parameterType;
     }
+
+    @Override
+    public String toString() {
+        return "Function{" +
+                "sqltype='" + sqltype + '\'' +
+                ", funcName='" + funcName + '\'' +
+                ", sql='" + sql + '\'' +
+                ", resultType=" + resultType +
+                ", parameterType='" + parameterType + '\'' +
+                '}';
+    }
 }

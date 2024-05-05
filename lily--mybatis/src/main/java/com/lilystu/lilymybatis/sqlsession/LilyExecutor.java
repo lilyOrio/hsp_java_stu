@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class LilyExecutor implements Executor{
-    private LilyConfiguration lilyConfiguration = new LilyConfiguration();
+    private final LilyConfiguration lilyConfiguration = new LilyConfiguration();
     @Override
     public <T> T query(String sql, Object parameter) {
         Connection connection = getConnection();
