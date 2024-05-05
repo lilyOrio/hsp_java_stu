@@ -1,11 +1,9 @@
 package com.lilystu.test;
 
 import com.lilystu.entity.Monster;
-import com.lilystu.lilymybatis.sqlsession.Executor;
-import com.lilystu.lilymybatis.sqlsession.LilyConfiguration;
-import com.lilystu.lilymybatis.sqlsession.LilyExecutor;
-import com.lilystu.lilymybatis.sqlsession.LilySqlSession;
+import com.lilystu.lilymybatis.sqlsession.*;
 import com.lilystu.lilymybatis.sqlsession.config.MapperBean;
+import com.lilystu.mapper.MonsterMapper;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -38,5 +36,23 @@ public class LilyMybatisTest {
         LilyConfiguration lilyConfiguration = new LilyConfiguration();
         MapperBean mapperBean = lilyConfiguration.readMapper("MonsterMapper.xml");
         System.out.println("mapperBean = " + mapperBean);
+    }
+
+    @Test
+    public void testGetMapper(){
+        LilySqlSession lilySqlSession = new LilySqlSession();
+        MonsterMapper mapper = lilySqlSession.getMapper(MonsterMapper.class);
+        System.out.println("mapper--" + mapper);
+        Monster monster = mapper.getMonsterById(1);
+        System.out.println("mapper--" + mapper.getClass());
+        System.out.println("monster--" + monster);
+    }
+
+    @Test
+    public void testSessionFactory(){
+        LilySqlSession lilySqlSession = LilySessionFactory.open();
+        MonsterMapper mapper = lilySqlSession.getMapper(MonsterMapper.class);
+        Monster monster = mapper.getMonsterById(1);
+        System.out.println("monster--" + monster);
     }
 }
