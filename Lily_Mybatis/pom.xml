@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>01_mybatis_quickstart</module>
+        <module>xml-mapper</module>
     </modules>
 
     <!-- 导入依赖-->
