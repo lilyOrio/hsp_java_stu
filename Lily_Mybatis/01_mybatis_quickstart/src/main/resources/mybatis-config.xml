@@ -11,9 +11,13 @@
     </settings>
 
     <typeAliases>
-        <!-- 为某个mapper 指定一个别名, 下面可以在XxxxxMapper.xml 做相应简化处理
-        -->
-        <typeAlias type="com.lilystu.entity.Monster" alias="Monster"/>
+    <!-- 如果一个包下有很多的类，我们可以直接引入包，这样
+        该包下面的所有类名，可以直接使用
+    -->
+        <package name="com.lilystu.entity"/>
+    <!-- 为某个mapper 指定一个别名, 下面可以在XxxxxMapper.xml 做相应简化处理
+    -->
+    <!-- <typeAlias type="com.lilystu.entity.Monster" alias="Monster"/>-->
     </typeAliases>
 
     <environments default="development">
