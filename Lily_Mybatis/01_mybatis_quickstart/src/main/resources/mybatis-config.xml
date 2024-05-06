@@ -30,6 +30,12 @@
     <mappers>
         <!-- 这里会引入(注册)我们的Mapper.xml 文件-->
         <mapper resource="com/lilystu/mapper/MonsterMapper.xml"/>
+
+        <!--
+            1. 如果是通过注解的方式，可不再使用MonsterMapper.xml
+            2. 但是需要在mybatis-config.xml 注册含注解的类
+        -->
+        <mapper class="com.lilystu.mapper.MonsterAnnotation"/>
     </mappers>
 
 </configuration>
