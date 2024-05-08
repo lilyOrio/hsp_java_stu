@@ -2,6 +2,26 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lilystu.mapper.MonsterMapper">
+    <!-- 实现 List<Monster> findMonsterByNameORId(Monster monster)
+         通过id/名字查询
+         id=#{id} id=>表字段名 #{id}=>Monster属性名
+    -->
+    <select id="findMonsterByNameORId" parameterType="Monster" resultType="Monster">
+        SELECT * FROM monster WHERE id=#{id} OR name=#{name}
+    </select>
 
+    <!-- 模糊查询的使用取值需要${value} 取值-->
+    <select id="findMonsterByName" parameterType="String" resultType="Monster">
+        SELECT * FROM monster WHERE name LIKE '%${value}%'
+    </select>
+    <!-- 如果以map为入参，id > #{id} 表示着map中一定需要有一对k-v中的k是id-->
+    <select id="findMonsterByIdAndSalary_ParameterHashMap" parameterType="map" resultType="Monster">
+        SELECT * FROM monster WHERE id > #{id} AND salary > #{salary}
+    </select>
+    <!-- 以map为入参，返回值也是map-->
+    <select id="findMonsterByIdAndSalary_ParameterHashMap" parameterType="map" resultType="map">
+        SELECT * FROM monster WHERE id > #{id} AND salary > #{salary}
+    </select>
+    
 
 </mapper>

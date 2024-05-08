@@ -1,0 +1,33 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lilystu.mapper.UserMapper">
+    <!-- 实现addUser -->
+    <insert id="addUser" parameterType="User">
+        INSERT INTO user (user_name,user_email) VALUES(#{userName}, #{userEmail})
+    </insert>
+
+    <!-- 配置 findAllUser
+       使用传统方式接收返回值 resultType="User" ==>如果属性名和表字段名不一致，默认返回null
+    -->
+    <!--
+        1. resultMap 表示我们定义一个结果映射
+        2. type="User" 返回的真正的数据类型还是User
+        3. id="findAllUserMap", 给resultMap 取名
+        4. column="user_name" 表中的字段
+        5. property="userName" 表示对象的属性
+    -->
+    <resultMap id="findAllUserMap" type="User">
+        <result column="user_name" property="userName"/>
+        <result column="user_email" property="userEmail"/>
+    </resultMap>
+    <select id="findAllUser"  resultType="findAllUserMap">
+        SELECT * FROM `user`
+    </select>
+<!-- 其他：如果不使用resultMap，也可以通过修改SQL语句实现 （无法复用不推荐）
+    SELECT user_id,user_name AS userName, user_email AS userEmail FROM user
+-->
+<!--    如果是MyBatis-Plus 处理就比较简单, 可以使用注解@TableField 来解决
+        实体字段名和表字段名不一致的问题，还可以使用@TableName 来解决实体类名和表名不一致的问题
+-->
+</mapper>
