@@ -6,7 +6,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface MonsterMapper {
-//根据age 查询结果
+    //根据age 查询结果
     public List<Monster>
     findMonsterByAge(@Param("age") Integer age);
+    //根据id 和名字来查询结果
+    public List<Monster> findMonsterByIdAndName(Monster monster);
 }

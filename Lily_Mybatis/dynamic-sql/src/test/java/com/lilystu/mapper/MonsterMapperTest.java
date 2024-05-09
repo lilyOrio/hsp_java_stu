@@ -30,4 +30,18 @@ public class MonsterMapperTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void findMonsterByIdAndName(){
+        Monster monster = new Monster();
+        monster.setId(1);
+        monster.setName("狐狸精");
+        List<Monster> monsterList = monsterMapper.findMonsterByIdAndName(monster);
+        for (Monster m : monsterList) {
+            System.out.println("monster==>" + m);
+        }
+        if (sqlSession != null){
+            sqlSession.close();
+        }
+    }
 }

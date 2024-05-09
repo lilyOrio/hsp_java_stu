@@ -14,4 +14,20 @@
             AND age > #{age}
         </if>
     </select>
+
+    <!-- 使用where 标签开始拼接
+    where 标签的好处是. 会自动的加入where 子句.
+    mybatis 会自动的去掉多余的AND
+    -->
+    <select id="findMonsterByIdAndName" parameterType="Monster" resultType="Monster">
+        SELECT * FROM monster
+        <where>
+            <if test="id > 0">
+                AND id > #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND name = #{name}
+            </if>
+        </where>
+    </select>
 </mapper>
