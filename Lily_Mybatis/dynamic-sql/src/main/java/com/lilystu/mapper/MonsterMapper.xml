@@ -30,4 +30,24 @@
             </if>
         </where>
     </select>
+
+    <!-- findMonsterByIdAndName_choose[使用choose 标签]
+        类似Java中的switch语句
+    -->
+    <select id="findMonsterByIdAndName_choose" parameterType="map"
+            resultType="Monster">
+        SELECT * FROM monster
+        <choose>
+            <!-- 这里test="name" 这name 就是你传入的map 参数对应的key -->
+            <when test="name != null and name != ''">
+                WHERE name = #{name}
+            </when>
+            <when test="id > 0">
+                WHERE id > #{id}
+            </when>
+            <otherwise>
+                WHERE 1 = 1
+            </otherwise>
+        </choose>
+    </select>
 </mapper>
