@@ -83,4 +83,35 @@
         </if>
     </trim>
     </select>
+
+    <!-- updateMonster_set set 标签-->
+    <update id="updateMonster_set" parameterType="map">
+        UPDATE monster
+        <!-- 根据传入的值是否为空，来决定是否进行修改
+            map.put("name",...)
+            map.put("age",...)
+            map.put("monster_id",...)
+        -->
+        <set>
+            <if test="age != null and age != ''">
+                age = #{age},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="salary != null and salary != ''">
+                salary = #{salary},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

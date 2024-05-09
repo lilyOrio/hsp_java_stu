@@ -29,4 +29,7 @@ public interface MonsterMapper {
     //trim 标签的使用
     public List<Monster> findMonsterByName_Trim(Map<String, Object> map);
 
+    //测试Set 标签
+    public void
+    updateMonster_set(Map<String, Object> map);
 }

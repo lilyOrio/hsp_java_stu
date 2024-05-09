@@ -93,4 +93,22 @@ public class MonsterMapperTest {
             sqlSession.close();
         }
     }
+
+    /*
+        set标签的使用
+        需求: 请对指定id 的妖怪进行修改，如果没有设置新的属性，则保持原来的值
+     */
+    @Test
+    public void updateMonster_set(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", "3");
+        map.put("name", "牛魔王");
+        map.put("age", 10);
+        monsterMapper.updateMonster_set(map);
+        if (sqlSession != null){
+            sqlSession.commit();
+            sqlSession.close();
+        }
+        System.out.println();
+    }
 }
