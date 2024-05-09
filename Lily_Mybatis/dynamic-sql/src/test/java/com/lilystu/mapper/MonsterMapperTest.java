@@ -80,4 +80,17 @@ public class MonsterMapperTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void findMonsterByName_Trim(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", "狐狸精");
+        List<Monster> monsterList = monsterMapper.findMonsterByName_Trim(map);
+        for (Monster m : monsterList) {
+            System.out.println("monster==>" + m);
+        }
+        if (sqlSession != null){
+            sqlSession.close();
+        }
+    }
 }

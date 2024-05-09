@@ -26,4 +26,7 @@ public interface MonsterMapper {
     public List<Monster>
     findMonsterById_forEach(Map<String, Object> map);
 
+    //trim 标签的使用
+    public List<Monster> findMonsterByName_Trim(Map<String, Object> map);
+
 }

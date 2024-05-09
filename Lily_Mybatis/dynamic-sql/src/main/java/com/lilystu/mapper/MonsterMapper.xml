@@ -67,4 +67,20 @@
             </where>
         </if>
     </select>
+
+<!-- 了解trim 标签
+    如果sql 语句有and | or 就替换成where
+    默认的where只会去掉多余的and
+
+    trim prefix="where" prefixOverrides="and|or|lily"
+        加入where标签(前缀)，并且如果子句开头and、or、lily 就把他们去掉
+-->
+    <select id="findMonsterByName_Trim" parameterType="map" resultType="Monster">
+        select * from monster
+    <trim prefix="where" prefixOverrides="and|or|lily">
+        <if test="name !=null and name!=''">
+            and name=#{name}
+        </if>
+    </trim>
+    </select>
 </mapper>
