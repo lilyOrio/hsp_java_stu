@@ -2,5 +2,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lilystu.mapper.MonsterMapper">
-
+    <!-- 实现findMonsterByAge
+        test="age > 0" 不能用#{age}，无法取出参数值
+            可以在Java代码里面的形参加上@Param注解
+            例如：findMonsterByAge(@Param("age") Integer age);
+    -->
+    <select id="findMonsterByAge" resultType="Monster"
+            parameterType="Integer">
+        SELECT * FROM monster WHERE 1=1
+        <if test="age > 0">
+            AND age > #{age}
+        </if>
+    </select>
 </mapper>
