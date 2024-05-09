@@ -50,4 +50,21 @@
             </otherwise>
         </choose>
     </select>
+
+<!--
+    演示foreach 的标签使用
+    ● 需求：查询monster_id 为20, 22, 34 的妖怪
+    map.put("ids",Arrays.asList(20, 22, 34))
+-->
+    <select id="findMonsterById_forEach" parameterType="map" resultType="Monster">
+        SELECT * FROM monster
+        <if test="ids != null and ids != ''">
+            <where>
+                id IN
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </where>
+        </if>
+    </select>
 </mapper>

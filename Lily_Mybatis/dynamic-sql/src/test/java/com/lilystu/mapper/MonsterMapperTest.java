@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ public class MonsterMapperTest {
      * 1. choose 的标签使用
      * 2. 如果给的name 不为空，就查询名字为输入的妖怪，
      * 如果monster_id>0，就查询monster_id 的妖怪
+     * 只会走一个条件，类似switch语句
      */
     @Test
     public void findMonsterByIdAndName_choose(){
@@ -58,6 +60,19 @@ public class MonsterMapperTest {
         map.put("name", "白虎精");
         map.put("id", 2);
         List<Monster> monsterList = monsterMapper.findMonsterByIdAndName_choose(map);
+        for (Monster m : monsterList) {
+            System.out.println("monster==>" + m);
+        }
+        if (sqlSession != null){
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void findMonsterById_forEach(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("ids", Arrays.asList(20, 22, 34));
+        List<Monster> monsterList = monsterMapper.findMonsterById_forEach(map);
         for (Monster m : monsterList) {
             System.out.println("monster==>" + m);
         }
