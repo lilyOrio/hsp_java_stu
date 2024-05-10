@@ -3,9 +3,9 @@ package com.lilystu.entity;
 public class Person {
     private Integer id;
     private String name;
-    private IdCard card;
+    private IdenCard card;
 
-    public Person(Integer id, String name, IdCard card) {
+    public Person(Integer id, String name, IdenCard card) {
         this.id = id;
         this.name = name;
         this.card = card;
@@ -30,11 +30,11 @@ public class Person {
         this.name = name;
     }
 
-    public IdCard getCard() {
+    public IdenCard getCard() {
         return card;
     }
 
-    public void setCard(IdCard card) {
+    public void setCard(IdenCard card) {
         this.card = card;
     }
 

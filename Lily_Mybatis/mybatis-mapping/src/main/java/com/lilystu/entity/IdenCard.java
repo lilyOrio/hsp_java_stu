@@ -1,13 +1,13 @@
 package com.lilystu.entity;
 
-public class IdCard {
+public class IdenCard {
     private Integer id;
     private String card_sn;
 
-    public IdCard() {
+    public IdenCard() {
     }
 
-    public IdCard(Integer id, String card_sn) {
+    public IdenCard(Integer id, String card_sn) {
         this.id = id;
         this.card_sn = card_sn;
     }

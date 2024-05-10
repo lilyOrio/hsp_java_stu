@@ -2,5 +2,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lilystu.mapper.PersonMapper">
-
+    <resultMap id="PersonResultMap" type="Person">
+        <!-- id： 一个ID 结果；标记出作为ID 的结果可以帮助提高整体性能, 通常指定主键
+            property="id" 表示person 对象的哪个属性代表主键
+            column="id" 表示对应的表的字段
+        -->
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="card" javaType="com.lilystu.entity.IdenCard">
+            <!-- 将关联的card 对象哪些属性放入到这个resultMap -->
+            <result property="id" column="id"/>
+            <result property="card_sn" column="card_sn"/>
+        </association>
+    </resultMap>
+    <select id="getPersonById" resultMap="PersonResultMap" parameterType="Integer">
+        select * from person , idencard WHERE person.id=#{id}
+        AND person.car_id=idencard.id;
+    </select>
 </mapper>
