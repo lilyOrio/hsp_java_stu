@@ -12,6 +12,7 @@
         <module>01_mybatis_quickstart</module>
         <module>xml-mapper</module>
         <module>dynamic-sql</module>
+        <module>mybatis-mapping</module>
     </modules>
 
     <!-- 指定编译器版本-->
