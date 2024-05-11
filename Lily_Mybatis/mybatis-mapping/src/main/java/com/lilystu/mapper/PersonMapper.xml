@@ -17,6 +17,26 @@
     </resultMap>
     <select id="getPersonById" resultMap="PersonResultMap" parameterType="Integer">
         select * from person , idencard WHERE person.id=#{id}
-        AND person.car_id=idencard.id;
+        AND person.card_id=idencard.id;
+    </select>
+
+    <!-- 1对1 的第二种方式[推荐]
+        1.select * from person WHERE person.id=#{id} 查找到person信息
+        2.再通过card_id 获取到card信息
+        3.可以复用前面写好的mapper
+    -->
+    <!-- 定义一个resultMap 来映射返回的结果-->
+    <resultMap id="PersonResultMap2" type="Person">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="card" column="card_id"
+                     select="com.lilystu.mapper.IdenCardMapper.getIdCardById">
+            <!-- 将关联的card 对象哪些属性放入到这个resultMap -->
+            <result property="id" column="id"/>
+            <result property="card_sn" column="card_sn"/>
+        </association>
+    </resultMap>
+    <select id="getPersonById2" resultMap="PersonResultMap2" parameterType="Integer">
+        select * from person WHERE person.id=#{id}
     </select>
 </mapper>

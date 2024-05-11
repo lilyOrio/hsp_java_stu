@@ -1,6 +1,5 @@
 package com.lilystu.mapper;
 
-import com.lilystu.entity.IdenCard;
 import com.lilystu.entity.Person;
 import com.lilystu.util.MyBatisUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -23,6 +22,16 @@ public class PersonMapperTest {
     @Test
     public void getPersonById(){
         Person person = personMapper.getPersonById(1);
+        System.out.println(person);
+        if(sqlSession != null) {
+            sqlSession.close();
+        }
+    }
+
+    //测试是否可以获取身份证
+    @Test
+    public void getPersonById2(){
+        Person person = personMapper.getPersonById2(1);
         System.out.println(person);
         if(sqlSession != null) {
             sqlSession.close();
