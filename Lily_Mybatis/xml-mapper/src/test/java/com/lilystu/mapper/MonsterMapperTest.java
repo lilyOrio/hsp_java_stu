@@ -62,7 +62,7 @@ public class MonsterMapperTest {
     @Test
     public void findMonsterByIdAndSalary_ParameterHashMap(){
         Map<String,Object> map = new HashMap<>();
-        map.put("id",10);
+        map.put("id",5);
         map.put("salary",40);
         List<Monster> monsterList = monsterMapper.findMonsterByIdAndSalary_ParameterHashMap(map);
         for (Monster m : monsterList) {
@@ -77,7 +77,7 @@ public class MonsterMapperTest {
     @Test
     public void findMonsterByIdAndSalary_ParameterHashMap_ReturnHashMap(){
         Map<String,Object> map = new HashMap<>();
-        map.put("id",10);
+        map.put("id",5);
         map.put("salary",40);
         List<Map<String, Object>> monsterList = monsterMapper.findMonsterByIdAndSalary_ParameterHashMap_ReturnHashMap(map);
         for (Map<String, Object> monsterMap : monsterList) {

@@ -19,7 +19,7 @@
         SELECT * FROM monster WHERE id > #{id} AND salary > #{salary}
     </select>
     <!-- 以map为入参，返回值也是map-->
-    <select id="findMonsterByIdAndSalary_ParameterHashMap" parameterType="map" resultType="map">
+    <select id="findMonsterByIdAndSalary_ParameterHashMap_ReturnHashMap" parameterType="map" resultType="map">
         SELECT * FROM monster WHERE id > #{id} AND salary > #{salary}
     </select>
     

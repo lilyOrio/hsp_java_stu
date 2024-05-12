@@ -21,7 +21,7 @@
         <result column="user_name" property="userName"/>
         <result column="user_email" property="userEmail"/>
     </resultMap>
-    <select id="findAllUser"  resultType="findAllUserMap">
+    <select id="findAllUser"  resultMap="findAllUserMap">
         SELECT * FROM `user`
     </select>
 <!-- 其他：如果不使用resultMap，也可以通过修改SQL语句实现 （无法复用不推荐）
