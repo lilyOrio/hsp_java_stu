@@ -34,18 +34,18 @@
     </environments>
 
     <mappers>
-        <!-- 这里会引入(注册)我们的Mapper.xml 文件-->
-        <mapper resource="com/lilystu/mapper/MonsterMapper.xml"/>
+<!--        &lt;!&ndash; 这里会引入(注册)我们的Mapper.xml 文件&ndash;&gt;-->
+<!--        <mapper resource="com/lilystu/mapper/MonsterMapper.xml"/>-->
 
-        <!--
-            1. 如果是通过注解的方式，可不再使用MonsterMapper.xml
-            2. 但是需要在mybatis-config.xml 注册含注解的类
-        -->
-        <mapper class="com.lilystu.mapper.MonsterAnnotation"/>
-        <!--
-            1. 当一个包下有很多的Mapper.xml 文件和基于注解实现的接口时，为了方便，我们可以以包方式进行注册
-            2. 将下面的所有xml 文件和注解接口都进行注册
-        -->
+<!--        &lt;!&ndash;-->
+<!--            1. 如果是通过注解的方式，可不再使用MonsterMapper.xml-->
+<!--            2. 但是需要在mybatis-config.xml 注册含注解的类-->
+<!--        &ndash;&gt;-->
+<!--        <mapper class="com.lilystu.mapper.MonsterAnnotation"/>-->
+<!--        &lt;!&ndash;-->
+<!--            1. 当一个包下有很多的Mapper.xml 文件和基于注解实现的接口时，为了方便，我们可以以包方式进行注册-->
+<!--            2. 将下面的所有xml 文件和注解接口都进行注册-->
+<!--        &ndash;&gt;-->
         <package name="com.lilystu.mapper"/>
     </mappers>
 
