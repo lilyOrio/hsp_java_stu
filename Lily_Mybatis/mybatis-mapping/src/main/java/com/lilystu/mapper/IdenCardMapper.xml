@@ -5,4 +5,14 @@
     <select id="getIdCardById" parameterType="Integer" resultType="IdenCard">
         SELECT * from idencard where id=#{id}
     </select>
+    <resultMap id="IdenCardResultMap" type="IdenCard">
+        <id column="id" property="id"/>
+        <result column="card_sn" property="card_sn"/>
+        <association property="person" column="id"
+                     select="com.lilystu.mapper.PersonMapper.getPersonByCardId">
+        </association>
+    </resultMap>
+    <select id="getIdCardById2" parameterType="Integer" resultMap="IdenCardResultMap">
+        SELECT * from idencard where id=#{id}
+    </select>
 </mapper>

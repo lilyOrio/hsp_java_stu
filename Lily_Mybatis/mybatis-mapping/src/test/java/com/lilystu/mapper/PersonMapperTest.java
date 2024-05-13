@@ -37,4 +37,14 @@ public class PersonMapperTest {
             sqlSession.close();
         }
     }
+
+    //测试是否可以获取身份证
+    @Test
+    public void getPersonByCardId(){
+        Person person = personMapper.getPersonByCardId(1);
+        System.out.println(person);
+        if(sqlSession != null) {
+            sqlSession.close();
+        }
+    }
 }

@@ -27,4 +27,14 @@ public class IdCardMapperTest {
             sqlSession.close();
         }
     }
+
+    //测试是否可以获取身份证
+    @Test
+    public void getIdCardById2(){
+        IdenCard card = idCardMapper.getIdCardById2(1);
+        System.out.println(card);
+        if(sqlSession != null) {
+            sqlSession.close();
+        }
+    }
 }

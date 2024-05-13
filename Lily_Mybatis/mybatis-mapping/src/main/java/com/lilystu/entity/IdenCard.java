@@ -3,13 +3,23 @@ package com.lilystu.entity;
 public class IdenCard {
     private Integer id;
     private String card_sn;
+    private Person person;
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 
     public IdenCard() {
     }
 
-    public IdenCard(Integer id, String card_sn) {
+    public IdenCard(Integer id, String card_sn,Person person) {
         this.id = id;
         this.card_sn = card_sn;
+        this.person = person;
     }
 
     public Integer getId() {
@@ -33,6 +43,7 @@ public class IdenCard {
         return "IdenCard{" +
                 "id=" + id +
                 ", card_sn='" + card_sn + '\'' +
+                ", person=" + person +
                 '}';
     }
 }

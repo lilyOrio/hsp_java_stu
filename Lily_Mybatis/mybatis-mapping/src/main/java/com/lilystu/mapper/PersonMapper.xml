@@ -39,4 +39,8 @@
     <select id="getPersonById2" resultMap="PersonResultMap2" parameterType="Integer">
         select * from person WHERE person.id=#{id}
     </select>
+
+    <select id="getPersonByCardId" resultType="Person" parameterType="Integer">
+        select * from person WHERE card_id=#{card_id}
+    </select>
 </mapper>
