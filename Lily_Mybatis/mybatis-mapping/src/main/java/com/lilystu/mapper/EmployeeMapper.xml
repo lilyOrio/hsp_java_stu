@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lilystu.mapper.EmployeeMapper">
+    <resultMap id="EmployeeResultMap" type="Employee">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association column="department_id" property="department"
+                     select="com.lilystu.mapper.DepartmentMapper.findDeptById">
+            <result column="id" property="id"/>
+            <result column="dept_name" property="dept_name"/>
+        </association>
+    </resultMap>
+    <select id="getEmployeeById" parameterType="Integer" resultType="Employee">
+        SELECT * from employee where id=#{id}
+    </select>
+</mapper>
