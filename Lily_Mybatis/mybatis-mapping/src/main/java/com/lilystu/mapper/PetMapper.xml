@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lilystu.mapper.PetMapper">
+    <!--
+        collection : 一对多关联查询, 表示一个用户可能对应多个pet 对象
+        ofType： 集合中元素对象的类型
+    -->
+    <resultMap id="PetResultMap" type="Pet">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <association property="user" column="user_id"
+                    select="com.lilystu.mapper.UserMapper.getUserById">
+        </association>
+    </resultMap>
+    <select id="getPetByUserId" resultMap="PetResultMap" parameterType="Integer">
+        select * from mybatis_pet where user_id=#{userId}
+    </select>
+
+    <select id="getPetById" resultMap="PetResultMap" parameterType="Integer">
+        select * from mybatis_pet where id=#{Id}
+    </select>
+</mapper>
