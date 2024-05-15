@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--引入外部的jdbc.properties文件-->
+    <properties resource="jdbc.properties"/>
+    <!-- 配置MyBatis 自带的日志输出, 还可以是其它日志比如SLF4J | LOG4J | LOG4J2 |JDK_LOGGING 等-->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <typeAliases>
+    <!-- 如果一个包下有很多的类，我们可以直接引入包，这样
+        该包下面的所有类名，可以直接使用
+    -->
+        <package name="com.lilystu.entity"/>
+    <!-- 为某个mapper 指定一个别名, 下面可以在XxxxxMapper.xml 做相应简化处理
+    -->
+    <!-- <typeAlias type="com.lilystu.entity.Monster" alias="Monster"/>-->
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url"
+                          value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.pwd}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--
+            1. 当一个包下有很多的Mapper.xml 文件和基于注解实现的接口时，为了方便，我们可以以包方式进行注册
+            2. 将下面的所有xml 文件和注解接口都进行注册
+        -->
+        <package name="com.lilystu.mapper"/>
+    </mappers>
+
+</configuration>
+

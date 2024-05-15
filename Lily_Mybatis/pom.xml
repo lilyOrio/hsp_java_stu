@@ -13,6 +13,7 @@
         <module>xml-mapper</module>
         <module>dynamic-sql</module>
         <module>mybatis-mapping</module>
+        <module>mybatis_cache</module>
     </modules>
 
     <!-- 指定编译器版本-->

@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lilystu.mapper.MonsterMapper">
+
+    <!-- 实现getMonsterById 方法-->
+    <select id="getMonsterById" parameterType="Integer"
+            resultType="Monster">
+        SELECT * FROM monster WHERE id = #{id}
+    </select>
+
+    <select id="findAllMonster"
+            resultType="Monster">
+        SELECT * FROM monster
+    </select>
+
+</mapper>
