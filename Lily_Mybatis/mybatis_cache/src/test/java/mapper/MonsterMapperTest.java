@@ -40,4 +40,21 @@ public class MonsterMapperTest {
             sqlSession.close();
         }
     }
+
+    @Test
+    public void level1CacheTest(){
+        Monster monster = monsterMapper.getMonsterById(2);
+        System.out.println("--" + monster + "--");
+        System.out.println(monster.getClass());
+//----------------------------测试一级缓存[一个一个的规则进行测试.]-----------------------
+//1. 当我们再次查询id=2 的Monster 时，直接从一级缓存获取,不会再次发出sql
+        monster = monsterMapper.getMonsterById(2);
+        System.out.println("--" + monster + "--");
+        System.out.println(monster.getClass());
+
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+        System.out.println("操作成功");
+    }
 }
