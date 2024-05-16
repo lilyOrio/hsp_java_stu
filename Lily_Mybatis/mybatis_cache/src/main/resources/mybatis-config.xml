@@ -8,6 +8,12 @@
     <!-- 配置MyBatis 自带的日志输出, 还可以是其它日志比如SLF4J | LOG4J | LOG4J2 |JDK_LOGGING 等-->
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
+<!--        
+    设置名	描述	有效值	默认值
+    cacheEnabled	全局性地开启或关闭所有映射器配置文件中已配置的任何缓存。	true | false	true
+-->
+    <!-- 1.开启二级缓存 默认开启-->
+    <setting name="cacheEnabled" value="true"/>
     </settings>
 
     <typeAliases>

@@ -2,16 +2,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lilystu.mapper.MonsterMapper">
-
+    <!-- 配置二级缓存
+        这个更高级的配置创建了一个 FIFO 缓存，
+        每隔 60 秒刷新，
+        最多可以存储结果对象或列表的 512 个引用，
+        而且返回的对象被认为是只读的，因此对它们进行修改可能会在不同线程中的调用者产生冲突。
+    -->
+    <cache
+            eviction="FIFO"
+            flushInterval="60000"
+            size="512"
+            readOnly="true"/>
     <!-- 实现getMonsterById 方法-->
     <select id="getMonsterById" parameterType="Integer"
             resultType="Monster">
         SELECT * FROM monster WHERE id = #{id}
     </select>
 
+    <!--    设置useCache=false 可以禁用当前select 语句的二级缓存，即每次查询都会发出sql 去查询,默认是true开启二级缓存  -->
     <select id="findAllMonster"
-            resultType="Monster">
+            resultType="Monster" useCache="false">
         SELECT * FROM monster
     </select>
-
+    <!--    insert、update、delete 操作数据后需要刷新缓存，如果不执行刷新缓存会出现脏读 flushCache="true"-->
+<!--    <update id="updateMonster" parameterType="Monster" flushCache="true">-->
+<!--        UPDATE mybatis_monster SET NAME=#{name},age=#{age} WHERE id=#{id}-->
+<!--    </update>-->
 </mapper>

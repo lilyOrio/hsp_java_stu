@@ -1,8 +1,10 @@
 package lilystu.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Monster {
+//2.使用二级缓存时entity 类实现序列化接口(serializable)，因为二级缓存可能使用到序列化技术
+public class Monster implements Serializable {
     private Integer id;
     private Integer age;
     private String name;
