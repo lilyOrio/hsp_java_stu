@@ -8,11 +8,11 @@
         最多可以存储结果对象或列表的 512 个引用，
         而且返回的对象被认为是只读的，因此对它们进行修改可能会在不同线程中的调用者产生冲突。
     -->
-    <cache
-            eviction="FIFO"
-            flushInterval="60000"
-            size="512"
-            readOnly="true"/>
+<!--    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/>-->
+
+    <!-- 启动ehcache 缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
     <!-- 实现getMonsterById 方法-->
     <select id="getMonsterById" parameterType="Integer"
             resultType="Monster">

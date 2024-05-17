@@ -62,7 +62,7 @@ public class MonsterMapperTest {
     }
 
     @Test
-    public void level2CacheTest(){
+    public void level2CacheTest() {
         Monster monster = monsterMapper.getMonsterById(2);
         System.out.println("--" + monster + "--");
         System.out.println(monster.getClass());
@@ -103,6 +103,32 @@ public class MonsterMapperTest {
         System.out.println(monster.getClass());
         monster = monsterMapper.getMonsterById(2);
         System.out.println("-4-" + monster + "--");
+        System.out.println(monster.getClass());
+
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+        System.out.println("操作成功");
+    }
+
+    @Test
+    public void ehCacheTest() {
+        Monster monster = monsterMapper.getMonsterById(2);
+        System.out.println("-1-" + monster + "--");
+        System.out.println(monster.getClass());
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+//        一级缓存失效
+//        启用全局的二级缓存，再sqlSession关闭之后，去查询同一个id的monster，不会再发出Sql请求
+        sqlSession = MyBatisUtils.getSqlSession();
+        monsterMapper = sqlSession.getMapper(MonsterMapper.class);
+        monster = monsterMapper.getMonsterById(2);
+        System.out.println("-2-" + monster + "--");
+        System.out.println(monster.getClass());
+
+        monster = monsterMapper.getMonsterById(2);
+        System.out.println("-3-" + monster + "--");
         System.out.println(monster.getClass());
 
         if (sqlSession != null) {
