@@ -17,11 +17,12 @@ public class MonsterMapperTest {
     private MonsterMapper monsterMapper;
 
     @Before
-    public void init(){
+    public void init() {
         sqlSession = MyBatisUtils.getSqlSession();
         monsterMapper = sqlSession.getMapper(MonsterMapper.class);
         System.out.println("MonsterMapper = " + monsterMapper.getClass());
     }
+
     //测查询单个对象
     @Test
     public void getMonsterById() {
@@ -31,6 +32,7 @@ public class MonsterMapperTest {
             sqlSession.close();
         }
     }
+
     @Test
     public void findAllMonster() {
         List<Monster> monsterList = monsterMapper.findAllMonster();
@@ -43,7 +45,7 @@ public class MonsterMapperTest {
     }
 
     @Test
-    public void level1CacheTest(){
+    public void level1CacheTest() {
         Monster monster = monsterMapper.getMonsterById(2);
         System.out.println("--" + monster + "--");
         System.out.println(monster.getClass());
@@ -72,6 +74,35 @@ public class MonsterMapperTest {
         monsterMapper = sqlSession.getMapper(MonsterMapper.class);
         monster = monsterMapper.getMonsterById(2);
         System.out.println("--" + monster + "--");
+        System.out.println(monster.getClass());
+
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+        System.out.println("操作成功");
+    }
+
+    //10.4 Mybatis 的一级缓存和二级缓存执行顺序
+    @Test
+    public void cacheSeqTest() {
+        Monster monster = monsterMapper.getMonsterById(2);
+        System.out.println("-1-" + monster + "--");
+        System.out.println(monster.getClass());
+        System.out.println("-2-" + monster + "--");
+        System.out.println(monster.getClass());
+//        3. 运行效果, 可以看到，在一级缓存存在的情况下，依然是先查询二级缓存，但是因为
+//           二级缓存，没有数据, 所以命中率都是0.0
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+//        1. 不会出现一级缓存和二级缓存中有同一个数据。因为二级缓存(数据)是在一级缓存关闭之后才有的
+        sqlSession = MyBatisUtils.getSqlSession();
+        monsterMapper = sqlSession.getMapper(MonsterMapper.class);
+        monster = monsterMapper.getMonsterById(2);
+        System.out.println("-3-" + monster + "--");
+        System.out.println(monster.getClass());
+        monster = monsterMapper.getMonsterById(2);
+        System.out.println("-4-" + monster + "--");
         System.out.println(monster.getClass());
 
         if (sqlSession != null) {
