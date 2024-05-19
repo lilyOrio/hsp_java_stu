@@ -1,7 +1,7 @@
-package lilystu.mapper;
+package com.lilystu.mapper;
 
 
-import lilystu.entity.Monster;
+import com.lilystu.entity.Monster;
 
 import java.util.List;
 

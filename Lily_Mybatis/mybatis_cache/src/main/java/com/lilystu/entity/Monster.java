@@ -1,4 +1,4 @@
-package lilystu.entity;
+package com.lilystu.entity;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,14 +1,12 @@
 package mapper;
 
-import com.sun.org.apache.bcel.internal.generic.MULTIANEWARRAY;
-import lilystu.entity.Monster;
-import lilystu.mapper.MonsterMapper;
-import lilystu.util.MyBatisUtils;
+import com.lilystu.entity.Monster;
+import com.lilystu.mapper.MonsterMapper;
+import com.lilystu.util.MyBatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
 import java.util.List;
 
 public class MonsterMapperTest {
@@ -46,14 +44,14 @@ public class MonsterMapperTest {
 
     @Test
     public void level1CacheTest() {
-        Monster monster = monsterMapper.getMonsterById(2);
+        Monster monster = monsterMapper.getMonsterById(3);
         System.out.println("--" + monster + "--");
-        System.out.println(monster.getClass());
+        System.out.println(monster.hashCode());
 //----------------------------测试一级缓存[一个一个的规则进行测试.]-----------------------
 //1. 当我们再次查询id=2 的Monster 时，直接从一级缓存获取,不会再次发出sql
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("--" + monster + "--");
-        System.out.println(monster.getClass());
+        System.out.println(monster.hashCode());
 
         if (sqlSession != null) {
             sqlSession.close();
@@ -63,7 +61,7 @@ public class MonsterMapperTest {
 
     @Test
     public void level2CacheTest() {
-        Monster monster = monsterMapper.getMonsterById(2);
+        Monster monster = monsterMapper.getMonsterById(3);
         System.out.println("--" + monster + "--");
         System.out.println(monster.getClass());
         if (sqlSession != null) {
@@ -72,7 +70,7 @@ public class MonsterMapperTest {
 //        启用全局的二级缓存，再sqlSession关闭之后，去查询同一个id的monster，不会再发出Sql请求
         sqlSession = MyBatisUtils.getSqlSession();
         monsterMapper = sqlSession.getMapper(MonsterMapper.class);
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("--" + monster + "--");
         System.out.println(monster.getClass());
 
@@ -85,7 +83,7 @@ public class MonsterMapperTest {
     //10.4 Mybatis 的一级缓存和二级缓存执行顺序
     @Test
     public void cacheSeqTest() {
-        Monster monster = monsterMapper.getMonsterById(2);
+        Monster monster = monsterMapper.getMonsterById(3);
         System.out.println("-1-" + monster + "--");
         System.out.println(monster.getClass());
         System.out.println("-2-" + monster + "--");
@@ -98,10 +96,10 @@ public class MonsterMapperTest {
 //        1. 不会出现一级缓存和二级缓存中有同一个数据。因为二级缓存(数据)是在一级缓存关闭之后才有的
         sqlSession = MyBatisUtils.getSqlSession();
         monsterMapper = sqlSession.getMapper(MonsterMapper.class);
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("-3-" + monster + "--");
         System.out.println(monster.getClass());
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("-4-" + monster + "--");
         System.out.println(monster.getClass());
 
@@ -113,7 +111,7 @@ public class MonsterMapperTest {
 
     @Test
     public void ehCacheTest() {
-        Monster monster = monsterMapper.getMonsterById(2);
+        Monster monster = monsterMapper.getMonsterById(3);
         System.out.println("-1-" + monster + "--");
         System.out.println(monster.getClass());
         if (sqlSession != null) {
@@ -123,11 +121,11 @@ public class MonsterMapperTest {
 //        启用全局的二级缓存，再sqlSession关闭之后，去查询同一个id的monster，不会再发出Sql请求
         sqlSession = MyBatisUtils.getSqlSession();
         monsterMapper = sqlSession.getMapper(MonsterMapper.class);
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("-2-" + monster + "--");
         System.out.println(monster.getClass());
 
-        monster = monsterMapper.getMonsterById(2);
+        monster = monsterMapper.getMonsterById(3);
         System.out.println("-3-" + monster + "--");
         System.out.println(monster.getClass());
 
