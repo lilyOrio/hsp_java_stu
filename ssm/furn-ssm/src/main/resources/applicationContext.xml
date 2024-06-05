@@ -39,7 +39,7 @@
         2. 在类路径(resources 目录)下创建mapper 目录，后面的mapper 文件，就放在这
         里
         -->
-<!--        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
     </bean>
 
     <!-- 配置扫描器，将mybatis 接口的实现加入到ioc 容器中
@@ -49,6 +49,7 @@
         <!--
         1. 扫描所有的dao 接口的实现，加入到ioc 容器中
         2. 这里dao 接口，就是mapper 接口
+        可以通过ioc.getBean(xxxMapper.class)获取mapper对象
         -->
         <property name="basePackage" value="com.lilystu.furn.dao"></property>
     </bean>

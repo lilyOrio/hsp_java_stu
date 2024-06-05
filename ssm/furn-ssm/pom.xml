@@ -76,5 +76,12 @@
       <version>5.1.49</version>
     </dependency>
 
+    <!-- 引入mybatis 逆向工程依赖包-->
+    <dependency>
+      <groupId>org.mybatis.generator</groupId>
+      <artifactId>mybatis-generator-core</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+
   </dependencies>
 </project>
