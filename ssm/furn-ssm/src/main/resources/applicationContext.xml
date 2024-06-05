@@ -1,6 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- spring 的配置文件: 主要配置和业务逻辑有关的，比如数据源，事务控制等-->
 
+    <!--
+    1. 扫描com.lilystu.furn 包
+    2. context:exclude-filter 配置说明不描控制器[控制器交由Springmvc接管]
+    -->
+    <context:component-scan base-package="com.lilystu.furn">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 数据源配置
+1. 引入外部配置文件: jdbc.properties 放在resources 下
+-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="pooledDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="driverClassName" value="${jdbc.driverClass}"></property>
+        <property name="username" value="${jdbc.userName}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <!-- 配置与mybatis 的整合-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 指定mybatis 全局配置文件的位置-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <!-- 指定数据源-->
+        <property name="dataSource" ref="pooledDataSource"></property>
+        <!--
+        1. 指定mybatis 的mapper 的文件位置，扫描mapper 下的所有xml 文件
+        2. 在类路径(resources 目录)下创建mapper 目录，后面的mapper 文件，就放在这
+        里
+        -->
+<!--        <property name="mapperLocations" value="classpath:mapper/*.xml"></property>-->
+    </bean>
+
+    <!-- 配置扫描器，将mybatis 接口的实现加入到ioc 容器中
+        将dao接口放置到dao包下
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--
+        1. 扫描所有的dao 接口的实现，加入到ioc 容器中
+        2. 这里dao 接口，就是mapper 接口
+        -->
+        <property name="basePackage" value="com.lilystu.furn.dao"></property>
+    </bean>
+
+    <!-- 配置事务控制-->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 指定数据源-->
+        <property name="dataSource" ref="pooledDataSource"></property>
+    </bean>
+
+    <!--
+    1. 开启基于注解的事务，并指定切入点
+    2. execution(* com.lilystu.furn.service..*(..)):
+    表示对com.lilystu.furn.service 包所有类的所有方法控制事务
+    3. tx:advice : 配置事务增强, 也就是指定事务如何切入
+    -->
+    <aop:config>
+        <!-- 切入点表达式-->
+        <aop:pointcut id="txPoint" expression="execution(* com.lilystu.furn.service..*(..))"/>
+        <!-- 配置事务增强: 使用txAdvice 指定规则对txPoint 进行切入-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+    </aop:config>
+    <!-- 配置事务增强，也就是指定事务如何切入-->
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <!-- *代表所有方法都是事务方法-->
+            <tx:method name="*"/>
+            <!-- 以get 开始的所有方法，我们认为是只读，进行调优-->
+            <tx:method name="get*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
 </beans>
