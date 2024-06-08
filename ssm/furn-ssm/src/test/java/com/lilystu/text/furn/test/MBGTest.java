@@ -12,7 +12,7 @@ import java.util.List;
 
 public class MBGTest {
     @Test
-    private void generator()throws Exception{
+    public void generator()throws Exception{
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
 //        指定逆向工程配置文件，这个文件要直接放在项目下面
