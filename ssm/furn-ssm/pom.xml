@@ -83,5 +83,12 @@
       <version>1.4.0</version>
     </dependency>
 
+    <!-- 引入jackson,处理json 数据-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.12.4</version>
+    </dependency>
+
   </dependencies>
 </project>

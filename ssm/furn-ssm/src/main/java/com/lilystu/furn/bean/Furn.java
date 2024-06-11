@@ -1,5 +1,7 @@
 package com.lilystu.furn.bean;
 
+import org.springframework.util.StringUtils;
+
 import java.math.BigDecimal;
 
 public class Furn {
@@ -15,7 +17,8 @@ public class Furn {
 
     private Integer stock;
 
-    private String imgPath;
+//    当创建Furn 对象imgPath 为null 时, imgPath 给默认值
+    private String imgPath = "assets/images/product-image/1.jpg";
 
     public Integer getId() {
         return id;
@@ -83,7 +86,10 @@ public class Furn {
         this.price = price;
         this.sales = sales;
         this.stock = stock;
-        this.imgPath = imgPath;
+//        imgPath不能是null、""、"   "
+        if(StringUtils.hasText(imgPath)){
+            this.imgPath = imgPath;
+        }
     }
 
     @Override
