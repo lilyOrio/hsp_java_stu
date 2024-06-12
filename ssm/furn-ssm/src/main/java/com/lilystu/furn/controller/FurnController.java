@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class FurnController {
@@ -19,5 +22,12 @@ public class FurnController {
     public Msg save(@RequestBody Furn furn) {//将前端发送的json 数据,转成JavaBean 数据
         furnService.save(furn);
         return Msg.success();
+    }
+
+    @ResponseBody
+    @RequestMapping("/furns")
+    public Msg listFurns() {
+        List<Furn> furnList = furnService.findAll();
+        return Msg.success().add("furnsList", furnList);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class FurnServiceTest {
     private ApplicationContext ac;
@@ -28,5 +29,13 @@ public class FurnServiceTest {
                         7, null);
         furnService.save(furn);
         System.out.println("save ok");
+    }
+
+    @Test
+    public void findAll() {
+        List<Furn> furnList = furnService.findAll();
+        for (Furn furn : furnList) {
+            System.out.println(furn);
+        }
     }
 }
