@@ -20,10 +20,12 @@
         </div>
 
         <el-table :data="tableData" stripe style="width: 90%">
-            <el-table-column prop="date" label="日期"></el-table-column>
-            <el-table-column prop="name" label="姓名"></el-table-column>
-            <el-table-column prop="address" label="地址"></el-table-column>
-
+            <el-table-column prop="id" label="ID" sortable></el-table-column>
+            <el-table-column prop="name" label="家居名"></el-table-column>
+            <el-table-column prop="maker" label="厂家"></el-table-column>
+            <el-table-column prop="price" label="价格"></el-table-column>
+            <el-table-column prop="sales" label="销量"></el-table-column>
+            <el-table-column prop="stock" label="库存"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template #default="scope">
                     <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
@@ -59,10 +61,10 @@
                 </el-form-item>
             </el-form>
             <template #footer>
-<span class="dialog-footer">
-<el-button @click="dialogVisible = false">取消</el-button>
-<el-button type="primary" @click="save">确定</el-button>
-</span>
+                <span class="dialog-footer">
+                <el-button @click="dialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="save">确定</el-button>
+                </span>
             </template>
         </el-dialog>
     </div>
@@ -79,10 +81,11 @@
                 search: '',
                 dialogVisible: false,
                 form: {},
-                tableData: [{date: '2016-05-02', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄',},
-                    {date: '2016-05-04', name: '王小虎', address: '上海市普陀区金沙江路 1517 弄',},
-                    {date: '2016-05-01', name: '王小虎', address: '上海市普陀区金沙江路 1519 弄',}]
+                tableData: []
             }
+        },
+        created(){
+            this.list()
         },
         methods: {
             handleEdit() {
@@ -90,9 +93,11 @@
             save() {
                 //将添加的数据发送到后端
                 // =======说明====...
-                request.post("api/save", this.form).then(res => {
+                request.post("/api/save", this.form).then(res => {
                     console.log(res)
                     this.dialogVisible = false
+                    //添加完家具再刷新显示
+                    this.list()
                 })
             },
             add() {
@@ -100,7 +105,15 @@
                 this.dialogVisible = true;
                 //清空表单
                 this.form = {};
-
+            },
+            list(){
+                request.get("/api/furns").then(res => {
+                    //绑定tableData, 显示在表格
+                    console.log("res=",res)
+                    // this.tableData = res.data.extend.furnsList
+                    //已经对返回值res做过处理了，返回的是res.data
+                    this.tableData = res.extend.furnsList
+                })
             }
         }
     }
