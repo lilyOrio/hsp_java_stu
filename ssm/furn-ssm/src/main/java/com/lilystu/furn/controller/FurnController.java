@@ -35,4 +35,12 @@ public class FurnController {
         furnService.update(furn);
         return Msg.success();
     }
+
+    @DeleteMapping("/del/{id}")
+    @ResponseBody
+    public Msg del(@PathVariable Integer id) {
+        System.out.println("del id= " + id);
+        furnService.del(id);
+        return Msg.success();
+    }
 }

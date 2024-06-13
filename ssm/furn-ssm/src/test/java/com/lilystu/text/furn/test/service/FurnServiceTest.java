@@ -47,4 +47,10 @@ public class FurnServiceTest {
         furnService.update(furn);
         System.out.println("update ok");
     }
+
+    @Test
+    public void del() {
+        furnService.del(1);
+        System.out.println("del ok");
+    }
 }

@@ -31,4 +31,10 @@ public class FurnServiceImpl implements FurnService{
         //因为传入的furn 的字段不一定是完整的，所以使用updateByPrimaryKeySelective
         furnMapper.updateByPrimaryKeySelective(furn);
     }
+
+    @Override
+    public void del(Integer id) {
+        furnMapper.deleteByPrimaryKey(id);
+    }
+
 }
