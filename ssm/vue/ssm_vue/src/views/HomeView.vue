@@ -26,11 +26,17 @@
             <el-table-column prop="price" label="价格"></el-table-column>
             <el-table-column prop="sales" label="销量"></el-table-column>
             <el-table-column prop="stock" label="库存"></el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="操作" width="120">
                 <!--handleEdit(scope.row)可以将当前行数据传递给handleEdit-->
                 <template #default="scope">
                     <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
-                    <el-button type="text">删除</el-button>
+                    <!-- 增加popcomfirm 控件，确认删除-->
+                    <el-popconfirm
+                            title="确定删除吗？" @confirm="handleDel(scope.row.id)">
+                        <template #reference>
+                            <el-button size="small" type="danger">删除</el-button>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
 
@@ -139,6 +145,23 @@
                     this.tableData = res.extend.furnsList
                 })
             },
+            handleDel(id){
+                console.log("id=",id);
+                request.delete("/api/del/" + id).then(res => {
+                    if (res.code === 200) {
+                        this.$message({
+                            type: "success",
+                            message: "删除成功"
+                        })
+                    } else {
+                        this.$message({
+                            type: "error",
+                            message: res.msg
+                        })
+                    }
+                    this.list() // 刷新列表
+                })
+            }
         }
     }
 </script>
