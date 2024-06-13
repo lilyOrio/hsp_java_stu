@@ -38,4 +38,13 @@ public class FurnServiceTest {
             System.out.println(furn);
         }
     }
+
+    @Test
+    public void update() {
+        Furn furn =
+                new Furn(1, "优雅风格沙发", "顺平家居", new BigDecimal(10), 666,
+                        7,null);
+        furnService.update(furn);
+        System.out.println("update ok");
+    }
 }

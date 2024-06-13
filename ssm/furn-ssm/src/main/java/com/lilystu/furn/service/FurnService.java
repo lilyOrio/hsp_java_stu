@@ -12,4 +12,6 @@ public interface FurnService {
      * @return
      */
     public List<Furn> findAll();
+
+    public void update(Furn furn);
 }

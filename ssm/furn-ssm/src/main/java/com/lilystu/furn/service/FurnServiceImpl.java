@@ -25,4 +25,10 @@ public class FurnServiceImpl implements FurnService{
         //查看mapper.xml文件,此语句用于查询所有数据
         return furnMapper.selectByExample(null);
     }
+
+    @Override
+    public void update(Furn furn) {
+        //因为传入的furn 的字段不一定是完整的，所以使用updateByPrimaryKeySelective
+        furnMapper.updateByPrimaryKeySelective(furn);
+    }
 }
