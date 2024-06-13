@@ -27,6 +27,7 @@
             <el-table-column prop="sales" label="销量"></el-table-column>
             <el-table-column prop="stock" label="库存"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
+                <!--handleEdit(scope.row)可以将当前行数据传递给handleEdit-->
                 <template #default="scope">
                     <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
                     <el-button type="text">删除</el-button>
@@ -88,17 +89,40 @@
             this.list()
         },
         methods: {
-            handleEdit() {
+            handleEdit(row) {//回显数据
+                console.log("row=",row);
+                this.form = JSON.parse(JSON.stringify(row));//将row转换成json字符串后再转成json对象
+                this.dialogVisible = true;
             },
-            save() {
-                //将添加的数据发送到后端
-                // =======说明====...
-                request.post("/api/save", this.form).then(res => {
-                    console.log(res)
-                    this.dialogVisible = false
-                    //添加完家具再刷新显示
-                    this.list()
-                })
+            save() {//修改（数据回显）和添加（数据清空）
+                console.log("this.form.id",this.form.id);
+                if (this.form.id){//修改
+                    request.put("/api/update", this.form).then(res => {
+                        console.log("res",res)
+                        if (res.code === 200){
+                            this.$message({ //弹出更新成功的消息框
+                                type: "success",
+                                message: "更新成功"
+                            })
+                        }else {
+                            this.$message({//弹出更新失败信息
+                                type: "error",
+                                message: res.msg
+                            })
+                        }
+                        this.dialogVisible = false
+                        //添加完家具再刷新显示
+                        this.list()//必须放在ajax请求回调函数内，因为ajax请求是异步函数函数未执行完也会继续下面的指令
+                    })
+                }else{
+                    //将添加的数据发送到后端
+                    request.post("/api/save", this.form).then(res => {
+                        console.log("res",res)
+                        this.dialogVisible = false
+                        //添加完家具再刷新显示
+                        this.list()
+                    })
+                }
             },
             add() {
                 //显示对话框
@@ -114,7 +138,7 @@
                     //已经对返回值res做过处理了，返回的是res.data
                     this.tableData = res.extend.furnsList
                 })
-            }
+            },
         }
     }
 </script>
