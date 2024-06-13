@@ -97,8 +97,18 @@
         methods: {
             handleEdit(row) {//回显数据
                 console.log("row=",row);
-                this.form = JSON.parse(JSON.stringify(row));//将row转换成json字符串后再转成json对象
-                this.dialogVisible = true;
+                //方法一
+                // this.form = JSON.parse(JSON.stringify(row));//将row转换成json字符串后再转成json对象
+                // this.dialogVisible = true;
+                //方法二
+                request.get("/api/find/"+ row.id).then(res => {
+                    //绑定tableData, 显示在表格
+                    console.log("res=",res)
+                    // this.tableData = res.data.extend.furnsList
+                    //已经对返回值res做过处理了，返回的是res.data
+                    this.form = res.extend.furn
+                })
+
             },
             save() {//修改（数据回显）和添加（数据清空）
                 console.log("this.form.id",this.form.id);

@@ -37,4 +37,9 @@ public class FurnServiceImpl implements FurnService{
         furnMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public Furn findById(Integer id) {
+        return furnMapper.selectByPrimaryKey(id);
+    }
+
 }

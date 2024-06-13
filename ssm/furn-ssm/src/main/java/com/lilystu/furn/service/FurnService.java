@@ -16,4 +16,6 @@ public interface FurnService {
     public void update(Furn furn);
 
     public void del(Integer id);
+
+    public Furn findById(Integer id);
 }

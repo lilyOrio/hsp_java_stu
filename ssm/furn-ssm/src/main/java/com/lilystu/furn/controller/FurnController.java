@@ -43,4 +43,11 @@ public class FurnController {
         furnService.del(id);
         return Msg.success();
     }
+
+    @RequestMapping("/find/{id}")
+    @ResponseBody
+    public Msg find(@PathVariable Integer id) {
+        System.out.println("find id= " + id);
+        return Msg.success().add("furn",furnService.findById(id));
+    }
 }
