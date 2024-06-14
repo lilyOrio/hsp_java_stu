@@ -15,8 +15,8 @@
 
         <!-- 搜索-->
         <div style="margin: 10px 0">
-            <el-input v-model="search" placeholder=" 请 输 入 关 键 字 " style="width: 30%"></el-input>
-            <el-button style="margin-left: 10px" type="primary">查询</el-button>
+            <el-input v-model="search" placeholder=" 请 输 入 关 键 字 " style="width: 20%"></el-input>
+            <el-button style="margin-left: 10px" type="primary" @click="list">查询</el-button>
         </div>
 
         <el-table :data="tableData" stripe style="width: 90%">
@@ -174,10 +174,11 @@
                 // })
 
                 //请求分页
-                request.get("/api/furnsByPage",{
+                request.get("/api/furnsByConditionPage",{
                     params:{//携带参数
                         pageNum: this.currentPage,
-                        pageSize: this.pageSize
+                        pageSize: this.pageSize,
+                        search: this.search
                     }
                 }).then(res => {
                     //绑定tableData, 显示在表格

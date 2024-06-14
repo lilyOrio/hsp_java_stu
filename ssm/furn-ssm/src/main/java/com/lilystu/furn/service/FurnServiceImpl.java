@@ -1,9 +1,11 @@
 package com.lilystu.furn.service;
 
 import com.lilystu.furn.bean.Furn;
+import com.lilystu.furn.bean.FurnExample;
 import com.lilystu.furn.dao.FurnMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -40,6 +42,16 @@ public class FurnServiceImpl implements FurnService{
     @Override
     public Furn findById(Integer id) {
         return furnMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Furn> findByCondition(String name) {
+        FurnExample furnExample = new FurnExample();
+        FurnExample.Criteria criteria = furnExample.createCriteria();
+        if (StringUtils.hasText(name)){
+            criteria.andNameLike("%" + name + "%");
+        }
+        return furnMapper.selectByExample(furnExample);
     }
 
 }

@@ -71,4 +71,16 @@ public class FurnController {
         System.out.println("pageInfo==>" + pageInfo);
         return Msg.success().add("pageInfo", pageInfo);
     }
+
+    @ResponseBody
+    @RequestMapping("/furnsByConditionPage")
+    public Msg listFurnsByConditionPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                                        @RequestParam(defaultValue = "5") Integer pageSize,
+                                        @RequestParam(defaultValue = "") String search) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Furn> furnList = furnService.findByCondition(search);
+        PageInfo<Furn> pageInfo = new PageInfo<Furn>(furnList, pageSize);
+        System.out.println("pageInfo==>" + pageInfo);
+        return Msg.success().add("pageInfo", pageInfo);
+    }
 }

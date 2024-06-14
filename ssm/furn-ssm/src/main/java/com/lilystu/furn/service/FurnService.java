@@ -18,4 +18,6 @@ public interface FurnService {
     public void del(Integer id);
 
     public Furn findById(Integer id);
+
+    public List<Furn> findByCondition(String name);
 }
