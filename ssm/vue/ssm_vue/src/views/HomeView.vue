@@ -74,6 +74,18 @@
                 </span>
             </template>
         </el-dialog>
+        <!--//增加element-plus 分页控件-->
+        <div style="margin: 10px 0">
+            <el-pagination
+                    @size-change="handlePageSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-sizes="[5,10,15]"
+                    :page-size="pageSize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="total">
+            </el-pagination>
+        </div>
     </div>
 </template>
 
@@ -85,6 +97,12 @@
         components: {},
         data() {
             return {
+                //当前页
+                currentPage: 1,
+                //每页几条数据
+                pageSize: 5,
+                //总共多少条数据
+                total: 10,
                 search: '',
                 dialogVisible: false,
                 form: {},
@@ -147,12 +165,24 @@
                 this.form = {};
             },
             list(){
-                request.get("/api/furns").then(res => {
+                // request.get("/api/furns").then(res => {
+                //     //绑定tableData, 显示在表格
+                //     console.log("res=",res)
+                //     // this.tableData = res.data.extend.furnsList
+                //     //已经对返回值res做过处理了，返回的是res.data
+                //     this.tableData = res.extend.furnsList
+                // })
+
+                //请求分页
+                request.get("/api/furnsByPage",{
+                    params:{//携带参数
+                        pageNum: this.currentPage,
+                        pageSize: this.pageSize
+                    }
+                }).then(res => {
                     //绑定tableData, 显示在表格
-                    console.log("res=",res)
-                    // this.tableData = res.data.extend.furnsList
-                    //已经对返回值res做过处理了，返回的是res.data
-                    this.tableData = res.extend.furnsList
+                    this.tableData = res.extend.pageInfo.list//拿到的显示数据
+                    this.total = res.extend.pageInfo.total
                 })
             },
             handleDel(id){
@@ -171,6 +201,15 @@
                     }
                     this.list() // 刷新列表
                 })
+            },
+            handlePageSizeChange(pageSize){//处理分页请求
+                this.pageSize = pageSize
+                this.list()
+            },
+            //处理当前页变化, 比如点击分页连接,或者go to 第几页
+            handleCurrentChange(pageNum) {
+                this.currentPage = pageNum
+                this.list()
             }
         }
     }

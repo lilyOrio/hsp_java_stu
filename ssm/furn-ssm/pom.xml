@@ -90,5 +90,12 @@
       <version>2.12.4</version>
     </dependency>
 
+    <!-- 引入mybatis pageHelper 分页插件-->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper</artifactId>
+      <version>5.2.1</version>
+    </dependency>
+
   </dependencies>
 </project>
