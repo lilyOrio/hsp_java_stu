@@ -50,20 +50,20 @@
         4.前端中，对象的属性可以动态添加的
         -->
         <el-dialog title="提示" v-model="dialogVisible" width="30%">
-            <el-form :model="form" label-width="120px">
-                <el-form-item label="家居名">
+            <el-form :model="form" :rules="rules" ref="form" label-width="120px">
+                <el-form-item label="家居名" prop="name">
                     <el-input v-model="form.name" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="厂商">
+                <el-form-item label="厂商" prop="maker">
                     <el-input v-model="form.maker" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="价格">
+                <el-form-item label="价格" prop="price">
                     <el-input v-model="form.price" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="销量">
+                <el-form-item label="销量" prop="sales">
                     <el-input v-model="form.sales" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="库存">
+                <el-form-item label="库存" prop="stock">
                     <el-input v-model="form.stock" style="width: 80%"></el-input>
                 </el-form-item>
             </el-form>
@@ -106,22 +106,43 @@
                 search: '',
                 dialogVisible: false,
                 form: {},
-                tableData: []
+                tableData: [],
+                //添加表单的校验规则
+                rules: {
+                    name: [
+                        {required: true, message: '请输入称家居名', trigger: 'blur'}
+                    ],
+                    maker: [
+                        {required: true, message: '请输入称制造商', trigger: 'blur'}
+                    ],
+                    price: [
+                        {required: true, message: '请输入价格', trigger: 'blur'},
+                        {pattern: /^(([1-9]\d*)|(0))(\.\d+)?$/, message: '请输入数字', trigger: 'blur'}
+                    ],
+                    sales: [
+                        {required: true, message: '请输入销量', trigger: 'blur'},
+                        {pattern: /^(([1-9]\d*)|(0))$/, message: '请输入数字', trigger: 'blur'}
+                    ],
+                    stock: [
+                        {required: true, message: '请输入库存', trigger: 'blur'},
+                        {pattern: /^(([1-9]\d*)|(0))$/, message: '请输入数字', trigger: 'blur'}
+                    ]
+                }
             }
         },
-        created(){
+        created() {
             this.list()
         },
         methods: {
             handleEdit(row) {//回显数据
-                console.log("row=",row);
+                console.log("row=", row);
                 //方法一
                 // this.form = JSON.parse(JSON.stringify(row));//将row转换成json字符串后再转成json对象
                 // this.dialogVisible = true;
                 //方法二
-                request.get("/api/find/"+ row.id).then(res => {
+                request.get("/api/find/" + row.id).then(res => {
                     //绑定tableData, 显示在表格
-                    console.log("res=",res)
+                    console.log("res=", res)
                     // this.tableData = res.data.extend.furnsList
                     //已经对返回值res做过处理了，返回的是res.data
                     this.form = res.extend.furn
@@ -129,16 +150,16 @@
 
             },
             save() {//修改（数据回显）和添加（数据清空）
-                console.log("this.form.id",this.form.id);
-                if (this.form.id){//修改
+                console.log("this.form.id", this.form.id);
+                if (this.form.id) {//修改
                     request.put("/api/update", this.form).then(res => {
-                        console.log("res",res)
-                        if (res.code === 200){
+                        console.log("res", res)
+                        if (res.code === 200) {
                             this.$message({ //弹出更新成功的消息框
                                 type: "success",
                                 message: "更新成功"
                             })
-                        }else {
+                        } else {
                             this.$message({//弹出更新失败信息
                                 type: "error",
                                 message: res.msg
@@ -148,13 +169,30 @@
                         //添加完家具再刷新显示
                         this.list()//必须放在ajax请求回调函数内，因为ajax请求是异步函数函数未执行完也会继续下面的指令
                     })
-                }else{
-                    //将添加的数据发送到后端
-                    request.post("/api/save", this.form).then(res => {
-                        console.log("res",res)
-                        this.dialogVisible = false
-                        //添加完家具再刷新显示
-                        this.list()
+                } else {
+                    //表单验证是否通过
+                    this.$refs['form'].validate((valid) => {
+                        if (valid) {
+                        //=======说明======
+                        //1. 将form 表单提交给/api/save 的接口
+                        //2. /api/save 等价http://localhost:10001/save
+                        //3. 如果成功，就进入then 方法
+                        //4. res 就是返回的信息
+                        //5. 查看Mysql 看看数据是否保存
+                            //将添加的数据发送到后端
+                            request.post("/api/save", this.form).then(res => {
+                                console.log("res", res)
+                                this.dialogVisible = false
+                                //添加完家具再刷新显示
+                                this.list()
+                            })
+                        }else {
+                            this.$message({//弹出更新失败信息
+                                type: "error",
+                                message: "验证失败，不提交"
+                            })
+                            return false;
+                        }
                     })
                 }
             },
@@ -163,8 +201,10 @@
                 this.dialogVisible = true;
                 //清空表单
                 this.form = {};
+                //将添加验证提示消息，清空
+                this.$refs['form'].resetFields();
             },
-            list(){
+            list() {
                 // request.get("/api/furns").then(res => {
                 //     //绑定tableData, 显示在表格
                 //     console.log("res=",res)
@@ -174,8 +214,8 @@
                 // })
 
                 //请求分页
-                request.get("/api/furnsByConditionPage",{
-                    params:{//携带参数
+                request.get("/api/furnsByConditionPage", {
+                    params: {//携带参数
                         pageNum: this.currentPage,
                         pageSize: this.pageSize,
                         search: this.search
@@ -186,8 +226,8 @@
                     this.total = res.extend.pageInfo.total
                 })
             },
-            handleDel(id){
-                console.log("id=",id);
+            handleDel(id) {
+                console.log("id=", id);
                 request.delete("/api/del/" + id).then(res => {
                     if (res.code === 200) {
                         this.$message({
@@ -203,7 +243,7 @@
                     this.list() // 刷新列表
                 })
             },
-            handlePageSizeChange(pageSize){//处理分页请求
+            handlePageSizeChange(pageSize) {//处理分页请求
                 this.pageSize = pageSize
                 this.list()
             },
