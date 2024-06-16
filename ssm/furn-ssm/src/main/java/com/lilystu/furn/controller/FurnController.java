@@ -7,9 +7,14 @@ import com.lilystu.furn.bean.Msg;
 import com.lilystu.furn.service.FurnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FurnController {
@@ -19,9 +24,19 @@ public class FurnController {
 
     @PostMapping("/save")
     @ResponseBody//将返回数据转为json格式
-    public Msg save(@RequestBody Furn furn) {//将前端发送的json 数据,转成JavaBean 数据
-        furnService.save(furn);
-        return Msg.success();
+    public Msg save(@Validated @RequestBody Furn furn, Errors errors) {//将前端发送的json 数据,转成JavaBean 数据
+
+        Map<String, Object> map = new HashMap<>();
+        List<FieldError> fieldErrors = errors.getFieldErrors();
+        for (FieldError e : fieldErrors) {
+            map.put(e.getField(), e.getDefaultMessage());
+        }
+        if (map.isEmpty()) {
+            furnService.save(furn);
+            return Msg.success();
+        } else {
+            return Msg.fail().add("errorMsg", map);
+        }
     }
 
     @ResponseBody

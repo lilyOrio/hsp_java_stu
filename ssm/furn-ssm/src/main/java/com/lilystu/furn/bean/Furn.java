@@ -1,23 +1,31 @@
 package com.lilystu.furn.bean;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.util.StringUtils;
 
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Furn {
     private Integer id;
 
+    @NotEmpty(message = "请输入家居名")
     private String name;
-
+    @NotEmpty(message = "请输入厂家名")
     private String maker;
+    @NotNull(message = "请输入数字")
+    @Range(min = 0, message = "价格不能小于 0")
 
     private BigDecimal price;
-
+    @NotNull(message = "请输入数字")
+    @Range(min = 0, message = "销量不能小于 0")
     private Integer sales;
-
+    @NotNull(message = "请输入数字")
+    @Range(min = 0, message = "库存不能小于 0")
     private Integer stock;
-
-//    当创建Furn 对象imgPath 为null 时, imgPath 给默认值
+    //    当创建Furn 对象imgPath 为null 时, imgPath 给默认值
     private String imgPath = "assets/images/product-image/1.jpg";
 
     public Integer getId() {
@@ -87,7 +95,7 @@ public class Furn {
         this.sales = sales;
         this.stock = stock;
 //        imgPath不能是null、""、"   "
-        if(StringUtils.hasText(imgPath)){
+        if (StringUtils.hasText(imgPath)) {
             this.imgPath = imgPath;
         }
     }

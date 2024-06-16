@@ -52,19 +52,24 @@
         <el-dialog title="提示" v-model="dialogVisible" width="30%">
             <el-form :model="form" :rules="rules" ref="form" label-width="120px">
                 <el-form-item label="家居名" prop="name">
-                    <el-input v-model="form.name" style="width: 80%"></el-input>
+                    <el-input v-model="form.name" style="width: 50%"></el-input>
+                    {{ serverValidErrors.name }}
                 </el-form-item>
                 <el-form-item label="厂商" prop="maker">
-                    <el-input v-model="form.maker" style="width: 80%"></el-input>
+                    <el-input v-model="form.maker" style="width: 50%"></el-input>
+                    {{ serverValidErrors.maker }}
                 </el-form-item>
                 <el-form-item label="价格" prop="price">
-                    <el-input v-model="form.price" style="width: 80%"></el-input>
+                    <el-input v-model="form.price" style="width: 50%"></el-input>
+                    {{ serverValidErrors.price }}
                 </el-form-item>
                 <el-form-item label="销量" prop="sales">
-                    <el-input v-model="form.sales" style="width: 80%"></el-input>
+                    <el-input v-model="form.sales" style="width: 50%"></el-input>
+                    {{ serverValidErrors.sales }}
                 </el-form-item>
                 <el-form-item label="库存" prop="stock">
-                    <el-input v-model="form.stock" style="width: 80%"></el-input>
+                    <el-input v-model="form.stock" style="width: 50%"></el-input>
+                    {{ serverValidErrors.stock }}
                 </el-form-item>
             </el-form>
             <template #footer>
@@ -97,6 +102,8 @@
         components: {},
         data() {
             return {
+                //存放错误信息
+                serverValidErrors: {},
                 //当前页
                 currentPage: 1,
                 //每页几条数据
@@ -146,6 +153,7 @@
                     // this.tableData = res.data.extend.furnsList
                     //已经对返回值res做过处理了，返回的是res.data
                     this.form = res.extend.furn
+                    this.dialogVisible = true;
                 })
 
             },
@@ -172,21 +180,28 @@
                 } else {
                     //表单验证是否通过
                     this.$refs['form'].validate((valid) => {
+                        valid = true;//后端验证
                         if (valid) {
-                        //=======说明======
-                        //1. 将form 表单提交给/api/save 的接口
-                        //2. /api/save 等价http://localhost:10001/save
-                        //3. 如果成功，就进入then 方法
-                        //4. res 就是返回的信息
-                        //5. 查看Mysql 看看数据是否保存
+                            //=======说明======
+                            //1. 将form 表单提交给/api/save 的接口
+                            //2. /api/save 等价http://localhost:10001/save
+                            //3. 如果成功，就进入then 方法
+                            //4. res 就是返回的信息
+                            //5. 查看Mysql 看看数据是否保存
                             //将添加的数据发送到后端
                             request.post("/api/save", this.form).then(res => {
-                                console.log("res", res)
-                                this.dialogVisible = false
-                                //添加完家具再刷新显示
-                                this.list()
+                                if (res.code === 200) {
+                                    this.dialogVisible = false
+                                    this.list()
+                                } else if (res.code === 400) {
+                                    this.serverValidErrors.name = res.extend.errorMsg.name;
+                                    this.serverValidErrors.sales = res.extend.errorMsg.sales;
+                                    this.serverValidErrors.price = res.extend.errorMsg.price;
+                                    this.serverValidErrors.maker = res.extend.errorMsg.maker;
+                                    this.serverValidErrors.stock = res.extend.errorMsg.stock;
+                                }
                             })
-                        }else {
+                        } else {
                             this.$message({//弹出更新失败信息
                                 type: "error",
                                 message: "验证失败，不提交"
@@ -203,6 +218,7 @@
                 this.form = {};
                 //将添加验证提示消息，清空
                 this.$refs['form'].resetFields();
+                this.serverValidErrors = {};
             },
             list() {
                 // request.get("/api/furns").then(res => {
