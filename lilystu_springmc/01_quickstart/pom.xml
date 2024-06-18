@@ -15,11 +15,22 @@
         <version>2.5.3</version>
     </parent>
 
+    <properties>
+        <mysql.version>5.1.49</mysql.version>
+    </properties>
+
     <!-- 导入web 项目场景启动器,会自动导入和web 开发相关依赖,非常方便-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 根据依赖就近优先原则，以自己指定的为准-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+<!--            <version>5.1.49</version>-->
         </dependency>
     </dependencies>
 </project>
