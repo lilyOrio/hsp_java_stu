@@ -3,6 +3,7 @@ package com.lilystu.springboot.config;
 import com.lilystu.springboot.bean.Cat;
 import com.lilystu.springboot.bean.Dog;
 import com.lilystu.springboot.bean.Monster;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration/*(proxyBeanMethods = false)*/
 @Import({Dog.class, Cat.class})//意@Import 方式注入的组件, 默认组件的名字就是全类名
+//@ConditionalOnBean(name = "monster_nmw")
 public class BeanConfig {
 
     /**
@@ -31,9 +33,24 @@ public class BeanConfig {
      * 4. @Bean("monster_nmw"): 重新指定组件的id = “monster_nmw”，默认id是方法名
      * 5. 配置类里面使用@Bean 标注在方法上给容器注册组件，默认是单实例的
      */
-    @Bean//一定要写上，不然这个bean不会被注入到容器
+    @Bean/*("monster_nmw")*///一定要写上，不然这个bean不会被注入到容器
 //    @Scope("prototype")//多例模式
     public Monster monster01(){
         return new Monster(100, "牛魔王", 500, "芭蕉扇");
+    }
+
+    /**
+     * @Conditional 应用实例
+     * 1. 要求: 演示在SpringBoot, 如何通过@ConditionalOnBean 来注入组件
+     * 2. 只有在容器中有name = monster_nmw 组件时，才注入dog01
+     *
+     * * 3. @ConditionalOnBean(name = "monster_nmw") 也可以放在配置类名处，
+     * * 则表示对该配置类中所有要注入
+     * * 的组件都进行条件约束
+     */
+    @Bean
+//    @ConditionalOnBean(name = "monster_nmw")
+    public Dog dog01() {
+        return new Dog();
     }
 }
