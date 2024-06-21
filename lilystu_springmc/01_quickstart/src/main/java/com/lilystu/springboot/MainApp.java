@@ -37,7 +37,10 @@ public class MainApp {
 //        Cat cat = ioc.getBean(Cat.class);
 //        System.out.println("dog= " + dog + " cat= " + cat);
 
-        Dog dog01 = ioc.getBean("dog01",Dog.class);
-        System.out.println(dog01);
+//        Dog dog01 = ioc.getBean("dog01",Dog.class);
+//        System.out.println(dog01);
+
+        System.out.println("monster03: " + ioc.containsBean("monster03"));
+        System.out.println(ioc.getBean("monster03"));
     }
 }
