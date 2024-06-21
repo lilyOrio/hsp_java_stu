@@ -1,5 +1,7 @@
 package com.lilystu.springboot;
 
+import com.lilystu.springboot.bean.Cat;
+import com.lilystu.springboot.bean.Dog;
 import com.lilystu.springboot.bean.Monster;
 import com.lilystu.springboot.config.BeanConfig;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +27,14 @@ public class MainApp {
 //        System.out.println("monster01 = " + monster01.hashCode());
 //        System.out.println("monster02 = " + monster02.hashCode());
 
-
+        System.out.println("======获取@import 注入的组件======");
+        Dog dog = ioc.getBean(Dog.class);
+//通过@import 注入的组件, 组件的名字就是全类名
+        String[] beanNamesForType = ioc.getBeanNamesForType(Dog.class);
+        for (String s : beanNamesForType) {
+            System.out.println("s= " + s);
+        }
+        Cat cat = ioc.getBean(Cat.class);
+        System.out.println("dog= " + dog + " cat= " + cat);
     }
 }

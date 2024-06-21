@@ -1,8 +1,11 @@
 package com.lilystu.springboot.config;
 
+import com.lilystu.springboot.bean.Cat;
+import com.lilystu.springboot.bean.Dog;
 import com.lilystu.springboot.bean.Monster;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Scope;
 
 //@Configuration 标识这是一个配置类: 等价配置文件
@@ -18,8 +21,8 @@ import org.springframework.context.annotation.Scope;
  * (5) Lite 模也称为轻量级模式，因为不检测依赖关系，运行速度快
  */
 @Configuration/*(proxyBeanMethods = false)*/
+@Import({Dog.class, Cat.class})//意@Import 方式注入的组件, 默认组件的名字就是全类名
 public class BeanConfig {
-
 
     /**
      * 1. @Bean : 给容器中添加组件
