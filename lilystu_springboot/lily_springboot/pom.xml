@@ -34,5 +34,12 @@
             <artifactId>tomcat-embed-core</artifactId>
             <version>8.5.75</version>
         </dependency>
+
+<!--        启动包异常，需要引入-->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <version>8.5.75</version>
+        </dependency>
     </dependencies>
 </project>
