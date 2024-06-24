@@ -1,0 +1,27 @@
+monster:
+  id: 1
+  name: 牛魔王
+  age: 500
+  isMarried: true
+  birth: 1500/1/1
+#  car: {name: 宝马, price: 200000}
+  car:
+    name: 宝马
+    price: 200000
+  skill:
+    - 三十六变
+    - 芭蕉扇
+  hobby:
+    - 喝酒
+    - 吃面
+  wife:
+    wife1: {name: 铁扇公主 ,id: 2}
+    wife2: {name: xx,id: 3}
+  salaries: 100000.88
+  cars:
+    group1:
+      - {name: byd,price: 100000}
+      - {name: gac,price: 80000}
+    group2:
+      - {name: byd~,price: 100000}
+      - {name: gac~,price: 80000}
