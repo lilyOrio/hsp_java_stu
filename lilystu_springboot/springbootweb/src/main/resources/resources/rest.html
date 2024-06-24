@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rest</title>
+</head>
+<body>
+<h1>测试REST风格请求</h1>
+<form action="/monster" method="post">
+    <input type="submit" value="提交">
+<!--    网页表单要完成REST风格请求，需要通过隐藏域传递 _method , 注意需要设置method="post"-->
+    <input type="hidden" name="_method" value="delete">
+</form>
+</body>
+</html>
