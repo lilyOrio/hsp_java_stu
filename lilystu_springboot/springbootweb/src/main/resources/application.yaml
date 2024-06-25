@@ -17,3 +17,5 @@ spring:
     view:
       suffix: .html
       prefix: /lily/ #注意静态资源访问前缀要加上
+    contentnegotiation:
+      favor-parameter: true #启用基于请求参数的内容协商功能
