@@ -42,12 +42,14 @@ public class WebConfig {
                     }
                 });
                 //还可以添加更多的转换器...
-                registry.addConverter(new Converter<String, Monster>() {
-                    @Override
-                    public Monster convert(String s) {
-                        return null;
-                    }
-                });
+//                registry.addConverter(new Converter<String, Monster>() {
+//                    @Override
+//                    public Monster convert(String s) {
+//                        return null;
+//                    }
+//                });
+
+
             }
         };
     }
