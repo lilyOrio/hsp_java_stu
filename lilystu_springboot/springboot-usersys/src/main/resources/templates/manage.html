@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理后台</title>
+</head>
+<body>
+<a href="#">返回管理页面</a>     <a href="#" th:href="@{/}">安全退出</a>    欢迎你：[[${session.loginAdmin.name}]]
+</body>
+<h1>管理雇员</h1>
+<table border="1px" cellpadding="0">
+    <tr>
+        <td>id</td>
+        <td>name</td>
+        <td>pwd</td>
+        <td>email</td>
+        <td>age</td>
+    </tr>
+    <!--迭代显示用户信息-->
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}">a</td>
+        <td th:text="${user.name}">b</td>
+        <td th:text="${user.pwd}">c</td>
+        <td th:text="${user.email}">d</td>
+        <td th:text="${user.age}">f</td>
+    </tr>
+</table>
+</html>
