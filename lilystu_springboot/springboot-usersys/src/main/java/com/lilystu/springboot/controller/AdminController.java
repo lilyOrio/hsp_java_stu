@@ -2,6 +2,7 @@ package com.lilystu.springboot.controller;
 
 import com.lilystu.springboot.bean.Admin;
 import com.lilystu.springboot.bean.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class AdminController {
 
     //响应用户登录请求
@@ -24,6 +26,7 @@ public class AdminController {
         if (StringUtils.hasText(name) && "666".equals(pwd)) {
             //将用户添加到session
             session.setAttribute("loginAdmin", admin);
+            log.info("session添加登录用户");
             //验证通过，重定向到manage.html
             //使用重定向是为了避免重复提交
             return "redirect:/manage.html";
@@ -37,11 +40,13 @@ public class AdminController {
     @GetMapping("/manage.html")
     public String mainPage(Model model, HttpSession session) {
         Object loginAdmin = session.getAttribute("loginAdmin");
-        if (loginAdmin == null) {
-            //禁止非法登录
-            model.addAttribute("msg","请登录！");
-            return "adminLogin";
-        }
+//        if (loginAdmin == null) {
+//            //禁止非法登录
+//            model.addAttribute("msg","请登录！");
+//            return "adminLogin";
+//        }
+        //使用拦截器连接非法请求
+        log.info("访问到：manage.html");
         List<User> users = new ArrayList<>();
         users.add(new User(1, "mary", "66666", 20, "@qq.com"));
         users.add(new User(2, "jack", "66666", 20, "@qq.com"));
