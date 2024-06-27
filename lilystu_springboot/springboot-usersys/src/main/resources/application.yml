@@ -1,0 +1,6 @@
+#修改最大上传文件大小
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB  #默认1Mb
+      max-request-size: 20MB  #默认10Mb
