@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     //目标方法前调用
+    //请求转发也会被拦截
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String requestURI = request.getRequestURI();
         StringBuffer requestURL = request.getRequestURL();
@@ -50,5 +51,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         : preHandle拦截器请求的uri：/manage.html
         : preHandle拦截器请求的url：http://localhost:10001/manage.html
+
+    2.拦截器和过滤器
+        -过滤器实现的是javax.servlet.Filter接口，其使用需要依赖于Tomcat等容器，filter只能在web程序中使用
+        -拦截器Interceptor 是一个Spring组件，由Spring容器管理，不依赖Tomcat可以单独使用
+        一条请求过来-->Tomcat-->Filter-->Servlet-->Interceptor-->Controller
+        debug演示
+        -过滤器不会处理请求转发，过滤器会处理请求转发
      */
 }
