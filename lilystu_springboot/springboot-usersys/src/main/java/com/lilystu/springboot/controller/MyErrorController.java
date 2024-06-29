@@ -11,6 +11,8 @@ public class MyErrorController {
     //模拟服务端异常
     public String err(){
         int i = 10/0;
+        //默认处理机制--显示500页面
+        //配置异常处理器，就会交由处理处理
         return "manage";
     }
 

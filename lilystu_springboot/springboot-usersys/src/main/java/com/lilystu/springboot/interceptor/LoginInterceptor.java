@@ -57,6 +57,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         -拦截器Interceptor 是一个Spring组件，由Spring容器管理，不依赖Tomcat可以单独使用
         一条请求过来-->Tomcat-->Filter-->Servlet-->Interceptor-->Controller
         debug演示
-        -过滤器不会处理请求转发，过滤器会处理请求转发
+        -过滤器不会处理请求转发，拦截器会处理请求转发
      */
 }
