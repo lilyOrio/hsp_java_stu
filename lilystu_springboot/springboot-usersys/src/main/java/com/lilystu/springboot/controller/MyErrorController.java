@@ -1,5 +1,6 @@
 package com.lilystu.springboot.controller;
 
+import com.lilystu.springboot.exception.AccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,5 +21,14 @@ public class MyErrorController {
     //模拟客户端异常，客户端使用GET方式访问
     public String err2(){
         return "manage";
+    }
+
+    //模拟一个AccessException
+    @GetMapping("/err3")
+    public String err3(String name){
+        if (!"tom".equals(name)){
+            throw new AccessException("无权访问!");
+        }
+        return "redirect:/manage.html";
     }
 }

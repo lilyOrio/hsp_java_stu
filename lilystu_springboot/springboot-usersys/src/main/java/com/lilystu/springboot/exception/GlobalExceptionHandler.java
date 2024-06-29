@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExc
 public class GlobalExceptionHandler {
 
     //处理指定异常,处理异常类型由程序员指定，不指定则处理所有类型的异常
-    @ExceptionHandler(value = {ArithmeticException.class, NullPointerException.class})
+    @ExceptionHandler(value = {ArithmeticException.class, NullPointerException.class,AccessException.class})
     //  Exception e 异常发生后，传递的异常对象
     //  Model model程序员可以提取到的异常信息存放到model中，并在页面中显示
     //  HandlerMethod method 得到异常发生的方法
