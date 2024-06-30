@@ -9,7 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import javax.servlet.http.HttpServlet;
 
 @SpringBootApplication
-@ServletComponentScan(basePackages = {"com.lilystu.springboot"})
+//@ServletComponentScan(basePackages = {"com.lilystu.springboot"})
 public class Application {
 
     public static void main(String[] args) {

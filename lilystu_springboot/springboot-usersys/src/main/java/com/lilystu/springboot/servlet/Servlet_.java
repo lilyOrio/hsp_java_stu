@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(urlPatterns = {"/servlet01","/servlet02"})
+//@WebServlet(urlPatterns = {"/servlet01","/servlet02"})
 public class Servlet_ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
