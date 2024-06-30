@@ -4,6 +4,11 @@ spring:
     multipart:
       max-file-size: 5MB  #默认1Mb
       max-request-size: 20MB  #默认10Mb
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_boot?userSSL=true&amp;userUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
 #server:
 #  port: 10001
 #  tomcat: #配置Tomcat
@@ -14,3 +19,5 @@ spring:
 #    max-connections: 2000 #最大连接数，并发数
 #    connection-timeout: 10000 #建立连接的超时时间，单位ms
 #    #。。。
+
+#配置数据源
