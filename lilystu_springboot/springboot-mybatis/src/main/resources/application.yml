@@ -7,3 +7,15 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 server:
   port: 10001
+
+mybatis:
+  #指定要扫描的XxxMapper.xml文件路径
+  mapper-locations: classpath:mapper/*.xml
+  #指定mybatis-config.xml文件，可以使用之前的方式配置 mybatis -- log打印、全类名简写
+#  config-location:
+  #我们也可以直接在本文件中配置mybatis
+  #指定全类名简写包
+  type-aliases-package: com.lilystu.springboot.mybatis.bean
+  #配置日志输出
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
