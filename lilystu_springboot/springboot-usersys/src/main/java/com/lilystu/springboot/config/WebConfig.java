@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor())
                 //指定拦截规则
                 .addPathPatterns("/**")//拦截所有请求
-                .excludePathPatterns("/","/login","/image/**","/upload.html","/upload");// /image/** 放行图片资源，不然会影响界面显示
+                .excludePathPatterns("/","/login","/image/**","/upload.html","/upload","/sql");// /image/** 放行图片资源，不然会影响界面显示
                                                                 //无需在image前添加static包，因为在static下的静态资源可以直接访问
     }
 
