@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Arrays;
 
-@Configuration
+//@Configuration
 public class DruidDataSourceConfig {
 
     //注入Druid组件

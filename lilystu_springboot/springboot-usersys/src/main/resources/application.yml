@@ -9,6 +9,23 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+#    配置druid
+    druid:
+      stat-view-servlet: #开启druid页面监控功能
+        enabled: true
+        login-username: lily
+        login-password: 666
+        reset-enable: false
+      web-stat-filter: #配置web监控
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      filter:
+        wall: #配置sql防火墙
+          config:
+            drop-table-allow: false
+            select-all-column-allow: false
+          enabled: true
 #server:
 #  port: 10001
 #  tomcat: #配置Tomcat
