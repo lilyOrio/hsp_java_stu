@@ -24,7 +24,7 @@ spring:
         wall: #配置sql防火墙
           config:
             drop-table-allow: false
-            select-all-column-allow: false
+#            select-all-column-allow: false
           enabled: true
 #server:
 #  port: 10001
