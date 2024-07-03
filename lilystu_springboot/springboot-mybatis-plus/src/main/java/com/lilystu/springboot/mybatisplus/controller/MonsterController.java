@@ -23,7 +23,7 @@ public class MonsterController {
     }
 
     @GetMapping("/monster_list")
-    @Resource
+    @ResponseBody
     public List<Monster> getMonsterList(){
         return monsterService.list();
     }
