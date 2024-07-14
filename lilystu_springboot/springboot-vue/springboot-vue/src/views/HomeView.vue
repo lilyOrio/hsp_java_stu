@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="margin: 10px 0">
-            <el-button type="primary">新增</el-button>
+            <el-button type="primary" @click="add">新增</el-button>
             <el-button>其它</el-button>
         </div>
         <!-- 搜索-->
@@ -22,10 +22,37 @@
                 </template>
             </el-table-column>
         </el-table>
+        <!-- 添加家居的弹窗
+ 说明: 1. el-dialog ：v-model="dialogVisible" 表示对话框, 和 dialogVisible 变量双向 绑定,控制是否显示对话框
+      2. el-form :model="form" 表示表单数据和 form 数据变量双向绑定 3. el-input v-model="form.name"
+        表示表单的 input 控件，名字为 name 需要和 后台 Javabean 属性一致 -->
+        <el-dialog title="提示" v-model="dialogVisible" width="30%">
+            <el-form :model="form" label-width="120px">
+                <el-form-item label="家居名">
+                    <el-input v-model="form.name" style="width: 80%"></el-input>
+                </el-form-item>
+                <el-form-item label="厂商">
+                    <el-input v-model="form.maker" style="width: 80%"></el-input>
+                </el-form-item>
+                <el-form-item label="价格">
+                    <el-input v-model="form.price" style="width: 80%"></el-input>
+                </el-form-item>
+                <el-form-item label="销量">
+                    <el-input v-model="form.sales" style="width: 80%"></el-input>
+                </el-form-item>
+                <el-form-item label="库存">
+                    <el-input v-model="form.stock" style="width: 80%"></el-input>
+                </el-form-item>
+            </el-form>
+            <template #footer><span class="dialog-footer"> <el-button @click="dialogVisible = false">取 消</el-button> <el-button
+                    type="primary" @click="save">确 定</el-button> </span></template>
+        </el-dialog>
     </div>
 </template>
 
 <script>
+
+    import request from "@/utils/request";
 
     export default {
         name: 'HomeView',
@@ -36,10 +63,24 @@
                     {date: '2016-05-04', name: '王小虎', address: '上海市普陀区金沙江路 1517 弄',},
                     {date: '2016-05-01', name: '王小虎', address: '上海市普陀区金沙江路 1519 弄',}],
                 search: '',
+                form: '',
+                dialogVisible: false
             }
         },
         methods: {
             handleEdit() {
+            },
+            add() {
+                this.dialogVisible = true
+                this.form = {}
+            },
+            save(){//提交添加请求
+                request.post("/api/save",this.form).then(
+                    res=>{//后端返回至前端的请求
+                        console.log("res=",res)
+                        this.dialogVisible=false;
+                    }
+                )
             }
         }
     }
