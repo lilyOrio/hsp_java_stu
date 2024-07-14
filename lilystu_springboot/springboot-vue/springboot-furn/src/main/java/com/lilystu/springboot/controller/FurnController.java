@@ -1,5 +1,6 @@
 package com.lilystu.springboot.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lilystu.springboot.bean.Furn;
 import com.lilystu.springboot.service.FurnService;
 import com.lilystu.springboot.utils.Result;
@@ -43,5 +44,12 @@ public class FurnController {
     public Result<?> find(@PathVariable Integer id) {
         Furn furn = furnService.getById(id);
         return Result.success(furn);
+    }
+
+    @GetMapping("/page")
+    public Result<?> listFurnsByPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                                     @RequestParam(defaultValue = "5") Integer pageSize) {
+        Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize));
+        return Result.success(furnPage);
     }
 }

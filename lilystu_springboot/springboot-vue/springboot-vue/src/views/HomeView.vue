@@ -33,6 +33,11 @@
                 </template>
             </el-table-column>
         </el-table>
+        <div style="margin: 10px 0">
+            <el-pagination @size-change="handlePageSizeChange" @current-change="handleCurrentChange"
+                           :current-page="currentPage" :page-sizes="[5,10]" :page-size="pageSize"
+                           layout="total, sizes, prev, pager, next, jumper" :total="total"></el-pagination>
+        </div>
         <!-- 添加家居的弹窗
  说明: 1. el-dialog ：v-model="dialogVisible" 表示对话框, 和 dialogVisible 变量双向 绑定,控制是否显示对话框
       2. el-form :model="form" 表示表单数据和 form 数据变量双向绑定 3. el-input v-model="form.name"
@@ -73,7 +78,10 @@
                 tableData: [],
                 search: '',
                 form: '',
-                dialogVisible: false
+                dialogVisible: false,
+                currentPage: 1,
+                pageSize: 5,
+                total: 10
             }
         },
         created() {//钩子函数
@@ -93,7 +101,7 @@
                         if (res.code === "200") {
                             this.form = res.data;
                             this.dialogVisible = true;
-                        }else{
+                        } else {
                             this.$message({//弹出更新失败信息
                                 type: "error", message: res.msg
                             })
@@ -142,9 +150,22 @@
 
             },
             list() {//显示家具信息
-                request.get("/api/furns").then(
+                // request.get("/api/furns").then(
+                //     res => {
+                //         this.tableData = res.data;
+                //     }
+                // )
+                //分页显示
+                request.get("/api/page", {
+                    params: {
+                        pageNum: this.currentPage,
+                        pageSize: this.pageSize
+                    }
+                }).then(
                     res => {
-                        this.tableData = res.data;
+                        //绑定 tableData, 显示在表格
+                        this.tableData = res.data.records
+                        this.total = res.data.total
                     }
                 )
             },
@@ -157,6 +178,14 @@
                     }
                     this.list()
                 })
+            },
+            handlePageSizeChange(pageSize) {
+                this.pageSize = pageSize
+                this.list()
+            },
+            handleCurrentChange(pageNum) { //处理每页显示多少条记录变化
+                this.currentPage = pageNum
+                this.list()
             }
         }
     }
