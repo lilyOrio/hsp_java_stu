@@ -11,7 +11,7 @@
         </div>
         <!-- <img alt="Vue logo" src="../assets/logo.png">--> <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>-->
         <!-- <el-button>我的按钮</el-button> --> <!-- 去掉字段的 width, 让其自适应 -->
-        <el-table :data="tableData" stripe style="width: 100%">
+        <el-table :data="tableData" stripe style="width: 90%">
             <el-table-column
                     prop="id" label="ID" sortable></el-table-column>
             <el-table-column prop="name" label="家居名"></el-table-column>
@@ -74,19 +74,52 @@
             this.list();
         },
         methods: {
-            handleEdit() {
+            handleEdit(row) {
+                // console.log("row1=", row)
+                // console.log("row2=", JSON.stringify(row))
+                // console.log("row3=", JSON.parse(JSON.stringify(row)))
+                this.form = JSON.parse(JSON.stringify(row));
+                this.dialogVisible = true;
             },
             add() {
                 this.dialogVisible = true
                 this.form = {}
             },
             save() {//提交添加请求
-                request.post("/api/save", this.form).then(
-                    res => {//后端返回至前端的请求
-                        console.log("res=", res)
-                        this.dialogVisible = false;
-                    }
-                )
+                if (this.form.id) {//修改家具
+                    request.put("/api/update", this.form).then(
+                        res => {
+                            if (res.code === "200") {//如果 code 为 200, 注意是字符串 200
+                                this.$message({ //弹出更新成功的消息框
+                                    type: "success", message: "更新成功"
+                                })
+                            } else {
+                                this.$message({//弹出更新失败信息
+                                    type: "error", message: res.msg
+                                })
+                            }
+                            this.dialogVisible = false;
+                            this.list()
+                        }
+                    )
+                } else {//添加家具
+                    request.post("/api/save", this.form).then(
+                        res => {//后端返回至前端的请求
+                            if (res.code === "200") {//如果 code 为 200, 注意是字符串 200
+                                this.$message({ //弹出更新成功的消息框
+                                    type: "success", message: "添加成功"
+                                })
+                            } else {
+                                this.$message({//弹出更新失败信息
+                                    type: "error", message: res.msg
+                                })
+                            }
+                            this.dialogVisible = false;
+                            this.list()
+                        }
+                    )
+                }
+
             },
             list() {//显示家具信息
                 request.get("/api/furns").then(
