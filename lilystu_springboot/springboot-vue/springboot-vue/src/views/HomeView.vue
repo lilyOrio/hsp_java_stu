@@ -23,7 +23,13 @@
             <el-table-column fixed="right" label="操作" width="100">
                 <template #default="scope">
                     <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
-                    <el-button type="text">删除</el-button>
+                    <!--                    <el-button type="text">删除</el-button>-->
+                    <!-- 增加 popcomfirm 控件，确认删除 -->
+                    <el-popconfirm title="确定删除吗？" @confirm="handleDel(scope.row.id)">
+                        <template #reference>
+                            <el-button type="text">删除</el-button>
+                        </template>
+                    </el-popconfirm>
                 </template>
             </el-table-column>
         </el-table>
@@ -127,6 +133,16 @@
                         this.tableData = res.data;
                     }
                 )
+            },
+            handleDel(id) {
+                request.delete("/api/del/" + id).then(res => {
+                    if (res.code === "200") {
+                        this.$message({type: "success", message: "删除成功"})
+                    } else {
+                        this.$message({type: "error", message: res.msg})
+                    }
+                    this.list()
+                })
             }
         }
     }

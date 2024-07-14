@@ -29,8 +29,13 @@ public class FurnController {
     //GET 获取 、POST 创建、PUT 更新、DELETE 删除
     @PutMapping("/update")
     public Result<?> update(@RequestBody Furn furn) {
-        boolean b = furnService.updateById(furn);
-        System.out.println(b);
+        furnService.updateById(furn);
+        return Result.success();
+    }
+
+    @DeleteMapping("/del/{id}")
+    public Result<?> del(@PathVariable Integer id) {
+        furnService.removeById(id);
         return Result.success();
     }
 }
