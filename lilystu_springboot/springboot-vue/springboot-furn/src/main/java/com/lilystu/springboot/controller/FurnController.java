@@ -38,4 +38,10 @@ public class FurnController {
         furnService.removeById(id);
         return Result.success();
     }
+
+    @GetMapping("/find/{id}")
+    public Result<?> find(@PathVariable Integer id) {
+        Furn furn = furnService.getById(id);
+        return Result.success(furn);
+    }
 }

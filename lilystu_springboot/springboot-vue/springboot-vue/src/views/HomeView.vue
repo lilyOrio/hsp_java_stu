@@ -22,7 +22,7 @@
             <el-table-column prop="stock" label="库存"></el-table-column>
             <el-table-column fixed="right" label="操作" width="100">
                 <template #default="scope">
-                    <el-button @click="handleEdit(scope.row)" type="text">编辑</el-button>
+                    <el-button @click="handleEdit2(scope.row)" type="text">编辑</el-button>
                     <!--                    <el-button type="text">删除</el-button>-->
                     <!-- 增加 popcomfirm 控件，确认删除 -->
                     <el-popconfirm title="确定删除吗？" @confirm="handleDel(scope.row.id)">
@@ -86,6 +86,20 @@
                 // console.log("row3=", JSON.parse(JSON.stringify(row)))
                 this.form = JSON.parse(JSON.stringify(row));
                 this.dialogVisible = true;
+            },
+            handleEdit2(row) {
+                request.get("/api/find/" + row.id).then(
+                    res => {
+                        if (res.code === "200") {
+                            this.form = res.data;
+                            this.dialogVisible = true;
+                        }else{
+                            this.$message({//弹出更新失败信息
+                                type: "error", message: res.msg
+                            })
+                        }
+                    }
+                )
             },
             add() {
                 this.dialogVisible = true
