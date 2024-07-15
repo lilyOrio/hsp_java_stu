@@ -7,7 +7,7 @@
         <!-- 搜索-->
         <div style="margin: 10px 0">
             <el-input v-model="search" placeholder=" 请 输 入 关 键 字 " style="width: 30%"></el-input>
-            <el-button style="margin-left: 10px" type="primary">查询</el-button>
+            <el-button style="margin-left: 10px" type="primary" @click="list">查询</el-button>
         </div>
         <!-- <img alt="Vue logo" src="../assets/logo.png">--> <!-- <HelloWorld msg="Welcome to Your Vue.js App"/>-->
         <!-- <el-button>我的按钮</el-button> --> <!-- 去掉字段的 width, 让其自适应 -->
@@ -43,20 +43,20 @@
       2. el-form :model="form" 表示表单数据和 form 数据变量双向绑定 3. el-input v-model="form.name"
         表示表单的 input 控件，名字为 name 需要和 后台 Javabean 属性一致 -->
         <el-dialog title="提示" v-model="dialogVisible" width="30%">
-            <el-form :model="form" label-width="120px">
-                <el-form-item label="家居名">
+            <el-form :model="form" :rules="rules" res="form" label-width="120px">
+                <el-form-item label="家居名" prop="name">
                     <el-input v-model="form.name" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="厂商">
+                <el-form-item label="厂商" prop="maker">
                     <el-input v-model="form.maker" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="价格">
+                <el-form-item label="价格" prop="price">
                     <el-input v-model="form.price" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="销量">
+                <el-form-item label="销量" prop="sales">
                     <el-input v-model="form.sales" style="width: 80%"></el-input>
                 </el-form-item>
-                <el-form-item label="库存">
+                <el-form-item label="库存" prop="stock">
                     <el-input v-model="form.stock" style="width: 80%"></el-input>
                 </el-form-item>
             </el-form>
@@ -81,7 +81,26 @@
                 dialogVisible: false,
                 currentPage: 1,
                 pageSize: 5,
-                total: 10
+                total: 10,
+                rules: {
+                    name: [{required: true, message: '请输入称家居名', trigger: 'blur'}],
+                    maker: [{required: true, message: '请输入称制造商', trigger: 'blur'}],
+                    price: [{required: true, message: '请输入价格', trigger: 'blur'}, {
+                        pattern: /^(([1-9]\d*)|(0))(\.\d+)?$/,
+                        message: '请输入数字',
+                        trigger: 'blur'
+                    }],
+                    sales: [{required: true, message: '请输入销量', trigger: 'blur'}, {
+                        pattern: /^(([1-9]\d*)|(0))$/,
+                        message: '请输入数字',
+                        trigger: 'blur'
+                    }],
+                    stock: [{required: true, message: '请输入库存', trigger: 'blur'}, {
+                        pattern: /^(([1-9]\d*)|(0))$/,
+                        message: '请输入数字',
+                        trigger: 'blur'
+                    }]
+                }
             }
         },
         created() {//钩子函数
@@ -112,6 +131,7 @@
             add() {
                 this.dialogVisible = true
                 this.form = {}
+                this.$refs['form'].resetFields()//将上传验证消息，清空
             },
             save() {//提交添加请求
                 if (this.form.id) {//修改家具
@@ -131,23 +151,21 @@
                         }
                     )
                 } else {//添加家具
-                    request.post("/api/save", this.form).then(
-                        res => {//后端返回至前端的请求
-                            if (res.code === "200") {//如果 code 为 200, 注意是字符串 200
-                                this.$message({ //弹出更新成功的消息框
-                                    type: "success", message: "添加成功"
-                                })
-                            } else {
-                                this.$message({//弹出更新失败信息
-                                    type: "error", message: res.msg
-                                })
-                            }
-                            this.dialogVisible = false;
-                            this.list()
+                    //表单数据校验是否
+                    this.$refs['form'].validate((valid) => {
+                        if (valid) {
+                            request.post("/api/save", this.form).then(res => {
+                                this.dialogVisible = false
+                                this.list()
+                            })
+                        } else {
+                            this.$message({//弹出更新失败信息
+                                type: "error", message: "验证失败，不提交"
+                            })
+                            return false
                         }
-                    )
+                    })
                 }
-
             },
             list() {//显示家具信息
                 // request.get("/api/furns").then(
@@ -156,10 +174,11 @@
                 //     }
                 // )
                 //分页显示
-                request.get("/api/page", {
+                request.get("/api/furnsBySearchPage", {
                     params: {
                         pageNum: this.currentPage,
-                        pageSize: this.pageSize
+                        pageSize: this.pageSize,
+                        search: this.search
                     }
                 }).then(
                     res => {

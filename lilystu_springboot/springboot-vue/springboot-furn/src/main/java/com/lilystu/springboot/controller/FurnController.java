@@ -1,10 +1,13 @@
 package com.lilystu.springboot.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lilystu.springboot.bean.Furn;
 import com.lilystu.springboot.service.FurnService;
 import com.lilystu.springboot.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,6 +53,18 @@ public class FurnController {
     public Result<?> listFurnsByPage(@RequestParam(defaultValue = "1") Integer pageNum,
                                      @RequestParam(defaultValue = "5") Integer pageSize) {
         Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize));
+        return Result.success(furnPage);
+    }
+
+    @GetMapping("/furnsBySearchPage")
+    public Result<?> listFurnsByConditionPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                                              @RequestParam(defaultValue = "5") Integer pageSize,
+                                              @RequestParam(defaultValue = "") String search) {
+        QueryWrapper<Furn> queryWrapper = Wrappers.query();
+        if (StringUtils.hasText(search)){
+            queryWrapper.like("name",search);
+        }
+        Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize),queryWrapper);
         return Result.success(furnPage);
     }
 }
