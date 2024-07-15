@@ -8,9 +8,14 @@ import com.lilystu.springboot.service.FurnService;
 import com.lilystu.springboot.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class FurnController {
@@ -19,9 +24,18 @@ public class FurnController {
     FurnService furnService;
 
     @PostMapping("/save")
-    public Result<?> save(@RequestBody Furn furn) {
-        furnService.save(furn);
-        return Result.success();
+    public Result<?> save(@Validated @RequestBody Furn furn, Errors errors) {
+        Map<String, Object> map = new HashMap<>();
+        List<FieldError> fieldErrors = errors.getFieldErrors();
+        for (FieldError e : fieldErrors) {
+            map.put(e.getField(), e.getDefaultMessage());
+        }
+        if (map.isEmpty()) {
+            furnService.save(furn);
+            return Result.success();
+        } else {
+            return Result.error("400", "校验失败", map);
+        }
     }
 
     @RequestMapping("/furns")
@@ -61,10 +75,10 @@ public class FurnController {
                                               @RequestParam(defaultValue = "5") Integer pageSize,
                                               @RequestParam(defaultValue = "") String search) {
         QueryWrapper<Furn> queryWrapper = Wrappers.query();
-        if (StringUtils.hasText(search)){
-            queryWrapper.like("name",search);
+        if (StringUtils.hasText(search)) {
+            queryWrapper.like("name", search);
         }
-        Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize),queryWrapper);
+        Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize), queryWrapper);
         return Result.success(furnPage);
     }
 }

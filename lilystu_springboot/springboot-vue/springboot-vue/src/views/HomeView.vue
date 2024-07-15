@@ -45,19 +45,24 @@
         <el-dialog title="提示" v-model="dialogVisible" width="30%">
             <el-form :model="form" :rules="rules" res="form" label-width="120px">
                 <el-form-item label="家居名" prop="name">
-                    <el-input v-model="form.name" style="width: 80%"></el-input>
+                    <el-input v-model="form.name" style="width: 50%"></el-input>
+                    {{ serverValidErrors.name }}
                 </el-form-item>
                 <el-form-item label="厂商" prop="maker">
-                    <el-input v-model="form.maker" style="width: 80%"></el-input>
+                    <el-input v-model="form.maker" style="width: 50%"></el-input>
+                    {{ serverValidErrors.maker }}
                 </el-form-item>
                 <el-form-item label="价格" prop="price">
-                    <el-input v-model="form.price" style="width: 80%"></el-input>
+                    <el-input v-model="form.price" style="width: 50%"></el-input>
+                    {{ serverValidErrors.price }}
                 </el-form-item>
                 <el-form-item label="销量" prop="sales">
-                    <el-input v-model="form.sales" style="width: 80%"></el-input>
+                    <el-input v-model="form.sales" style="width: 50%"></el-input>
+                    {{ serverValidErrors.sales }}
                 </el-form-item>
                 <el-form-item label="库存" prop="stock">
-                    <el-input v-model="form.stock" style="width: 80%"></el-input>
+                    <el-input v-model="form.stock" style="width: 50%"></el-input>
+                    {{ serverValidErrors.stock }}
                 </el-form-item>
             </el-form>
             <template #footer><span class="dialog-footer"> <el-button @click="dialogVisible = false">取 消</el-button> <el-button
@@ -75,6 +80,8 @@
         components: {},
         data() {
             return {
+                //存放错误信息
+                serverValidErrors: {},
                 tableData: [],
                 search: '',
                 form: '',
@@ -132,6 +139,7 @@
                 this.dialogVisible = true
                 this.form = {}
                 this.$refs['form'].resetFields()//将上传验证消息，清空
+                this.serverValidErrors = {}
             },
             save() {//提交添加请求
                 if (this.form.id) {//修改家具
@@ -151,18 +159,35 @@
                         }
                     )
                 } else {//添加家具
-                    //表单数据校验是否
+                    //表单验证是否通过
                     this.$refs['form'].validate((valid) => {
+                        valid = true;//后端验证
                         if (valid) {
+                            //=======说明======
+                            //1. 将form 表单提交给/api/save 的接口
+                            //2. /api/save 等价http://localhost:10001/save
+                            //3. 如果成功，就进入then 方法
+                            //4. res 就是返回的信息
+                            //5. 查看Mysql 看看数据是否保存
+                            //将添加的数据发送到后端
                             request.post("/api/save", this.form).then(res => {
-                                this.dialogVisible = false
-                                this.list()
+                                if (res.code === 200) {
+                                    this.dialogVisible = false
+                                    this.list()
+                                } else if (res.code === 400) {
+                                    this.serverValidErrors.name = res.extend.errorMsg.name;
+                                    this.serverValidErrors.sales = res.extend.errorMsg.sales;
+                                    this.serverValidErrors.price = res.extend.errorMsg.price;
+                                    this.serverValidErrors.maker = res.extend.errorMsg.maker;
+                                    this.serverValidErrors.stock = res.extend.errorMsg.stock;
+                                }
                             })
                         } else {
                             this.$message({//弹出更新失败信息
-                                type: "error", message: "验证失败，不提交"
+                                type: "error",
+                                message: "验证失败，不提交"
                             })
-                            return false
+                            return false;
                         }
                     })
                 }
