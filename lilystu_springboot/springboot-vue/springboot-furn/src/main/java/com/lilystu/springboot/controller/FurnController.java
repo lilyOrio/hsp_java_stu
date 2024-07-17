@@ -1,11 +1,14 @@
 package com.lilystu.springboot.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lilystu.springboot.bean.Furn;
 import com.lilystu.springboot.service.FurnService;
 import com.lilystu.springboot.utils.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@Slf4j
 public class FurnController {
 
     @Autowired
@@ -80,5 +84,34 @@ public class FurnController {
         }
         Page<Furn> furnPage = furnService.page(new Page<>(pageNum, pageSize), queryWrapper);
         return Result.success(furnPage);
+    }
+
+    @GetMapping("/furnsBySearchPage2")
+    public Result<?> listFurnsByConditionPage2(@RequestParam(defaultValue = "1") Integer pageNum,
+                                               @RequestParam(defaultValue = "5") Integer pageSize,
+                                               @RequestParam(defaultValue = "") String search) {
+
+        // 先 创 建 LambdaQueryWrapper, 可 以 将 我 们 的 检 索 条 件 封 装 到 LambdaQueryWrapper
+        LambdaQueryWrapper<Furn> queryWrapper = Wrappers.lambdaQuery();
+        if (StringUtils.hasText(search)) {
+            /*
+            @FunctionalInterface
+            public interface SFunction<T, R> extends Function<T, R>, Serializable {
+            }
+            父接口
+            @FunctionalInterface
+            public interface Function<T, R> {
+            R apply(T t);//抽象方法
+            //默认实现方法。。。
+            }
+             */
+//            SFunction<Furn, Object> sf = Furn::getName;
+//            queryWrapper.like(sf, search);
+
+            queryWrapper.like(Furn::getName, search);
+        }
+        Page<Furn> page = furnService.page(new Page<>(pageNum, pageSize), queryWrapper);
+        log.info("page={}", page.getRecords());
+        return Result.success(page);
     }
 }
