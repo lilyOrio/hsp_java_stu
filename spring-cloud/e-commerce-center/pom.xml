@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>member-service-provider-10000</module>
+        <module>member-service-consumer-10080</module>
     </modules>
     <!-- 表明是一个父工程,聚合管理其他模块 -->
     <packaging>pom</packaging>

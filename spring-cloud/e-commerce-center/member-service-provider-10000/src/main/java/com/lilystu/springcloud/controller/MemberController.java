@@ -4,10 +4,7 @@ import com.lilystu.springcloud.entity.Member;
 import com.lilystu.springcloud.entity.Result;
 import com.lilystu.springcloud.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -18,7 +15,7 @@ public class MemberController {
     private MemberService memberService;
 
     @PostMapping(value = "/member/save")
-    public Result save(Member member) {
+    public Result save(@RequestBody Member member) {
         int result = memberService.save(member);
         log.info("reset= " + result);
         if (result > 0) { //成功
