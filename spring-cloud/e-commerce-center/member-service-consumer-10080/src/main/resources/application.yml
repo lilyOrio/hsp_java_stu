@@ -2,4 +2,12 @@ server:
   port: 10080
 spring:
   application:
-    name: member-service-provider #名称，可以自己指定
+    name: member-service-consumer #名称，可以自己指定
+
+#eureka 客户端配置
+eureka:
+  client:
+    register-with-eureka: true #将自己注册到 EurekaServer
+    fetchRegistry: true
+    service-url: #表示将自己注册到哪个 EurekaServer
+      defaultZone: http://localhost:9001/eureka
