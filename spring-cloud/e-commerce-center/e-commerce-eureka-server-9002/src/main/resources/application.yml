@@ -1,8 +1,8 @@
 server:
-  port: 9001
+  port: 9002
 eureka:
   instance:
-    hostname: eureka9001.com #eureka 服务端的实例名字
+    hostname: eureka9002.com #eureka 服务端的实例名字
   client:
     #不向注册中心注册自己
     register-with-eureka: false
@@ -10,7 +10,7 @@ eureka:
     fetch-registry: false
     service-url:
       #设置与 eureka server 交互的模块,查询服务和注册服务都需要依赖这个地址
-      defaultZone: http://eureka9002.com:9002/eureka/ # 相 互 注 册 , 这 里 写 eureka9002.com
+      defaultZone: http://eureka9001.com:9001/eureka/ # 相 互 注 册 , 这 里 写 eureka9001.com
 
 #  server:
 #    enable-self-preservation: false #禁用自我保护机制，默认开启，一般不禁用

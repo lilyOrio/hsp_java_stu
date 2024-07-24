@@ -2,7 +2,7 @@ server:
   port: 10008
 spring:
   application:
-    name: member-service-provider-10008 #名称，可以自己指定
+    name: member-service-provider-10008 #服务名称，可以自己指定
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.gjt.mm.mysql.Driver
@@ -22,7 +22,10 @@ eureka:
     #集群必须设置为 true 才能配合 ribbon 使用负载均衡
     fetchRegistry: true
     service-url: #表示将自己注册到哪个 EurekaServer
-        defaultZone: http://localhost:9001/eureka
+#        defaultZone: http://localhost:9001/eureka
+# 将本微服务注册到多个 eurekaServer, 使用逗号隔开
+      defaultZone: http://eureka9001.com:9001/eureka, http://eureka9002.com:9002/eureka
+
 #  instance: #配合eureka禁用自我保护机制
 #    lease-renewal-interval-in-seconds: 1 #发送心跳间隔时间：秒
 #    lease-expiration-duration-in-seconds: 2 #服务端收到最后一次心跳的等待时间上线：秒，超时将剔除该服务
