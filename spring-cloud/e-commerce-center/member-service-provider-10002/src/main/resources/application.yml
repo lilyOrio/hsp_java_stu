@@ -1,9 +1,7 @@
 server:
-  port: 10008
+  port: 10002
 spring:
   application:
-#    因为 member-service-provider-10000 和 member-service-provider-10002 作为一个集 群提供服务,
-#    因此需要将 spring.application.name 进行统一
     name: member-service-provider #服务名称，可以自己指定
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

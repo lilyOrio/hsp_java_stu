@@ -1,4 +1,4 @@
-package springcloud;
+package com.lilystu.springcloud;
 
 
 import org.springframework.boot.SpringApplication;
