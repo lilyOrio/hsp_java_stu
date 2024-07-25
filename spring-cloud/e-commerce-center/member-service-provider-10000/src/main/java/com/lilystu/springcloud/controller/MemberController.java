@@ -19,7 +19,7 @@ public class MemberController {
         int result = memberService.save(member);
         log.info("reset= " + result);
         if (result > 0) { //成功
-            return Result.success("添加用户成功", result);
+            return Result.success("添加用户成功 member-service-provider-10000", result);
         } else {
             return Result.error("401", "添加用户失败");
         }
@@ -30,7 +30,7 @@ public class MemberController {
         Member member = memberService.queryMemberById(id);
         log.info("查询结果= " + member);
         if (member != null) {
-            return Result.success("查询成功", member);
+            return Result.success("查询成功 member-service-provider-10000", member);
         } else {
             return Result.error("402", "ID= " + id + " 不存在");
         }

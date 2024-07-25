@@ -17,7 +17,12 @@ import javax.annotation.Resource;
 public class MemberConsumerController {
 
     //定义一个基础url地址
-    public static final String MEMBER_SERVICE_PROVIDER_URL = "http://localhost:10008";
+    /*
+    1. MEMBER-SERVICE-PROVIDER 就是服务提供方[集群]注册到 EurekaServer 的名称
+    2. 也就是服务提供方[集群] 对外暴露的名称为 MEMBER-SERVICE-PROVIDER
+    3. MEMBER-SERVICE-PROVIDER 目 前 有 两 个 Availability Zones 1member-service-provider:10002 , member-service-provider:10000
+     */
+    public static final String MEMBER_SERVICE_PROVIDER_URL = "http://MEMBER-SERVICE-PROVIDER";
 
     @Resource
     private RestTemplate restTemplate;
