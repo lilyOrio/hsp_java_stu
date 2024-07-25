@@ -4,6 +4,8 @@ package com.lilystu.springcloud.controller;
 import com.lilystu.springcloud.entity.Member;
 import com.lilystu.springcloud.entity.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -26,6 +29,23 @@ public class MemberConsumerController {
 
     @Resource
     private RestTemplate restTemplate;
+
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    @GetMapping(value = "/member/consumer/discovery")
+    public Object discovery() {
+        List<String> services = discoveryClient.getServices();
+        for (String service : services) {
+            log.info("service name = {}", service);
+            List<ServiceInstance> instances = discoveryClient.getInstances(service);
+            for (ServiceInstance instance : instances) {
+                System.out.println(instance.getServiceId() + "\t" + instance.getHost()
+                        + "\t" + instance.getPort() + "\t" + instance.getUri());
+            }
+        }
+        return discoveryClient;
+    }
 
     @PostMapping("/member/consumer/save")
     public Result<Member> save(Member member) {
