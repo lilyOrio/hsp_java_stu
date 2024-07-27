@@ -1,6 +1,6 @@
 package com.lilystu.springcloud.controller;
 
-import com.lilystu.springcloud.config.MemberFeignService;
+import com.lilystu.springcloud.service.MemberFeignService;
 import com.lilystu.springcloud.entity.Member;
 import com.lilystu.springcloud.entity.Result;
 import org.springframework.web.bind.annotation.GetMapping;

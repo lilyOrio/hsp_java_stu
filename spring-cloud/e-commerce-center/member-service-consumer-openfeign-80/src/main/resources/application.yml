@@ -12,3 +12,16 @@ eureka:
     service-url: #表示将自己注册到哪个 EurekaServer
       defaultZone: http://eureka9001.com:9001/eureka, http://eureka9002.com:9002/eureka
 
+#logging:
+#  level:
+#  #对 MemberFeignService 接口调用过程 打印的日志信息-debug 级别
+#    com.hspedu.springcloud.service.MemberFeignService: debug
+
+#ribbon:
+#  #设置 feign 客户端超时时间（openFeign 默认支持 ribbon)
+#  #指的是建立连接后从服务器读取到可用资源所用的时间，
+#  #时间单位是毫秒
+#  ReadTimeout: 8000
+#  #指的是建立连接所用的时间，适用于网络状况正常的情况下，
+#  #两端连接所用的时间
+#  ConnectTimeout: 8000

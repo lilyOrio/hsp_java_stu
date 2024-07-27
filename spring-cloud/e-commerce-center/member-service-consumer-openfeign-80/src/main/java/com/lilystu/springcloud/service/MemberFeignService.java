@@ -1,4 +1,4 @@
-package com.lilystu.springcloud.config;
+package com.lilystu.springcloud.service;
 
 import com.lilystu.springcloud.entity.Member;
 import com.lilystu.springcloud.entity.Result;
