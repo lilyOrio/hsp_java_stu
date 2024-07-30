@@ -14,22 +14,22 @@ import javax.annotation.Resource;
 @Configuration
 public class GateWayRoutesConfig {
 
-    @Resource
-    RouteLocatorBuilder routeLocatorBuilder;
-
-    @Bean
-    public RouteLocator myRouteLocator04(RouteLocatorBuilder routeLocatorBuilder) {
-        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        System.out.println("---" + routeLocatorBuilder.hashCode());
-        System.out.println("---" + this.routeLocatorBuilder.hashCode());
-        return routes.route("member_routh03", r -> r.path("/member/get/**")
-                .uri("http://localhost:10000")).build();
-    }
-
-    @Bean
-    public RouteLocator myRouteLocator05(RouteLocatorBuilder routeLocatorBuilder) {
-        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
-        return routes.route("member_routh05", r -> r.path("/member/save")
-                .uri("http://localhost:10000")).build();
-    }
+//    @Resource
+//    RouteLocatorBuilder routeLocatorBuilder;
+//
+//    @Bean
+//    public RouteLocator myRouteLocator04(RouteLocatorBuilder routeLocatorBuilder) {
+//        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+//        System.out.println("---" + routeLocatorBuilder.hashCode());
+//        System.out.println("---" + this.routeLocatorBuilder.hashCode());
+//        return routes.route("member_routh03", r -> r.path("/member/get/**")
+//                .uri("http://localhost:10000")).build();
+//    }
+//
+//    @Bean
+//    public RouteLocator myRouteLocator05(RouteLocatorBuilder routeLocatorBuilder) {
+//        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();
+//        return routes.route("member_routh05", r -> r.path("/member/save")
+//                .uri("http://localhost:10000")).build();
+//    }
 }

@@ -5,22 +5,30 @@ spring:
     name: e-commerce-gateway #名称，可以自己指定
   cloud:
     gateway:
-#      Gateway 路由配置 方式1
+      discovery:
+        locator:
+          #开启 Flag that enables DiscoveryClient gateway integration,即启用 DiscoveryClient 服务发现
+          enabled: true
+      #      Gateway 路由配置 方式1
       routes: #可以配置多个路由
         - id: member_routes01 #路由id
           #gateway 最终访问的 url = uri+Path 即: http://localhost:10000/memeber/get/
           #匹配后提供服务的路由地址, 也可以是外网 uri,比如 http://www.qq.com 等
-          uri: http://localhost:10088
+#          uri: http://localhost:10088
+          #说明: lb 是协议名 member-service-provider 是服务名
+          # lb 协议支持负载均衡算法，默认轮询
+          uri: lb://member-service-provider
           predicates:
             - Path=/member/get/** #断言,路径相匹配的进行路由
         - id: member_routes02 #路由id
-          uri: http://localhost:10088
+#          uri: http://localhost:10088
+          uri: lb://member-service-provider
           predicates:
             - Path=/member/save #断言,路径相匹配的进行路由
-        - id: member_routes03 #路由id
-          uri: https://www.baidu.com
-          predicates:
-            - Path=/ #断言,路径相匹配的进行路由
+#        - id: member_routes03 #路由id
+#          uri: https://www.baidu.com
+#          predicates:
+#            - Path=/ #断言,路径相匹配的进行路由
 
 
 #eureka 客户端配置
@@ -30,4 +38,4 @@ eureka:
     fetchRegistry: true
     service-url: #表示将自己注册到哪个 EurekaServer
 #      defaultZone: http://localhost:9001/eureka
-      defaultZone: http://eureka9001.com:9001/eureka, http://eureka9002.com:19002/eureka
+      defaultZone: http://eureka9001.com:9001/eureka, http://eureka9002.com:9002/eureka
