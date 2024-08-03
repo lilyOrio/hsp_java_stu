@@ -3,6 +3,14 @@ server:
 spring:
   application:
     name: member-service-consumer #名称，可以自己指定
+    #    配置链路追踪zipkin+sleuth
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样率在 0-1 之间，1 表示全部采集
+      probability: 1
+
 
 #eureka 客户端配置
 eureka:

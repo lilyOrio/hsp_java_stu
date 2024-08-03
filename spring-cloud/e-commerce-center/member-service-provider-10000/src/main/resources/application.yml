@@ -5,6 +5,15 @@ spring:
 #    因为 member-service-provider-10000 和 member-service-provider-10002 作为一个集 群提供服务,
 #    因此需要将 spring.application.name 进行统一
     name: member-service-provider #服务名称，可以自己指定
+
+#    配置链路追踪zipkin+sleuth
+  zipkin:
+    base-url: http://localhost:9411
+  sleuth:
+    sampler:
+      #采样率在 0-1 之间，1 表示全部采集
+      probability: 1
+
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: org.gjt.mm.mysql.Driver

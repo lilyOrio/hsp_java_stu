@@ -13,6 +13,12 @@
     <artifactId>member-service-provider-10000</artifactId>
 
     <dependencies>
+        <!--包含了 sleuth+zipkin-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!-- 引入 eureka-client 依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
