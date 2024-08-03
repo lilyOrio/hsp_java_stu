@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -27,7 +28,13 @@ public class MemberController {
     }
 
     @GetMapping(value = "/member/get/{id}")
-    public Result getMemberById(@PathVariable("id") Long id) {
+    public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+
+        //验证GateWayFilter
+//        String address = request.getParameter("address");
+//        String age = request.getParameter("age");
+//        log.info("address={},age={}",address,age);
+
 //        //模拟超时，这里暂停 5 秒
 //        try {
 //            TimeUnit.SECONDS.sleep(5);

@@ -29,6 +29,9 @@ spring:
             #- Method=GET,POST
             #- Query=email, [\w-]+@([a-zA-Z]+\.)+[a-zA-Z]+ #请求有参数 email ,并且满足电子邮件的基本格式, 才能匹配/断言成功
             #- RemoteAddr=127.0.0.1 #请求端的 IP 是 127.0.0.1, 才能匹配/断言成功
+#          filters: #GatewayFilter
+#            - AddRequestParameter=color, blue #过滤器工厂会在匹配的请求头加上一对请求头， 名称为 color 值为 blue
+#            - AddRequestParameter=age, 18 #过滤器工厂会在匹配的请求头加上一对请求头，名称为 age 值为 18
         - id: member_routes02 #路由id
 #          uri: http://localhost:10088
           uri: lb://member-service-provider
