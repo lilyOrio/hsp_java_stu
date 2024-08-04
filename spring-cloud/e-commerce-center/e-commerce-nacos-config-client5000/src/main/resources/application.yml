@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: dev #指定环境是 dev/test/prod...
+
+    #参考: https://blog.csdn.net/zsl131557/article/details/80886114

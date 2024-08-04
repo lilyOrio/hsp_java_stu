@@ -19,6 +19,7 @@
         <module>member-service-nacos-provider-10004</module>
         <module>member-service-nacos-provider-10006</module>
         <module>member-service-consumer-80</module>
+        <module>e-commerce-nacos-config-client5000</module>
     </modules>
     <!-- 表明是一个父工程,聚合管理其他模块 -->
     <packaging>pom</packaging>
