@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -29,18 +30,25 @@ public class MemberController {
 
     @GetMapping(value = "/member/get/{id}")
     public Result getMemberById(@PathVariable("id") Long id, HttpServletRequest request) {
+//    @GetMapping(value = "/member/get",params = "id")
+//    public Result getMemberById(Long id, HttpServletRequest request) {//流控规则
 
         //验证GateWayFilter
 //        String address = request.getParameter("address");
 //        String age = request.getParameter("age");
 //        log.info("address={},age={}",address,age);
 
-//        //模拟超时，这里暂停 5 秒
+        //(1)模拟超时，这里暂停 1 秒 (2)流控规则,工作线程数限制1个
 //        try {
-//            TimeUnit.SECONDS.sleep(5);
+//            TimeUnit.SECONDS.sleep(1);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
+        //输出线程情况,一个请求开启一个线程
+        System.out.println("enter getMemberById... 当 前 线 程 id=" +
+                Thread.currentThread().getId() + " 时间=" + new Date());
+
         Member member = memberService.queryMemberById(id);
         log.info("查询结果= " + member);
         if (member != null) {
