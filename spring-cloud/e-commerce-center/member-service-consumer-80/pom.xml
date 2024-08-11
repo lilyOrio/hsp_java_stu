@@ -12,6 +12,18 @@
     <artifactId>member-service-consumer-80</artifactId>
 
     <dependencies>
+        <!-- 引入 alibaba-sentinel -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+
+        <!-- 引入 openfeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
         <!--引入 alibaba-nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

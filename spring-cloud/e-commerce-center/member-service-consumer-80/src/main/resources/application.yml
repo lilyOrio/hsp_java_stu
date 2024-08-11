@@ -7,3 +7,16 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+    sentinel:
+      transport:
+        dashboard: localhost:8080 #这个是 sentinel 控制台(sentinel dashboard)的地址
+        port: 8719
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#openfeign 和 sentinel 整合，必须配
+feign:
+  sentinel:
+    enabled: true
