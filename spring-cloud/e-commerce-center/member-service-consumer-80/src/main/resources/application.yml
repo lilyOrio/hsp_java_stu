@@ -11,6 +11,15 @@ spring:
       transport:
         dashboard: localhost:8080 #这个是 sentinel 控制台(sentinel dashboard)的地址
         port: 8719
+      #配置该微服务从 Nacos Server 获取流控规则
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: member-service-nacos-consumer
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
 management:
   endpoints:
     web:

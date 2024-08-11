@@ -12,6 +12,12 @@
     <artifactId>member-service-consumer-80</artifactId>
 
     <dependencies>
+        <!-- 加入 sentinel 和 nacos 持久化整合依赖 -->
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>
+
         <!-- 引入 alibaba-sentinel -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
