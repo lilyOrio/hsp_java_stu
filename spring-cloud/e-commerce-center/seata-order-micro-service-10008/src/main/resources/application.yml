@@ -1,8 +1,8 @@
 server:
-  port: 10012
+  port: 10008
 spring:
   application:
-    name: seata-account-micro-service
+    name: seata-order-micro-service
   cloud:
     alibaba:
       seata:
@@ -13,7 +13,7 @@ spring:
         server-addr: localhost:8848 #配置 Nacos Server
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/account_micro_service
+    url: jdbc:mysql://localhost:3306/order_micro_service
     username: root
     password: 123456
 
