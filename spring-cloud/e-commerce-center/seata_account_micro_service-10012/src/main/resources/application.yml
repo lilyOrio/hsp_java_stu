@@ -1,0 +1,27 @@
+server:
+  port: 10012
+spring:
+  application:
+    name: seata_account_micro_service
+  cloud:
+    alibaba:
+      seata:
+      #自定义事务组名称需要与 seata-server 中的对应,看 \conf\file.conf
+        tx-service-group: lilystu_order_tx_group
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #配置 Nacos Server
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/account_micro_service
+    username: root
+    password: 123456
+
+#配置seata日志输出
+logging:
+  level:
+    io:
+      seata: info
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
