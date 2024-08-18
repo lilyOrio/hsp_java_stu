@@ -6,5 +6,7 @@
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="money" property="money" jdbcType="INTEGER"/>
     </resultMap> <!-- 扣减金额 -->
-    <update id="reduce"> UPDATE account SETmoney = money - #{money} WHERE user_id = #{userId}; </update>
+    <update id="reduce">
+        UPDATE account SET money = money - #{money} WHERE user_id = #{userId};
+     </update>
 </mapper>

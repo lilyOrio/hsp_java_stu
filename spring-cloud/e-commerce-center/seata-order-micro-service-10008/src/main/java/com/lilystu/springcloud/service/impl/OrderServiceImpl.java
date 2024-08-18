@@ -5,6 +5,7 @@ import com.lilystu.springcloud.entity.Order;
 import com.lilystu.springcloud.service.AccountService;
 import com.lilystu.springcloud.service.OrderService;
 import com.lilystu.springcloud.service.StorageService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class OrderServiceImpl implements OrderService {
     private AccountService accountService;
 
     @Override
+    @GlobalTransactional(name = "lilystu-save-order", rollbackFor = Exception.class)
     public void save(Order order) {
         log.info("=========开始新建订单 start ==========");
         //新建订单
@@ -32,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
         log.info("=========减库存 end ==========");
 
         log.info("=========减账户金额 start ==========");
-        accountService.reduce(order.getUserId(), order.getMoney());
+        accountService.result(order.getUserId(), order.getMoney());
         log.info("=========减账户金额 end ==========");
 
         log.info("=========修改订单状态 start ==========");
